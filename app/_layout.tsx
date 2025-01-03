@@ -1,9 +1,8 @@
 import { Link, Slot } from 'expo-router'
 
-// Import your global CSS file
 import '../global.css'
-import { View } from 'react-native'
 import React from 'react'
+import { View } from 'react-native'
 
 export default function RootLayout() {
     return (
