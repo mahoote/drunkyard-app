@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 export default function PageOne() {
     return (
         <View className="flex-1 justify-center items-center">
-            <Text>Page 1 is working!</Text>
+            <Text className="text-foreground">Page 1 is working!</Text>
         </View>
     )
 }
