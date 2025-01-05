@@ -1,7 +1,8 @@
 import {
     Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
     Poppins_700Bold,
-    Poppins_800ExtraBold,
 } from '@expo-google-fonts/poppins'
 import { useFonts } from 'expo-font'
 import React from 'react'
@@ -10,8 +11,9 @@ import { Text, View } from 'react-native'
 export default function Index() {
     const [fontsLoaded] = useFonts({
         Poppins_400Regular,
+        Poppins_500Medium,
+        Poppins_600SemiBold,
         Poppins_700Bold,
-        Poppins_800ExtraBold,
     })
 
     if (!fontsLoaded) {
@@ -23,12 +25,30 @@ export default function Index() {
     }
 
     return (
-        <View className="flex-1 justify-center items-center">
-            <View className="gap-4 justify-center items-center">
-                <Text className="text-foreground text-2xl">This is my app</Text>
-                <Text className="text-foreground text-5xl font-extrabold">
-                    SETT I GANG!
+        <View className="flex-1 justify-center items-start w-full px-8">
+            <Text className="text-foreground display-md-regular">
+                Dette er en test
+            </Text>
+            <Text className="text-foreground display-md-medium">
+                Dette er en test
+            </Text>
+            <Text className="text-foreground display-md-semibold">
+                Dette er en test
+            </Text>
+            <Text className="text-foreground display-md-bold">
+                Dette er en test
+            </Text>
+            <Text className="text-foreground display-md-bold">
+                SETT I GANG!
+            </Text>
+            <Text className="text-foreground text-xl-regular">
+                Spill for anledningen
+            </Text>
+            <View className="flex-row gap-4 justify-center items-center w-full">
+                <Text className="text-foreground display-xs-bold">
+                    Bli kjent
                 </Text>
+                <Text className="text-foreground display-xs-bold">Venner</Text>
             </View>
         </View>
     )
