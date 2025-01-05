@@ -42,15 +42,7 @@ module.exports = {
                 6: '#F3B08C',
             },
         },
-        extend: {
-            fontFamily: {
-                sans: [
-                    'Poppins_400Regular',
-                    'Poppins_700Bold',
-                    'Poppins_800ExtraBold',
-                ],
-            },
-        },
+        extend: {},
     },
     plugins: [],
 }
