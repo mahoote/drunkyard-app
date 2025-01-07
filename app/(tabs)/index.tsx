@@ -7,7 +7,8 @@ import {
 } from '@expo-google-fonts/poppins'
 import { useFonts } from 'expo-font'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import AppText from '@/app/components/AppText'
 
 export default function Index() {
     const [fontsLoaded] = useFonts({
@@ -21,25 +22,14 @@ export default function Index() {
     if (!fontsLoaded) {
         return (
             <View>
-                <Text>Loading...</Text>
+                <AppText>Loading...</AppText>
             </View>
         )
     }
 
     return (
         <View className="flex-1 justify-center items-start w-full px-8">
-            <Text className="text-foreground display-md-regular">
-                Dette er en test
-            </Text>
-            <Text className="text-foreground text-xl-regular">
-                Spill for anledningen
-            </Text>
-            <View className="flex-row gap-4 justify-center items-center w-full top-10">
-                <Text className="text-foreground display-xs-bold">
-                    Bli kjent
-                </Text>
-                <Text className="text-foreground display-xs-bold">Venner</Text>
-            </View>
+            <AppText size="display-md-bold">SPLASHD</AppText>
         </View>
     )
 }

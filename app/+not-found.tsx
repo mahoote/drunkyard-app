@@ -1,17 +1,14 @@
 import { Link } from 'expo-router'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import AppText from '@/app/components/AppText'
 
 export default function NotFound() {
     return (
         <View className="flex-1 justify-center items-center">
-            <Text className="text-foreground text-xl-regular">
-                404 - Page Not Found
-            </Text>
+            <AppText>404 - Page Not Found</AppText>
             <Link href="/">
-                <Text className="text-foreground text-xl-regular underline">
-                    Go to start
-                </Text>
+                <AppText className="underline">Go to start</AppText>
             </Link>
         </View>
     )
