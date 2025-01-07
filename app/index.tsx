@@ -1,5 +1,6 @@
 import {
     Poppins_400Regular,
+    Poppins_300Light_Italic,
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_700Bold,
@@ -11,6 +12,7 @@ import { Text, View } from 'react-native'
 export default function Index() {
     const [fontsLoaded] = useFonts({
         Poppins_400Regular,
+        Poppins_300Light_Italic,
         Poppins_500Medium,
         Poppins_600SemiBold,
         Poppins_700Bold,
@@ -29,6 +31,9 @@ export default function Index() {
             <Text className="text-foreground display-md-regular">
                 Dette er en test
             </Text>
+            <Text className="text-foreground display-md-light-italic">
+                Dette er en test
+            </Text>
             <Text className="text-foreground display-md-medium">
                 Dette er en test
             </Text>
@@ -42,6 +47,9 @@ export default function Index() {
                 SETT I GANG!
             </Text>
             <Text className="text-foreground text-xl-regular">
+                Spill for anledningen
+            </Text>
+            <Text className="text-foreground text-xl-light-italic">
                 Spill for anledningen
             </Text>
             <View className="flex-row gap-4 justify-center items-center w-full">
