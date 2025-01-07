@@ -49,7 +49,7 @@ module.exports = {
     },
     plugins: [
         plugin(function ({ addUtilities }) {
-            const utilities = generateFontStyles() // Generate font styles
+            const utilities = generateFontStyles()
             addUtilities(utilities, ['responsive'])
         }),
     ],
