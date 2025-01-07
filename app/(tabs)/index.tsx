@@ -31,28 +31,10 @@ export default function Index() {
             <Text className="text-foreground display-md-regular">
                 Dette er en test
             </Text>
-            <Text className="text-foreground display-md-light-italic">
-                Dette er en test
-            </Text>
-            <Text className="text-foreground display-md-medium">
-                Dette er en test
-            </Text>
-            <Text className="text-foreground display-md-semibold">
-                Dette er en test
-            </Text>
-            <Text className="text-foreground display-md-bold">
-                Dette er en test
-            </Text>
-            <Text className="text-foreground display-md-bold">
-                SETT I GANG!
-            </Text>
             <Text className="text-foreground text-xl-regular">
                 Spill for anledningen
             </Text>
-            <Text className="text-foreground text-xl-light-italic">
-                Spill for anledningen
-            </Text>
-            <View className="flex-row gap-4 justify-center items-center w-full">
+            <View className="flex-row gap-4 justify-center items-center w-full top-10">
                 <Text className="text-foreground display-xs-bold">
                     Bli kjent
                 </Text>
