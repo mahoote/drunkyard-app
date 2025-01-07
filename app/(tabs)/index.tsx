@@ -9,6 +9,7 @@ import { useFonts } from 'expo-font'
 import React from 'react'
 import { View } from 'react-native'
 import AppText from '@/app/components/AppText'
+import StartGameButton from '@/app/components/StartGameButton'
 
 export default function Index() {
     const [fontsLoaded] = useFonts({
@@ -30,6 +31,7 @@ export default function Index() {
     return (
         <View className="flex-1 justify-center items-start w-full px-8">
             <AppText size="display-md-bold">SPLASHD</AppText>
+            <StartGameButton />
         </View>
     )
 }
