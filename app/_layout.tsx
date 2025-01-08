@@ -19,9 +19,12 @@ export default function RootLayout() {
             <ScrollView
                 className={`flex-1 z-10 ${platformPadding}`}
                 bounces={false}
+                contentContainerClassName="items-center"
             >
                 <StatusBar style="light" />
-                <Slot />
+                <View className="flex-1 w-full items-center px-6 max-w-lg">
+                    <Slot />
+                </View>
             </ScrollView>
         </View>
     )

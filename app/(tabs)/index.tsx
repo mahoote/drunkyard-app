@@ -60,30 +60,28 @@ export default function Index() {
 
     return (
         <View className="flex-1 w-full items-center">
-            <View className="flex-1 items-center w-full px-6 max-w-lg">
-                <NavButtons
-                    leftButton={<FeedbackIcon width={36} height={36} />}
-                    rightButton={<ProfileIcon name="Martin" />}
-                />
-                <View className="mt-8 mb-12">
-                    <AppLogo height={70} width={240} />
-                </View>
-                <View className="w-full gap-8">
-                    <PrimaryStartButton />
+            <NavButtons
+                leftButton={<FeedbackIcon width={36} height={36} />}
+                rightButton={<ProfileIcon name="Martin" />}
+            />
+            <View className="mt-8 mb-12">
+                <AppLogo height={70} width={240} />
+            </View>
+            <View className="w-full gap-8">
+                <PrimaryStartButton />
 
-                    <View className="gap-3">
-                        <AppText size="text-xl-regular">
-                            Spill for anledningen
-                        </AppText>
-                        <FlatList
-                            data={data}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
-                            numColumns={2}
-                            columnWrapperStyle={{ gap: 12 }}
-                            scrollEnabled={false}
-                        />
-                    </View>
+                <View className="gap-3">
+                    <AppText size="text-xl-regular">
+                        Spill for anledningen
+                    </AppText>
+                    <FlatList
+                        data={data}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        numColumns={2}
+                        columnWrapperStyle={{ gap: 12 }}
+                        scrollEnabled={false}
+                    />
                 </View>
             </View>
         </View>

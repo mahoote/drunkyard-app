@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { Pressable, View } from 'react-native'
 import AppText from '@/app/components/AppText'
@@ -5,8 +6,17 @@ import BeersIcon from '@/assets/icons/beers.svg'
 import SquaresBackgroundImage from '@/assets/images/squares-background-1.svg'
 
 export default function PrimaryStartButton() {
+    const router = useRouter()
+
+    const handlePress = () => {
+        router.navigate('/lobby')
+    }
+
     return (
-        <Pressable className="relative w-full px-3 py-6 bg-secondary-900 flex-row justify-center items-center rounded-3xl overflow-hidden">
+        <Pressable
+            className="relative w-full px-3 py-6 bg-secondary-900 flex-row justify-center items-center rounded-3xl overflow-hidden"
+            onPress={handlePress}
+        >
             <View className="absolute inset-0">
                 <SquaresBackgroundImage
                     width="100%"
