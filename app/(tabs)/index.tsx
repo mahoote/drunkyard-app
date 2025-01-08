@@ -13,6 +13,7 @@ import PrimaryStartButton from '@/app/components/PrimaryStartButton'
 import SecondaryStartButton from '@/app/components/SecondaryStartButton'
 import CheersHandsIcon from '@/assets/icons/cheers-hands.svg'
 import HoldingBeersIcon from '@/assets/icons/holding-beer.svg'
+import AppLogo from '@/assets/logos/app-logo.svg'
 
 const data = [
     {
@@ -57,13 +58,13 @@ export default function Index() {
     return (
         <View className="flex-1 w-full items-center">
             <View className="flex-1 top-20 items-center w-full px-6 max-w-[30rem]">
-                <AppText size="display-lg-bold" className="my-12">
-                    SPLASHD
-                </AppText>
-                <View className="w-full">
+                <View className="my-12">
+                    <AppLogo height={70} width={240} />
+                </View>
+                <View className="w-full gap-8">
                     <PrimaryStartButton />
 
-                    <View className="mt-6 gap-3">
+                    <View className="gap-3">
                         <AppText size="text-xl-regular">
                             Spill for anledningen
                         </AppText>

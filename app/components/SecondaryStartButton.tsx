@@ -13,7 +13,7 @@ export default function SecondaryStartButton({
     title,
 }: SecondaryStartButtonProps) {
     return (
-        <Pressable className="w-full justify-center items-center p-4 primary-50 bg-primary-500 rounded-3xl relative overflow-hidden">
+        <Pressable className="w-full gap-3 justify-center items-center p-4 primary-50 bg-primary-500 rounded-3xl relative overflow-hidden">
             <View className="absolute inset-0">
                 <SquaresBackgroundImage
                     width="100%"
