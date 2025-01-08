@@ -4,11 +4,21 @@ import AppText from '@/app/components/AppText'
 
 interface ProfileIconProps {
     name: string
-    size?: 'small' | 'large'
+    size?: 'small' | 'medium' | 'large'
     circleColor?: string
     textColor?: string
 }
 
+/**
+ * Allows you to create a profile icon with a letter inside a circle.
+ * Scales the icon based on the size prop.
+ * Does calculations to make the icon scale properly on all platforms.
+ * @param name
+ * @param size
+ * @param circleColor
+ * @param textColor
+ * @constructor
+ */
 export default function ProfileIcon({
     name,
     size = 'small',
@@ -21,19 +31,41 @@ export default function ProfileIcon({
         default: 0, // Web
     }) as number
 
-    const scale = size === 'large' ? 'scale-[2]' : ''
+    const defaultSizePx = 44
+
+    let multiplier = 1
+    let scale = ''
+    let scaleMultiplied: number
+
+    switch (size) {
+        case 'large':
+            multiplier = 2
+            scale = `scale-[${multiplier}]`
+            break
+        case 'medium':
+            multiplier = 1.5
+            scale = `scale-[${multiplier}]`
+            break
+    }
+
+    scaleMultiplied = defaultSizePx * multiplier
 
     return (
         <View
-            className={`${circleColor} ${scale} flex items-center justify-center rounded-[50%] w-11 h-11`}
+            className={`${scaleMultiplied} items-center justify-center`}
+            style={{ width: scaleMultiplied, height: scaleMultiplied }}
         >
-            <AppText
-                style={{ transform: [{ translateY }] }}
-                size="display-xs-medium"
-                color={textColor}
+            <View
+                className={`${circleColor} ${scale} flex items-center justify-center rounded-[50%] w-11 h-11`}
             >
-                {name[0].toUpperCase()}
-            </AppText>
+                <AppText
+                    style={{ transform: [{ translateY }] }}
+                    size="display-xs-medium"
+                    color={textColor}
+                >
+                    {name[0].toUpperCase()}
+                </AppText>
+            </View>
         </View>
     )
 }
