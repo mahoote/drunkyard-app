@@ -1,33 +1,50 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import AppText from '@/app/components/AppText'
-import ProfileCircleIcon from '@/assets/icons/profile-circle.svg'
 
 interface ProfileIconProps {
     name: string
-    size?: 42 | 72
-    color?: string
+    size?: 'small' | 'large'
+    circleColor?: string
+    textColor?: string
+}
+
+const iconSize = {
+    small: 42,
+    large: 72,
 }
 
 export default function ProfileIcon({
     name,
-    size = 42,
-    color = '#B5A3D0',
+    size = 'small',
+    circleColor = 'bg-avatar-5',
+    textColor = 'text-background',
 }: ProfileIconProps) {
-    const textSize = size === 42 ? 'display-xs-medium' : 'display-md-medium'
+    const translateY = Platform.select({
+        ios: 2,
+        android: 2,
+        default: 0, // Web
+    }) as number
+
+    const textSize =
+        size === 'small' ? 'display-xs-medium' : 'display-md-medium'
+
+    const circleWidth =
+        size === 'large' ? `w-[${iconSize.large}px]` : `w-[${iconSize.small}px]`
+    const circleHeight =
+        size === 'large' ? `h-[${iconSize.large}px]` : `h-[${iconSize.small}px]`
 
     return (
-        <View className="relative justify-center items-center">
-            <ProfileCircleIcon width={size} height={size} color={color} />
-            <View className="absolute inset-0 justify-center items-center">
-                <AppText
-                    color="text-background"
-                    size={textSize}
-                    style={{ lineHeight: size }}
-                >
-                    {name[0].toUpperCase()}
-                </AppText>
-            </View>
+        <View
+            className={`flex items-center justify-center ${circleColor} rounded-[50%] ${circleWidth} ${circleHeight}`}
+        >
+            <AppText
+                style={{ transform: [{ translateY }] }}
+                size={textSize}
+                color={textColor}
+            >
+                {name[0].toUpperCase()}
+            </AppText>
         </View>
     )
 }

@@ -22,12 +22,12 @@ const data = [
     {
         id: '1',
         title: 'Bli kjent',
-        icon: <HoldingBeersIcon width={62} height={82} />,
+        icon: <HoldingBeersIcon width={62} height={82} style={{ zIndex: 1 }} />,
     },
     {
         id: '2',
         title: 'Venner',
-        icon: <CheersHandsIcon width={76} height={82} />,
+        icon: <CheersHandsIcon width={76} height={82} style={{ zIndex: 1 }} />,
     },
 ]
 
@@ -53,14 +53,14 @@ export default function Index() {
     }: {
         item: { id: string; title: string; icon: React.ReactNode }
     }) => (
-        <View className="flex-1">
+        <View className="flex-1 relative">
             <SecondaryStartButton {...item} />
         </View>
     )
 
     return (
         <View className="flex-1 w-full items-center">
-            <View className="flex-1 top-20 items-center w-full px-6 max-w-[30rem]">
+            <View className="flex-1 items-center w-full px-6 max-w-lg">
                 <NavButtons
                     leftButton={<FeedbackIcon width={36} height={36} />}
                     rightButton={<ProfileIcon name="Martin" />}

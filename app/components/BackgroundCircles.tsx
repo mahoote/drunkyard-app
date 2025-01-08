@@ -6,16 +6,18 @@ interface BackgroundSvgProps {
     children?: React.ReactNode
     backgroundColor?: string
     circleColor?: string
+    className?: string
 }
 
 const BackgroundCircles: React.FC<BackgroundSvgProps> = ({
     children,
     backgroundColor = 'bg-background',
     circleColor = 'white',
+    className,
 }) => {
     return (
         <View
-            className={`flex-1 w-full h-full relative overflow-hidden ${backgroundColor}`}
+            className={`flex-1 w-full h-full relative overflow-hidden ${backgroundColor} ${className}`}
         >
             <View className="absolute inset-0">
                 <CirclesBackgroundImage
