@@ -9,11 +9,6 @@ interface ProfileIconProps {
     textColor?: string
 }
 
-const iconSize = {
-    small: 42,
-    large: 72,
-}
-
 export default function ProfileIcon({
     name,
     size = 'small',
@@ -26,21 +21,15 @@ export default function ProfileIcon({
         default: 0, // Web
     }) as number
 
-    const textSize =
-        size === 'small' ? 'display-xs-medium' : 'display-md-medium'
-
-    const circleWidth =
-        size === 'large' ? `w-[${iconSize.large}px]` : `w-[${iconSize.small}px]`
-    const circleHeight =
-        size === 'large' ? `h-[${iconSize.large}px]` : `h-[${iconSize.small}px]`
+    const scale = size === 'large' ? 'scale-[2]' : ''
 
     return (
         <View
-            className={`flex items-center justify-center ${circleColor} rounded-[50%] ${circleWidth} ${circleHeight}`}
+            className={`${circleColor} ${scale} flex items-center justify-center rounded-[50%] w-11 h-11`}
         >
             <AppText
                 style={{ transform: [{ translateY }] }}
-                size={textSize}
+                size="display-xs-medium"
                 color={textColor}
             >
                 {name[0].toUpperCase()}
