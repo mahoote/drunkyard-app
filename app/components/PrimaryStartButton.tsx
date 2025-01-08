@@ -22,7 +22,7 @@ export default function PrimaryStartButton() {
                 >
                     SETT I GANG!
                 </AppText>
-                <BeersIcon width={113} height={115} fill="blue" />
+                <BeersIcon height={115} fill="blue" />
             </View>
         </Pressable>
     )

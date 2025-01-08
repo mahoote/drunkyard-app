@@ -22,12 +22,12 @@ const data = [
     {
         id: '1',
         title: 'Bli kjent',
-        icon: <HoldingBeersIcon width={62} height={82} style={{ zIndex: 1 }} />,
+        icon: <HoldingBeersIcon height={82} style={{ zIndex: 1 }} />,
     },
     {
         id: '2',
         title: 'Venner',
-        icon: <CheersHandsIcon width={76} height={82} style={{ zIndex: 1 }} />,
+        icon: <CheersHandsIcon height={82} style={{ zIndex: 1 }} />,
     },
 ]
 
@@ -65,7 +65,7 @@ export default function Index() {
                     leftButton={<FeedbackIcon width={36} height={36} />}
                     rightButton={<ProfileIcon name="Martin" />}
                 />
-                <View className="my-12">
+                <View className="mt-8 mb-12">
                     <AppLogo height={70} width={240} />
                 </View>
                 <View className="w-full gap-8">
