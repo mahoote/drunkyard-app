@@ -81,6 +81,7 @@ export default function Index() {
                             keyExtractor={item => item.id}
                             numColumns={2}
                             columnWrapperStyle={{ gap: 12 }}
+                            scrollEnabled={false}
                         />
                     </View>
                 </View>
