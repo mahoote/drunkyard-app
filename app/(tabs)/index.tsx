@@ -9,9 +9,12 @@ import { useFonts } from 'expo-font'
 import React from 'react'
 import { FlatList, View } from 'react-native'
 import AppText from '@/app/components/AppText'
+import NavButtons from '@/app/components/NavButtons'
 import PrimaryStartButton from '@/app/components/PrimaryStartButton'
+import ProfileIcon from '@/app/components/ProfileIcon'
 import SecondaryStartButton from '@/app/components/SecondaryStartButton'
 import CheersHandsIcon from '@/assets/icons/cheers-hands.svg'
+import FeedbackIcon from '@/assets/icons/feedback.svg'
 import HoldingBeersIcon from '@/assets/icons/holding-beer.svg'
 import AppLogo from '@/assets/logos/app-logo.svg'
 
@@ -58,6 +61,10 @@ export default function Index() {
     return (
         <View className="flex-1 w-full items-center">
             <View className="flex-1 top-20 items-center w-full px-6 max-w-[30rem]">
+                <NavButtons
+                    leftButton={<FeedbackIcon width={36} height={36} />}
+                    rightButton={<ProfileIcon name="Martin" />}
+                />
                 <View className="my-12">
                     <AppLogo height={70} width={240} />
                 </View>
