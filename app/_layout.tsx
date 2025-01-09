@@ -3,29 +3,17 @@ import { Slot } from 'expo-router'
 import '../global.css'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { Platform, ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import BackgroundCircles from '@/app/components/BackgroundCircles'
 
 export default function RootLayout() {
-    const platformPadding = Platform.select({
-        ios: 'pt-16',
-        android: 'pt-12',
-        default: 'pt-6', // Web
-    })
-
     return (
-        <View className="flex-1 w-full h-full relative overflow-hidden bg-background">
+        <View className="flex-1 items-center w-full h-full relative overflow-hidden bg-background">
             <BackgroundCircles />
-            <ScrollView
-                className={`flex-1 z-10 ${platformPadding}`}
-                bounces={false}
-                contentContainerClassName="items-center"
-            >
-                <StatusBar style="light" />
-                <View className="flex-1 w-full items-center px-6 max-w-lg">
-                    <Slot />
-                </View>
-            </ScrollView>
+            <StatusBar style="light" />
+            <View className="flex-1 w-full items-center px-6 max-w-lg">
+                <Slot />
+            </View>
         </View>
     )
 }

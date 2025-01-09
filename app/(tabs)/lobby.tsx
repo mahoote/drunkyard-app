@@ -4,6 +4,7 @@ import { FlatList, View } from 'react-native'
 import AppText from '@/app/components/AppText'
 import NavButtons from '@/app/components/NavButtons'
 import PlayerIcon from '@/app/components/PlayerIcon'
+import { tabRootStyling } from '@/app/utils/tabRootStyling'
 
 const players = [
     'Martin',
@@ -23,7 +24,7 @@ export default function Lobby() {
     )
 
     return (
-        <View className="flex-1 w-full items-center">
+        <View className={`${tabRootStyling} w-full items-center`}>
             <NavButtons
                 leftButton={<FontAwesome name="chevron-left" size={24} />}
             />
@@ -41,7 +42,6 @@ export default function Lobby() {
                     numColumns={3}
                     columnWrapperStyle={{
                         justifyContent: 'space-evenly',
-                        marginBottom: 16,
                     }}
                     bounces={false}
                 />

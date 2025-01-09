@@ -7,12 +7,13 @@ import {
 } from '@expo-google-fonts/poppins'
 import { useFonts } from 'expo-font'
 import React from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, ScrollView, View } from 'react-native'
 import AppText from '@/app/components/AppText'
 import NavButtons from '@/app/components/NavButtons'
 import PrimaryStartButton from '@/app/components/PrimaryStartButton'
 import ProfileIcon from '@/app/components/ProfileIcon'
 import SecondaryStartButton from '@/app/components/SecondaryStartButton'
+import { tabRootStyling } from '@/app/utils/tabRootStyling'
 import CheersHandsIcon from '@/assets/icons/cheers-hands.svg'
 import FeedbackIcon from '@/assets/icons/feedback.svg'
 import HoldingBeersIcon from '@/assets/icons/holding-beer.svg'
@@ -59,7 +60,11 @@ export default function Index() {
     )
 
     return (
-        <View className="flex-1 w-full items-center">
+        <ScrollView
+            className={tabRootStyling}
+            bounces={false}
+            contentContainerClassName="items-center"
+        >
             <NavButtons
                 leftButton={<FeedbackIcon width={36} height={36} />}
                 rightButton={<ProfileIcon name="Martin" />}
@@ -84,6 +89,6 @@ export default function Index() {
                     />
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
