@@ -24,7 +24,7 @@ export default function Lobby() {
     )
 
     return (
-        <View className={`${tabRootStyling} w-full items-center`}>
+        <View className={`${tabRootStyling} items-center`}>
             <NavButtons
                 leftButton={<FontAwesome name="chevron-left" size={24} />}
             />
@@ -32,8 +32,8 @@ export default function Lobby() {
             <View className="my-4">
                 <AppText size="text-sm-regular">TRYKK PÅ QR</AppText>
             </View>
-            <View className="items-center gap-6" style={{ width: '90%' }}>
-                <AppText size="text-xl-semibold">1/15</AppText>
+            <View className="items-center gap-6 w-full">
+                <AppText size="text-xl-semibold">1 / 15</AppText>
                 <FlatList
                     className="w-full"
                     data={players}
