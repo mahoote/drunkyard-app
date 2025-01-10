@@ -5,8 +5,8 @@ import Animated, {
     useAnimatedStyle,
     withTiming,
 } from 'react-native-reanimated'
-import AppView from '@/app/components/AppView'
-import NavButtons from '@/app/components/NavButtons'
+import NavButtons from '@/app/components/buttons/NavButtons'
+import AppView from '@/app/components/views/AppView'
 import { tabRootStyling } from '@/app/utils/tabRootStyling'
 
 interface OverlayProps {

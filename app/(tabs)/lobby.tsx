@@ -1,13 +1,13 @@
 import { FontAwesome } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
-import AppButton from '@/app/components/AppButton'
 import AppText from '@/app/components/AppText'
-import AppView from '@/app/components/AppView'
-import NavButtons from '@/app/components/NavButtons'
+import AppButton from '@/app/components/buttons/AppButton'
+import NavButtons from '@/app/components/buttons/NavButtons'
 import Overlay from '@/app/components/Overlay'
 import PlayerIcon from '@/app/components/PlayerIcon'
 import QrComponent from '@/app/components/QrComponent'
+import AppView from '@/app/components/views/AppView'
 
 const players = [
     'Martin',
@@ -98,9 +98,7 @@ export default function Lobby() {
                         </AppView>
                     }
                 />
-                <AppView>
-                    <AppButton title="NESTE" />
-                </AppView>
+                <AppButton title="NESTE" gradientBackgroundColor={[3, 3, 35]} />
             </AppView>
             <Overlay
                 isVisible={isOverlayVisible}
