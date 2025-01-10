@@ -9,16 +9,15 @@ export default function RootLayout() {
             <Stack
                 screenOptions={{
                     headerShown: false,
+                    animation: 'ios_from_right',
+                    animationDuration: 250,
                     contentStyle: {
                         backgroundColor: '#030323',
                         alignItems: 'center',
                     },
                 }}
-            >
-                <Stack.Screen name="(tabs)" />
-                <Stack.Screen name="+not-found" />
-            </Stack>
-            <StatusBar style="auto" />
+            />
+            <StatusBar style="light" />
         </>
     )
 }
