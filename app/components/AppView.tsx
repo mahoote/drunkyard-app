@@ -11,7 +11,7 @@ interface AppViewProps extends ViewProps {
 
 export default function AppView({
     children,
-    className,
+    className = '',
     isContent = true,
     isRoot,
     ...props

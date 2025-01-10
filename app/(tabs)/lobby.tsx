@@ -31,13 +31,7 @@ export default function Lobby() {
 
     const toggleOverlay = () => setOverlayVisible(prev => !prev)
 
-    const playerAlone = players.length <= 1
-
-    const renderItem = ({ item }: { item: string }) => (
-        <View className="w-1/3 p-2 items-center">
-            <PlayerIcon name={item} size="medium" />
-        </View>
-    )
+    const isPlayerAlone = players.length <= 1
 
     return (
         <>
@@ -49,7 +43,6 @@ export default function Lobby() {
                     data={players}
                     numColumns={3}
                     keyExtractor={(_, index) => index.toString()}
-                    renderItem={renderItem}
                     bounces={false}
                     ListHeaderComponent={
                         <AppView className="items-center">
@@ -85,9 +78,14 @@ export default function Lobby() {
                             </View>
                         </AppView>
                     }
+                    renderItem={({ item }) => (
+                        <View className="w-1/3 py-2 items-center">
+                            <PlayerIcon name={item} size="medium" />
+                        </View>
+                    )}
                     ListFooterComponent={
-                        <>
-                            {playerAlone && (
+                        <AppView>
+                            {isPlayerAlone && (
                                 <AppText
                                     className="text-center mt-10"
                                     size="text-md-regular"
@@ -97,7 +95,7 @@ export default function Lobby() {
                                     Trykk på QR-koden for å invitere folk.
                                 </AppText>
                             )}
-                        </>
+                        </AppView>
                     }
                 />
                 <AppView>
