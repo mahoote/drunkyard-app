@@ -5,6 +5,7 @@ import Animated, {
     useAnimatedStyle,
     withTiming,
 } from 'react-native-reanimated'
+import AppView from '@/app/components/AppView'
 import NavButtons from '@/app/components/NavButtons'
 import { tabRootStyling } from '@/app/utils/tabRootStyling'
 
@@ -31,12 +32,14 @@ const Overlay = ({ isVisible, toggleVisibility, children }: OverlayProps) => {
             style={animatedStyle}
             className={`${tabRootStyling} absolute inset-0 bg-background items-center justify-center`}
         >
-            <NavButtons
-                rightButton={<FontAwesome name="close" size={24} />}
-                rightButtonAction={toggleVisibility}
-            />
+            <AppView className="flex-1">
+                <NavButtons
+                    rightButton={<FontAwesome name="close" size={24} />}
+                    rightButtonAction={toggleVisibility}
+                />
 
-            {children}
+                {children}
+            </AppView>
         </Animated.View>
     )
 }

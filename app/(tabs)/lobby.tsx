@@ -2,21 +2,27 @@ import { FontAwesome } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import AppButton from '@/app/components/AppButton'
+import AppScrollView from '@/app/components/AppScrollView'
 import AppText from '@/app/components/AppText'
+import AppView from '@/app/components/AppView'
 import NavButtons from '@/app/components/NavButtons'
 import Overlay from '@/app/components/Overlay'
 import PlayerIcon from '@/app/components/PlayerIcon'
 import QrComponent from '@/app/components/QrComponent'
-import { tabRootStyling } from '@/app/utils/tabRootStyling'
 
 const players = [
     'Martin',
     'Erik',
     'Morten',
     'Jonas',
-    /* 'Karl',
+    'Karl',
     'Marius',
-    'Andreas',*/
+    'Andreas',
+    'Morten',
+    'Jonas',
+    'Karl',
+    'Marius',
+    'Andreas',
 ]
 
 export default function Lobby() {
@@ -34,8 +40,8 @@ export default function Lobby() {
 
     return (
         <>
-            <View className={`${tabRootStyling} items-center justify-between`}>
-                <View className="w-full items-center">
+            <AppView isRoot={true} className="items-center justify-between">
+                <AppScrollView contentContainerClassName="items-center">
                     <NavButtons
                         leftButton={
                             <FontAwesome name="chevron-left" size={24} />
@@ -64,6 +70,7 @@ export default function Lobby() {
                                 justifyContent: 'space-evenly',
                             }}
                             bounces={false}
+                            scrollEnabled={false}
                         />
                     </View>
                     {playerAlone && (
@@ -76,11 +83,11 @@ export default function Lobby() {
                             Trykk på QR-koden for å invitere folk.
                         </AppText>
                     )}
-                </View>
-                <View className="w-full mb-12 ios:mb-16">
+                </AppScrollView>
+                <AppView>
                     <AppButton title="NESTE" />
-                </View>
-            </View>
+                </AppView>
+            </AppView>
             <Overlay
                 isVisible={isOverlayVisible}
                 toggleVisibility={toggleOverlay}
