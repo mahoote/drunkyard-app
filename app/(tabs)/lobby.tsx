@@ -36,7 +36,9 @@ export default function Lobby() {
                     <AppText size="text-sm-regular">TRYKK PÅ QR</AppText>
                 </View>
                 <View className="items-center w-full mt-6">
-                    <AppText size="text-xl-semibold">1 / 15</AppText>
+                    <AppText size="text-xl-semibold">
+                        {players.length} / 15
+                    </AppText>
                     <FlatList
                         className="w-full"
                         data={players}
