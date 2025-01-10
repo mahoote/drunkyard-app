@@ -14,15 +14,17 @@ const players = [
     'Erik',
     'Morten',
     'Jonas',
-    'Karl',
+    /* 'Karl',
     'Marius',
-    'Andreas',
+    'Andreas',*/
 ]
 
 export default function Lobby() {
     const [isOverlayVisible, setOverlayVisible] = useState(false)
 
     const toggleOverlay = () => setOverlayVisible(prev => !prev)
+
+    const playerAlone = players.length <= 1
 
     const renderItem = ({ item }: { item: string }) => (
         <View className="m-4">
@@ -64,6 +66,16 @@ export default function Lobby() {
                             bounces={false}
                         />
                     </View>
+                    {playerAlone && (
+                        <AppText
+                            className="text-center mt-10"
+                            size="text-md-regular"
+                            color="text-primary-300"
+                        >
+                            Du er alene i rommet.{'\n'}
+                            Trykk på QR-koden for å invitere folk.
+                        </AppText>
+                    )}
                 </View>
                 <View className="w-full mb-12 ios:mb-16">
                     <AppButton title="NESTE" />
