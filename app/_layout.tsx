@@ -1,19 +1,24 @@
-import { Slot } from 'expo-router'
-
-import '../global.css'
+import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { View } from 'react-native'
-import BackgroundCircles from '@/app/components/BackgroundCircles'
+import '../global.css'
 
 export default function RootLayout() {
     return (
-        <View className="flex-1 items-center w-full h-full relative overflow-hidden bg-background">
-            <BackgroundCircles />
-            <StatusBar style="light" />
-            <View className="flex-1 w-full items-center">
-                <Slot />
-            </View>
-        </View>
+        <>
+            <Stack
+                screenOptions={{
+                    headerShown: false,
+                    contentStyle: {
+                        backgroundColor: '#030323',
+                        alignItems: 'center',
+                    },
+                }}
+            >
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+        </>
     )
 }

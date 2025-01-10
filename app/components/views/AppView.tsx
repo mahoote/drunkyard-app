@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, ViewProps } from 'react-native'
+import BackgroundCircles from '@/app/components/BackgroundCircles'
 import { tabContentStyling, tabRootStyling } from '@/app/utils/tabRootStyling'
 
 interface AppViewProps extends ViewProps {
@@ -7,6 +8,7 @@ interface AppViewProps extends ViewProps {
     className?: string
     isRoot?: boolean
     isContent?: boolean
+    noBackground?: boolean
 }
 
 export default function AppView({
@@ -14,16 +16,20 @@ export default function AppView({
     className = '',
     isContent = true,
     isRoot,
+    noBackground,
     ...props
 }: AppViewProps) {
     if (isRoot) {
         return (
-            <View
-                className={`${tabRootStyling} ${className} max-w-lg`}
-                {...props}
-            >
-                {children}
-            </View>
+            <>
+                {!noBackground && <BackgroundCircles />}
+                <View
+                    className={`${tabRootStyling} ${className} max-w-lg`}
+                    {...props}
+                >
+                    {children}
+                </View>
+            </>
         )
     }
     if (isContent) {
