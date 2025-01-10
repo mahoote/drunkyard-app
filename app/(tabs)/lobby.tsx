@@ -42,10 +42,10 @@ export default function Lobby() {
                     />
                     <AppText size="display-sm-regular">Martin's spill</AppText>
                     <Pressable
-                        className="my-4 items-center gap-2"
+                        className="my-4 items-center"
                         onPress={toggleOverlay}
                     >
-                        <View className="py-6 bg-primary-600 w-14 h-14 rounded-lg" />
+                        <FontAwesome name="qrcode" size={64} color="#E8E8EA" />
                         <AppText size="text-sm-regular">TRYKK PÅ QR</AppText>
                     </Pressable>
                     <View className="items-center w-full mt-6">
