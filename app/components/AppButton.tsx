@@ -27,7 +27,7 @@ export default function AppButton({
     let textSize = 'text-xl-semibold'
 
     if (size === 'large') {
-        buttonStyles = 'rounded-3xl p-2 ios:p-3'
+        buttonStyles = 'rounded-2xl p-2 ios:p-3'
         textSize = 'display-sm-semibold'
     }
 

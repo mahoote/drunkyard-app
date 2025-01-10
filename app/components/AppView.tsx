@@ -18,17 +18,17 @@ export default function AppView({
 }: AppViewProps) {
     if (isRoot) {
         return (
-            <View className={`${tabRootStyling} ${className}`} {...props}>
+            <View
+                className={`${tabRootStyling} ${className} max-w-lg`}
+                {...props}
+            >
                 {children}
             </View>
         )
     }
     if (isContent) {
         return (
-            <View
-                className={`${tabContentStyling} ${className} max-w-lg`}
-                {...props}
-            >
+            <View className={`${tabContentStyling} ${className}`} {...props}>
                 {children}
             </View>
         )
