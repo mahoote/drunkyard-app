@@ -11,7 +11,7 @@ export default function RootLayout() {
         <View className="flex-1 items-center w-full h-full relative overflow-hidden bg-background">
             <BackgroundCircles />
             <StatusBar style="light" />
-            <View className="flex-1 w-full items-center px-6 max-w-lg">
+            <View className="flex-1 w-full items-center max-w-lg">
                 <Slot />
             </View>
         </View>
