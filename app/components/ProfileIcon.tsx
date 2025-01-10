@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, View } from 'react-native'
+import { View } from 'react-native'
 import AppText from '@/app/components/AppText'
 
 interface ProfileIconProps {
@@ -11,8 +11,7 @@ interface ProfileIconProps {
 
 /**
  * Allows you to create a profile icon with a letter inside a circle.
- * Scales the icon based on the size prop.
- * Does calculations to make the icon scale properly on all platforms.
+ * Three different sizes are available: small, medium, and large.
  * @param name
  * @param size
  * @param circleColor
@@ -25,47 +24,24 @@ export default function ProfileIcon({
     circleColor = 'bg-avatar-5',
     textColor = 'text-background',
 }: ProfileIconProps) {
-    const translateY = Platform.select({
-        ios: 2,
-        android: 2,
-        default: 0, // Web
-    }) as number
+    let circleSize = 'h-11 w-11'
+    let fontSize = 'display-xs-medium'
 
-    const defaultSizePx = 44
-
-    let multiplier = 1
-    let scale = ''
-    let scaleMultiplied: number
-
-    switch (size) {
-        case 'large':
-            multiplier = 2
-            scale = `scale-[${multiplier}]`
-            break
-        case 'medium':
-            multiplier = 1.5
-            scale = `scale-[${multiplier}]`
-            break
+    if (size === 'medium') {
+        circleSize = 'h-16 w-16'
+        fontSize = 'display-sm-medium'
+    } else if (size === 'large') {
+        circleSize = 'h-20 w-20'
+        fontSize = 'display-lg-medium'
     }
-
-    scaleMultiplied = defaultSizePx * multiplier
 
     return (
         <View
-            className={`${scaleMultiplied} items-center justify-center`}
-            style={{ width: scaleMultiplied, height: scaleMultiplied }}
+            className={`${circleColor} ${circleSize} flex items-center justify-center rounded-[50%]`}
         >
-            <View
-                className={`${circleColor} ${scale} flex items-center justify-center rounded-[50%] w-11 h-11`}
-            >
-                <AppText
-                    style={{ transform: [{ translateY }] }}
-                    size="display-xs-medium"
-                    color={textColor}
-                >
-                    {name[0].toUpperCase()}
-                </AppText>
-            </View>
+            <AppText size={fontSize} color={textColor} verticalAlign={true}>
+                {name[0].toUpperCase()}
+            </AppText>
         </View>
     )
 }
