@@ -1,5 +1,5 @@
 import { LinkProps, useRouter } from 'expo-router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, View } from 'react-native'
 import AppText from '@/app/components/AppText'
 
@@ -15,6 +15,19 @@ interface NavButtonsProps {
     rightButtonBack?: boolean
 }
 
+/**
+ * Displays two navigation buttons at each side of the screen.
+ * Can be used to navigate between screens or do an action.
+ * @param leftButton
+ * @param leftButtonHref
+ * @param leftButtonAction
+ * @param leftButtonBack
+ * @param rightButton
+ * @param rightButtonHref
+ * @param rightButtonAction
+ * @param rightButtonBack
+ * @constructor
+ */
 export default function NavButtons({
     leftButton,
     leftButtonHref,
@@ -26,6 +39,10 @@ export default function NavButtons({
     rightButtonAction,
     rightButtonBack,
 }: NavButtonsProps) {
+    const [leftButtonDisabled, setLeftButtonDisabled] = useState<boolean>(false)
+    const [rightButtonDisabled, setRightButtonDisabled] =
+        useState<boolean>(false)
+
     const router = useRouter()
 
     if (leftButtonBack) {
@@ -48,13 +65,45 @@ export default function NavButtons({
         }
     }
 
+    /**
+     * Disable buttons if the router can't go back and the button is a back button
+     */
+    useEffect(() => {
+        setLeftButtonDisabled(!router.canGoBack() && !!leftButtonBack)
+        setRightButtonDisabled(!router.canGoBack() && !!rightButtonBack)
+    }, [router.canGoBack(), leftButtonBack, rightButtonBack])
+
     return (
         <View className="w-full flex-row justify-between items-center">
-            <Pressable onPress={leftButtonAction}>
-                <AppText className="text-foreground">{leftButton}</AppText>
+            <Pressable
+                onPress={leftButtonAction}
+                disabled={leftButtonDisabled}
+                className="p-2"
+            >
+                <AppText
+                    color={
+                        leftButtonDisabled
+                            ? 'text-background'
+                            : 'text-foreground'
+                    }
+                >
+                    {leftButton}
+                </AppText>
             </Pressable>
-            <Pressable onPress={rightButtonAction}>
-                <AppText className="text-foreground">{rightButton}</AppText>
+            <Pressable
+                onPress={rightButtonAction}
+                disabled={rightButtonDisabled}
+                className="p-2"
+            >
+                <AppText
+                    color={
+                        rightButtonDisabled
+                            ? 'text-background'
+                            : 'text-foreground'
+                    }
+                >
+                    {rightButton}
+                </AppText>
             </Pressable>
         </View>
     )
