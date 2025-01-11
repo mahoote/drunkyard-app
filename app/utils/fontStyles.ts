@@ -1,3 +1,10 @@
+type FontStyleUtilities = {
+    [key: string]: {
+        fontSize: string
+        fontFamily: string
+    }
+}
+
 const generateFontStyles = () => {
     const sizes = [
         { prefix: 'display-2xl', fontSize: '72px' },
@@ -21,14 +28,13 @@ const generateFontStyles = () => {
         { suffix: 'bold', fontFamily: 'Poppins_700Bold' },
     ]
 
-    const utilities = {}
+    const utilities: FontStyleUtilities = {}
 
-    sizes.forEach(({ prefix, fontSize, lineHeight }) => {
+    sizes.forEach(({ prefix, fontSize }) => {
         weights.forEach(({ suffix, fontFamily }) => {
             const className = `${prefix}-${suffix}`
             utilities[`.${className}`] = {
                 fontSize,
-                lineHeight,
                 fontFamily,
             }
         })
