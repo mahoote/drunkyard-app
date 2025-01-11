@@ -30,7 +30,7 @@ export default function AppButton({
 
     const width = fullWidth ? 'w-full' : 'w-fit'
 
-    let buttonStyles = 'rounded-2xl p-1 ios:p-2'
+    let buttonStyles = 'rounded-xl p-1 ios:p-2'
     let textSize = 'text-xl-semibold'
 
     if (size === 'large') {
