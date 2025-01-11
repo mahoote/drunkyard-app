@@ -9,10 +9,12 @@ import { useFonts } from 'expo-font'
 import React from 'react'
 import { FlatList, View } from 'react-native'
 import AppText from '@/app/components/AppText'
-import NavButtons from '@/app/components/NavButtons'
-import PrimaryStartButton from '@/app/components/PrimaryStartButton'
+import NavButtons from '@/app/components/buttons/NavButtons'
+import PrimaryStartButton from '@/app/components/buttons/PrimaryStartButton'
+import SecondaryStartButton from '@/app/components/buttons/SecondaryStartButton'
 import ProfileIcon from '@/app/components/ProfileIcon'
-import SecondaryStartButton from '@/app/components/SecondaryStartButton'
+import AppScrollView from '@/app/components/views/AppScrollView'
+import AppView from '@/app/components/views/AppView'
 import CheersHandsIcon from '@/assets/icons/cheers-hands.svg'
 import FeedbackIcon from '@/assets/icons/feedback.svg'
 import HoldingBeersIcon from '@/assets/icons/holding-beer.svg'
@@ -22,12 +24,12 @@ const data = [
     {
         id: '1',
         title: 'Bli kjent',
-        icon: <HoldingBeersIcon width={62} height={82} style={{ zIndex: 1 }} />,
+        icon: <HoldingBeersIcon height={82} style={{ zIndex: 1 }} />,
     },
     {
         id: '2',
         title: 'Venner',
-        icon: <CheersHandsIcon width={76} height={82} style={{ zIndex: 1 }} />,
+        icon: <CheersHandsIcon height={82} style={{ zIndex: 1 }} />,
     },
 ]
 
@@ -59,13 +61,16 @@ export default function Index() {
     )
 
     return (
-        <View className="flex-1 w-full items-center">
-            <View className="flex-1 items-center w-full px-6 max-w-lg">
+        <AppView isRoot={true} className="items-center">
+            <AppScrollView
+                bounces={false}
+                contentContainerClassName="items-center"
+            >
                 <NavButtons
                     leftButton={<FeedbackIcon width={36} height={36} />}
                     rightButton={<ProfileIcon name="Martin" />}
                 />
-                <View className="my-12">
+                <View className="mt-8 mb-12">
                     <AppLogo height={70} width={240} />
                 </View>
                 <View className="w-full gap-8">
@@ -85,7 +90,7 @@ export default function Index() {
                         />
                     </View>
                 </View>
-            </View>
-        </View>
+            </AppScrollView>
+        </AppView>
     )
 }
