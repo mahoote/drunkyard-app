@@ -9,6 +9,15 @@ interface AppScrollViewProps extends ScrollViewProps {
     isContent?: boolean
 }
 
+/**
+ * A custom ScrollView component that applies styling based on the isRoot and isContent props.
+ * @param children
+ * @param className
+ * @param isContent
+ * @param isRoot
+ * @param props
+ * @constructor
+ */
 export default function AppScrollView({
     children,
     className,

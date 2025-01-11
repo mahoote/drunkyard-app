@@ -11,6 +11,16 @@ interface AppViewProps extends ViewProps {
     noBackground?: boolean
 }
 
+/**
+ * A custom View component that applies styling based on the isRoot and isContent props.
+ * @param children
+ * @param className
+ * @param isContent
+ * @param isRoot
+ * @param noBackground
+ * @param props
+ * @constructor
+ */
 export default function AppView({
     children,
     className = '',
