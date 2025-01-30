@@ -69,6 +69,7 @@ export default function Index() {
                 <NavButtons
                     leftButton={<FeedbackIcon width={36} height={36} />}
                     rightButton={<ProfileIcon name="Martin" />}
+                    rightButtonHref="/join"
                 />
                 <View className="mt-8 mb-12">
                     <AppLogo height={70} width={240} />
