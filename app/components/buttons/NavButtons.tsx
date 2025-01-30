@@ -86,6 +86,7 @@ export default function NavButtons({
                             ? 'text-background'
                             : 'text-foreground'
                     }
+                    className="min-h-[24px]"
                 >
                     {leftButton}
                 </AppText>
@@ -101,6 +102,7 @@ export default function NavButtons({
                             ? 'text-background'
                             : 'text-foreground'
                     }
+                    className="min-h-[24px]"
                 >
                     {rightButton}
                 </AppText>
