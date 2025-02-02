@@ -25,8 +25,9 @@ export default function Join() {
                             <AppText>Kode</AppText>
                             <View className="w-40">
                                 <TextInput
-                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 py-3 text-center  tracking-[6px]"
+                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 py-3 text-center tracking-[6px]"
                                     placeholder="-"
+                                    keyboardType="number-pad"
                                 />
                             </View>
                         </View>
