@@ -14,10 +14,13 @@ export default function Join() {
                     <View className="gap-4">
                         <View className="items-center gap-2">
                             <AppText>Spill som gjest</AppText>
-                            <View className="w-full">
+                            <View className="w-full ">
                                 <TextInput
-                                    className="bg-foreground text-background rounded-full w-full px-4 py-3 text-lg-regular"
+                                    className="bg-foreground text-background rounded-full w-full px-6 text-lg-regular h-14"
                                     placeholder="Skriv inn navn"
+                                    multiline={false}
+                                    textAlignVertical="center"
+                                    maxLength={20}
                                 />
                             </View>
                         </View>
@@ -25,9 +28,12 @@ export default function Join() {
                             <AppText>Kode</AppText>
                             <View className="w-40">
                                 <TextInput
-                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 py-3 text-center tracking-[6px]"
+                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 text-center tracking-[6px] h-14"
                                     placeholder="-"
                                     keyboardType="number-pad"
+                                    multiline={false}
+                                    textAlignVertical="center"
+                                    maxLength={6}
                                 />
                             </View>
                         </View>
