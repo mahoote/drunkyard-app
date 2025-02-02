@@ -16,7 +16,7 @@ export default function Join() {
                             <AppText>Spill som gjest</AppText>
                             <View className="w-full ">
                                 <TextInput
-                                    className="bg-foreground text-background rounded-full w-full px-6 text-lg-regular h-14"
+                                    className="bg-foreground text-background rounded-full w-full px-6 text-lg-regular h-16"
                                     placeholder="Skriv inn navn"
                                     multiline={false}
                                     textAlignVertical="center"
@@ -28,7 +28,7 @@ export default function Join() {
                             <AppText>Kode</AppText>
                             <View className="w-40">
                                 <TextInput
-                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 text-center tracking-[6px] h-14"
+                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 text-center tracking-[6px] h-16"
                                     placeholder="-"
                                     keyboardType="number-pad"
                                     multiline={false}
