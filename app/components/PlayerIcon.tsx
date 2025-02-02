@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
-import AppText from '@/app/components/AppText'
 import ProfileIcon from '@/app/components/ProfileIcon'
+import AppText from '@/app/components/text/AppText'
 
 interface PlayerIconProps {
     name: string

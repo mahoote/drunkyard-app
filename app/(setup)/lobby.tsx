@@ -1,12 +1,12 @@
 import { FontAwesome } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
-import AppText from '@/app/components/AppText'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import Overlay from '@/app/components/Overlay'
 import PlayerIcon from '@/app/components/PlayerIcon'
 import QrComponent from '@/app/components/QrComponent'
+import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 
 const players = [

@@ -1,7 +1,7 @@
 import { Link } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 
 export default function NotFound() {
     return (

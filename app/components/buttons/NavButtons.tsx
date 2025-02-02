@@ -1,7 +1,7 @@
 import { LinkProps, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 
 interface NavButtonsProps {
     leftButton?: React.ReactNode

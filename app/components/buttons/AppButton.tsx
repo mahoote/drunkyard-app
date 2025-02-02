@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
 import { LayoutChangeEvent, Platform, Pressable } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 
 interface AppButtonProps {

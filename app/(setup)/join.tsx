@@ -1,7 +1,8 @@
 import React from 'react'
-import { TextInput, View } from 'react-native'
-import AppText from '@/app/components/AppText'
+import { View } from 'react-native'
 import NavButtons from '@/app/components/buttons/NavButtons'
+import AppText from '@/app/components/text/AppText'
+import AppTextInput from '@/app/components/text/AppTextInput'
 import AppView from '@/app/components/views/AppView'
 
 export default function Join() {
@@ -14,28 +15,17 @@ export default function Join() {
                     <View className="gap-4">
                         <View className="items-center gap-2">
                             <AppText>Spill som gjest</AppText>
-                            <View className="w-full ">
-                                <TextInput
-                                    className="bg-foreground text-background rounded-full w-full px-6 text-lg-regular h-16"
-                                    placeholder="Skriv inn navn"
-                                    multiline={false}
-                                    textAlignVertical="center"
-                                    maxLength={20}
-                                />
-                            </View>
+                            <AppTextInput placeholder="Skriv inn navn" />
                         </View>
                         <View className="items-center gap-2">
                             <AppText>Kode</AppText>
-                            <View className="w-40">
-                                <TextInput
-                                    className="bg-primary-300 text-background text-lg-semibold rounded-full w-full px-4 text-center tracking-[6px] h-16"
-                                    placeholder="-"
-                                    keyboardType="number-pad"
-                                    multiline={false}
-                                    textAlignVertical="center"
-                                    maxLength={6}
-                                />
-                            </View>
+                            <AppTextInput
+                                className="bg-primary-300 text-lg-semibold text-center tracking-[6px]"
+                                keyboardType="number-pad"
+                                placeholder="-"
+                                width={40}
+                                maxLength={6}
+                            />
                         </View>
                     </View>
                 </View>
