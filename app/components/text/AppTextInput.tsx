@@ -23,7 +23,7 @@ export default function AppTextInput({
     return (
         <View className={`${viewWidth}`}>
             <TextInput
-                className={`w-full text-lg-regular h-16 rounded-full bg-foreground text-background px-6 ${className}`}
+                className={`w-full text-lg-regular h-14 rounded-full bg-foreground text-background px-6 py-0 ${className}`}
                 placeholder={placeholder}
                 multiline={multiline}
                 textAlignVertical="center"
