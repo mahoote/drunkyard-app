@@ -16,7 +16,13 @@ export default function Join() {
                     <View className="gap-4">
                         <View className="items-center gap-2">
                             <AppText>Spill som gjest</AppText>
-                            <AppTextInput placeholder="Skriv inn navn" />
+                            <AppTextInput
+                                placeholder="Skriv inn navn"
+                                hasButton={true}
+                                buttonAction={() => {}}
+                                maxLength={16}
+                                width="w-72"
+                            />
                         </View>
                         <View className="items-center gap-2">
                             <AppText>Kode</AppText>
@@ -24,7 +30,7 @@ export default function Join() {
                                 className="text-lg-semibold text-center tracking-[6px]"
                                 keyboardType="number-pad"
                                 placeholder="-"
-                                width={40}
+                                width="w-40"
                                 maxLength={6}
                             />
                         </View>
