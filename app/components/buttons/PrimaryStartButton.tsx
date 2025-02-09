@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { Pressable, View } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 import BeersIcon from '@/assets/icons/beers.svg'
 import SquaresBackgroundImage from '@/assets/images/squares-background-1.svg'
 

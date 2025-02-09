@@ -8,11 +8,11 @@ import {
 import { useFonts } from 'expo-font'
 import React from 'react'
 import { FlatList, View } from 'react-native'
-import AppText from '@/app/components/AppText'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import PrimaryStartButton from '@/app/components/buttons/PrimaryStartButton'
 import SecondaryStartButton from '@/app/components/buttons/SecondaryStartButton'
 import ProfileIcon from '@/app/components/ProfileIcon'
+import AppText from '@/app/components/text/AppText'
 import AppScrollView from '@/app/components/views/AppScrollView'
 import AppView from '@/app/components/views/AppView'
 import CheersHandsIcon from '@/assets/icons/cheers-hands.svg'
@@ -69,6 +69,7 @@ export default function Index() {
                 <NavButtons
                     leftButton={<FeedbackIcon width={36} height={36} />}
                     rightButton={<ProfileIcon name="Martin" />}
+                    rightButtonHref="/join"
                 />
                 <View className="mt-8 mb-12">
                     <AppLogo height={70} width={240} />

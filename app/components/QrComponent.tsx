@@ -2,10 +2,10 @@ import { Link } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 
 export default function QrComponent() {
-    const webUrl = 'http://192.168.1.38:8081/lobby' // TODO: Change to actual URL
+    const webUrl = 'http://192.168.197.117:8081/join' // TODO: Change to actual URL
 
     return (
         <View className="flex-1 items-center justify-between">

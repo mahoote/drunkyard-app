@@ -12,6 +12,8 @@ interface AppTextProps extends TextProps {
 /**
  * AppText is a component that displays text with a specific size and color.
  * It also has an optional verticalAlign prop that adjusts the text's vertical alignment on Android.
+ * - Default size: text-xl-regular
+ * - Default color: text-foreground
  * @param children
  * @param size
  * @param color

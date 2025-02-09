@@ -1,12 +1,13 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
 import { LayoutChangeEvent, Platform, Pressable } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 
 interface AppButtonProps {
     title: string
     size?: 'small' | 'large'
+    color?: 'primary-400' | 'secondary-900'
     fullWidth?: boolean
     gradientBackgroundColor?: [number, number, number]
 }
@@ -14,8 +15,11 @@ interface AppButtonProps {
 /**
  * Displays a custom button with a title.
  * Two different sizes are available: small and large.
+ * - Default size: large
+ * - Default color: secondary-900
  * @param title
  * @param size
+ * @param color
  * @param fullWidth
  * @param gradientBackgroundColor
  * @constructor
@@ -23,10 +27,17 @@ interface AppButtonProps {
 export default function AppButton({
     title,
     size = 'large',
+    color = 'secondary-900',
     fullWidth = true,
     gradientBackgroundColor,
 }: AppButtonProps) {
     const [gradientHeight, setGradientHeight] = useState<number>(0)
+
+    const buttonBackgroundColor =
+        color === 'primary-400' ? 'bg-primary-400' : 'bg-secondary-900'
+
+    const buttonTextColor =
+        color === 'primary-400' ? 'text-background' : 'text-foreground'
 
     const width = fullWidth ? 'w-full' : 'w-fit'
 
@@ -66,13 +77,14 @@ export default function AppButton({
                 />
             )}
             <Pressable
-                className={`${buttonStyles} ${width} justify-center bg-secondary-900`}
+                className={`${buttonStyles} ${width} ${buttonBackgroundColor} justify-center`}
                 onLayout={handlePressableLayout}
             >
                 <AppText
                     size={textSize}
                     className="text-center"
                     verticalAlign={true}
+                    color={buttonTextColor}
                 >
                     {title}
                 </AppText>

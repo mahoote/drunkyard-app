@@ -1,7 +1,7 @@
 import { LinkProps, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Pressable, View } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 
 interface NavButtonsProps {
     leftButton?: React.ReactNode
@@ -86,6 +86,7 @@ export default function NavButtons({
                             ? 'text-background'
                             : 'text-foreground'
                     }
+                    className="min-h-[24px]"
                 >
                     {leftButton}
                 </AppText>
@@ -101,6 +102,7 @@ export default function NavButtons({
                             ? 'text-background'
                             : 'text-foreground'
                     }
+                    className="min-h-[24px]"
                 >
                     {rightButton}
                 </AppText>

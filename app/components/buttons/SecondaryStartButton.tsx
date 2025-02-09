@@ -1,6 +1,6 @@
 import React from 'react'
 import { Pressable, View } from 'react-native'
-import AppText from '@/app/components/AppText'
+import AppText from '@/app/components/text/AppText'
 import SquaresBackgroundImage from '@/assets/images/squares-background-1.svg'
 
 interface SecondaryStartButtonProps {
