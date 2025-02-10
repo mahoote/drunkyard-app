@@ -5,7 +5,7 @@ import QRCode from 'react-native-qrcode-svg'
 import AppText from '@/app/components/text/AppText'
 
 export default function QrComponent() {
-    const webUrl = 'http://192.168.197.117:8081/join' // TODO: Change to actual URL
+    const webUrl = 'http://192.168.0.203:8081/join' // TODO: Change to actual URL
 
     return (
         <View className="flex-1 items-center justify-between">

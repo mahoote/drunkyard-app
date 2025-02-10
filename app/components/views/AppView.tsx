@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ViewProps } from 'react-native'
+import { KeyboardAvoidingView, Platform, View, ViewProps } from 'react-native'
 import BackgroundCircles from '@/app/components/BackgroundCircles'
 import { tabContentStyling, tabRootStyling } from '@/app/utils/tabRootStyling'
 
@@ -9,6 +9,7 @@ interface AppViewProps extends ViewProps {
     isRoot?: boolean
     isContent?: boolean
     noBackground?: boolean
+    isKeyboardAvoiding?: boolean
 }
 
 /**
@@ -18,6 +19,7 @@ interface AppViewProps extends ViewProps {
  * @param isContent
  * @param isRoot
  * @param noBackground
+ * @param isKeyboardAvoiding
  * @param props
  * @constructor
  */
@@ -27,9 +29,25 @@ export default function AppView({
     isContent = true,
     isRoot,
     noBackground,
+    isKeyboardAvoiding,
     ...props
 }: AppViewProps) {
     if (isRoot) {
+        if (isKeyboardAvoiding) {
+            return (
+                <>
+                    {!noBackground && <BackgroundCircles />}
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        className={`${tabRootStyling} ${className} max-w-lg`}
+                        {...props}
+                    >
+                        {children}
+                    </KeyboardAvoidingView>
+                </>
+            )
+        }
+
         return (
             <>
                 {!noBackground && <BackgroundCircles />}
