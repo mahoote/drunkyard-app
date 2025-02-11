@@ -74,7 +74,9 @@ export default function Login() {
                         </View>
                     </View>
                     {error && (
-                        <AppText className="text-center">{error}</AppText>
+                        <AppText className="text-center" size="text-sm-regular">
+                            {error}
+                        </AppText>
                     )}
                     <View className="gap-10">
                         {user ? (
