@@ -1,13 +1,23 @@
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
-import '../global.css'
-import { Provider } from 'react-redux'
-import { store } from '@/app/redux/store'
+import React, { useEffect } from 'react'
+import '../global.css' // Ensure global styles are correctly imported
+import { Provider, useDispatch } from 'react-redux'
+import useDeepLinking from '@/app/hooks/useDeepLinking'
+import { listenToAuthChanges } from '@/app/redux/authActions'
+import { AppDispatch, store } from '@/app/redux/store'
 
-export default function RootLayout() {
+function App() {
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        dispatch(listenToAuthChanges()) // ✅ Listen for auth state changes
+    }, [dispatch])
+
+    useDeepLinking() // ✅ Handles deep linking and authentication
+
     return (
-        <Provider store={store}>
+        <>
             <Stack
                 screenOptions={{
                     headerShown: false,
@@ -20,6 +30,14 @@ export default function RootLayout() {
                 }}
             />
             <StatusBar style="light" />
+        </>
+    )
+}
+
+export default function RootLayout() {
+    return (
+        <Provider store={store}>
+            <App />
         </Provider>
     )
 }

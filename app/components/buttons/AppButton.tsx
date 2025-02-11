@@ -1,10 +1,15 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { LayoutChangeEvent, Platform, Pressable } from 'react-native'
+import {
+    LayoutChangeEvent,
+    Platform,
+    Pressable,
+    PressableProps,
+} from 'react-native'
 import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 
-interface AppButtonProps {
+interface AppButtonProps extends PressableProps {
     title: string
     size?: 'small' | 'large'
     color?: 'primary-400' | 'secondary-900'
@@ -22,6 +27,7 @@ interface AppButtonProps {
  * @param color
  * @param fullWidth
  * @param gradientBackgroundColor
+ * @param props
  * @constructor
  */
 export default function AppButton({
@@ -30,6 +36,7 @@ export default function AppButton({
     color = 'secondary-900',
     fullWidth = true,
     gradientBackgroundColor,
+    ...props
 }: AppButtonProps) {
     const [gradientHeight, setGradientHeight] = useState<number>(0)
 
@@ -79,6 +86,7 @@ export default function AppButton({
             <Pressable
                 className={`${buttonStyles} ${width} ${buttonBackgroundColor} justify-center`}
                 onLayout={handlePressableLayout}
+                {...props}
             >
                 <AppText
                     size={textSize}

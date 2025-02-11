@@ -1,19 +1,27 @@
-import { Link } from 'expo-router'
+import Constants from 'expo-constants'
 import React from 'react'
 import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import AppText from '@/app/components/text/AppText'
 
-export default function QrComponent() {
-    const webUrl = 'http://192.168.0.203:8081/join' // TODO: Change to actual URL
+const getJoinWebUrl = () => {
+    const isDev = Constants.executionEnvironment === 'storeClient' // Running in Expo Go?
 
+    const BASE_WEB_URL = isDev
+        ? 'http://192.168.0.200:8081' // 👈 Use localhost in development
+        : 'https://www.splashd.no' // 👈 Use production URL
+
+    return `${BASE_WEB_URL}/join`
+}
+
+export default function QrComponent() {
     return (
         <View className="flex-1 items-center justify-between">
             <AppText size="display-sm-regular">Martin's spill</AppText>
             <View className="gap-8 items-center">
                 <View className="bg-white p-3 rounded-md">
                     <QRCode
-                        value={webUrl}
+                        value={getJoinWebUrl()}
                         size={200}
                         color="black"
                         backgroundColor="white"
@@ -27,9 +35,7 @@ export default function QrComponent() {
                 <AppText size="display-lg-bold" style={{ letterSpacing: 10 }}>
                     12345
                 </AppText>
-                <Link href={webUrl}>
-                    <AppText className="underline">www.splashd.no/join</AppText>
-                </Link>
+                <AppText>www.splashd.no/join</AppText>
             </View>
         </View>
     )

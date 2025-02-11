@@ -5,7 +5,8 @@
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
-        "scheme": "myapp",
+        "scheme": "dev.teigen",
+        "platforms": ["ios", "android", "web"],
         "userInterfaceStyle": "dark",
         "newArchEnabled": true,
         "backgroundColor": "#030323",
@@ -16,7 +17,24 @@
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
-            }
+            },
+            "package": "dev.teigen.dgapp",
+            "intentFilters": [
+                {
+                    "action": "VIEW",
+                    "data": [
+                        {
+                            "scheme": "http",
+                            "host": "localhost",
+                            "pathPrefix": "/"
+                        },
+                        {
+                            "scheme": "dev.teigen"
+                        }
+                    ],
+                    "category": ["BROWSABLE", "DEFAULT"]
+                }
+            ]
         },
         "web": {
             "bundler": "metro",

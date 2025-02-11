@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import AppButton from '@/app/components/buttons/AppButton'
@@ -7,6 +8,8 @@ import AppTextInput from '@/app/components/text/AppTextInput'
 import AppView from '@/app/components/views/AppView'
 
 export default function Join() {
+    const router = useRouter()
+
     return (
         <AppView isRoot={true} className="items-center">
             <AppView className="flex-1 items-center px-10">
@@ -53,6 +56,7 @@ export default function Join() {
                             title="Logg inn"
                             size="small"
                             color="primary-400"
+                            onPress={() => router.navigate('/login')}
                         />
                     </View>
                 </View>
