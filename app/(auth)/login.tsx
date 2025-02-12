@@ -32,69 +32,75 @@ export default function Login() {
                     leftButton={<FontAwesome name="chevron-left" size={24} />}
                     leftButtonBack={true}
                 />
-                <View className="flex-1 justify-between">
-                    <View className="items-center gap-8">
-                        <View className="items-center gap-5 px-6">
-                            <AppText
-                                size="display-xs-regular"
-                                className="text-center"
-                            >
-                                Bli spillvert – logg inn!
-                            </AppText>
+                <AppView className="flex-auto justify-between">
+                    <View className="items-center gap-5 pb-16">
+                        <AppText
+                            size="display-sm-regular"
+                            className="text-center"
+                        >
+                            Bli spillvert
+                        </AppText>
+                        <AppText>LOGG INN</AppText>
+                    </View>
+                    <View className="flex-1 justify-between">
+                        <>
+                            {user ? (
+                                <AppText>Logged in as {user.email}</AppText>
+                            ) : (
+                                <View className="gap-5">
+                                    <View className="gap-2 items-center">
+                                        <AppText>Epost</AppText>
+                                        <AppTextInput
+                                            value={email}
+                                            onChangeText={setEmail}
+                                            placeholder="Epost"
+                                            keyboardType="email-address"
+                                        />
+                                    </View>
+
+                                    {loading ? (
+                                        <AppText className="text-center">
+                                            Loading...
+                                        </AppText>
+                                    ) : (
+                                        <AppButton
+                                            title="Logg Inn / Registrer"
+                                            size="small"
+                                            onPress={() =>
+                                                dispatch(
+                                                    signInWithMagicLink(email),
+                                                )
+                                            }
+                                        />
+                                    )}
+
+                                    {error && (
+                                        <AppText
+                                            className="text-center"
+                                            size="text-sm-regular"
+                                        >
+                                            {error}
+                                        </AppText>
+                                    )}
+                                </View>
+                            )}
+                        </>
+                        <View className="py-8">
                             <AppText
                                 size="text-md-regular"
                                 className="text-center"
                             >
-                                Ingen passord å huske – {'\n'}bare skriv inn
-                                e-posten din, så sender vi deg en magisk lenke.{' '}
-                                {'\n'}Klikk på den, så er du inne!
+                                Ingen passord å huske –{'\n'} bare skriv inn
+                                e-posten din, så sender vi deg en magisk lenke.
+                                {'\n\n'}Klikk på den, så er du inne!
                             </AppText>
                         </View>
-                    </View>
-                    <View className="gap-10">
-                        {user ? (
-                            <AppText>Logged in as {user.email}</AppText>
-                        ) : (
-                            <View className="gap-5">
-                                <View className="gap-2 items-center">
-                                    <AppText>Epost</AppText>
-                                    <AppTextInput
-                                        value={email}
-                                        onChangeText={setEmail}
-                                        placeholder="Epost"
-                                        keyboardType="email-address"
-                                    />
-                                </View>
 
-                                {loading ? (
-                                    <AppText className="text-center">
-                                        Loading...
-                                    </AppText>
-                                ) : (
-                                    <AppButton
-                                        title="Logg Inn / Registrer"
-                                        size="small"
-                                        onPress={() =>
-                                            dispatch(signInWithMagicLink(email))
-                                        }
-                                    />
-                                )}
-
-                                {error && (
-                                    <AppText
-                                        className="text-center"
-                                        size="text-sm-regular"
-                                    >
-                                        {error}
-                                    </AppText>
-                                )}
-                            </View>
-                        )}
+                        <AppText size="text-sm-regular" className="text-center">
+                            Personvern & Vilkår
+                        </AppText>
                     </View>
-                    <AppText size="text-sm-regular" className="text-center">
-                        Personvern & Vilkår
-                    </AppText>
-                </View>
+                </AppView>
             </AppScrollView>
         </AppView>
     )

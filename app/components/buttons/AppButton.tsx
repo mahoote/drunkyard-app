@@ -1,20 +1,12 @@
-import { LinearGradient } from 'expo-linear-gradient'
-import React, { useState } from 'react'
-import {
-    LayoutChangeEvent,
-    Platform,
-    Pressable,
-    PressableProps,
-} from 'react-native'
+import React from 'react'
+import { Pressable, PressableProps } from 'react-native'
 import AppText from '@/app/components/text/AppText'
-import AppView from '@/app/components/views/AppView'
 
 interface AppButtonProps extends PressableProps {
     title: string
     size?: 'small' | 'large'
     color?: 'primary-400' | 'secondary-900'
     fullWidth?: boolean
-    gradientBackgroundColor?: [number, number, number]
 }
 
 /**
@@ -26,7 +18,6 @@ interface AppButtonProps extends PressableProps {
  * @param size
  * @param color
  * @param fullWidth
- * @param gradientBackgroundColor
  * @param props
  * @constructor
  */
@@ -35,11 +26,8 @@ export default function AppButton({
     size = 'large',
     color = 'secondary-900',
     fullWidth = true,
-    gradientBackgroundColor,
     ...props
 }: AppButtonProps) {
-    const [gradientHeight, setGradientHeight] = useState<number>(0)
-
     const buttonBackgroundColor =
         color === 'primary-400' ? 'bg-primary-400' : 'bg-secondary-900'
 
@@ -56,47 +44,19 @@ export default function AppButton({
         textSize = 'display-sm-semibold'
     }
 
-    const handlePressableLayout = (event: LayoutChangeEvent) => {
-        const { height } = event.nativeEvent.layout
-        const osHeight = Platform.OS === 'ios' ? 100 : 70
-
-        setGradientHeight(height + osHeight)
-    }
-
     return (
-        <AppView>
-            {gradientBackgroundColor && (
-                <LinearGradient
-                    colors={[
-                        `rgba(${gradientBackgroundColor[0]}, ${gradientBackgroundColor[1]}, ${gradientBackgroundColor[2]}, 0)`,
-                        `rgba(${gradientBackgroundColor[0]}, ${gradientBackgroundColor[1]}, ${gradientBackgroundColor[2]}, 1)`,
-                    ]}
-                    start={{ x: 0.5, y: 0 }}
-                    end={{ x: 0.5, y: 0.6 }} // Transition from transparent to color starts at 60% of the height
-                    style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        height: gradientHeight,
-                    }}
-                    pointerEvents="none" // Ensures it doesn't block interaction
-                />
-            )}
-            <Pressable
-                className={`${buttonStyles} ${width} ${buttonBackgroundColor} justify-center`}
-                onLayout={handlePressableLayout}
-                {...props}
+        <Pressable
+            className={`${buttonStyles} ${buttonBackgroundColor} ${width} justify-center`}
+            {...props}
+        >
+            <AppText
+                size={textSize}
+                className="text-center"
+                verticalAlign={true}
+                color={buttonTextColor}
             >
-                <AppText
-                    size={textSize}
-                    className="text-center"
-                    verticalAlign={true}
-                    color={buttonTextColor}
-                >
-                    {title}
-                </AppText>
-            </Pressable>
-        </AppView>
+                {title}
+            </AppText>
+        </Pressable>
     )
 }
