@@ -9,7 +9,7 @@ export const signInWithMagicLink =
 
         const redirectUri = makeRedirectUri({
             scheme: 'dev.teigen',
-            path: 'login',
+            path: 'profile',
         })
 
         const { error } = await supabase.auth.signInWithOtp({

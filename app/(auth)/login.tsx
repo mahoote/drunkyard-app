@@ -9,11 +9,11 @@ import AppTextInput from '@/app/components/text/AppTextInput'
 import AppKeyboardAvoidingView from '@/app/components/views/AppKeyboardAvoidingView'
 import AppView from '@/app/components/views/AppView'
 import { signInWithMagicLink } from '@/src/redux/actions/authActions'
-import { RootState, AppDispatch } from '@/src/redux/store'
+import { AppRootState, AppDispatch } from '@/src/redux/store'
 
 export default function Login() {
     const [email, setEmail] = useState<string>('martin@teigen.dev')
-    const { loading } = useSelector((state: RootState) => state.auth)
+    const { loading } = useSelector((state: AppRootState) => state.auth)
     const dispatch = useDispatch<AppDispatch>()
 
     return (

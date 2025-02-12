@@ -3,10 +3,12 @@ import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
-import { RootState } from '@/src/redux/store'
+import { AppRootState } from '@/src/redux/store'
 
 export default function JoinGameQrComponent() {
-    const webAppUrl = useSelector((state: RootState) => state.webUrl.webAppUrl)
+    const webAppUrl = useSelector(
+        (state: AppRootState) => state.webUrl.webAppUrl,
+    )
     const joinUrl = webAppUrl + '/join'
 
     return (
