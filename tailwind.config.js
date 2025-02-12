@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 const plugin = require('tailwindcss/plugin')
-const generateFontStyles = require('./app/utils/fontStyles')
+const generateFontStyles = require('./src/utils/fontStyles')
 
 module.exports = {
     content: ['./app/**/*.{js,jsx,ts,tsx}'],

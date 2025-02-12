@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, ScrollViewProps } from 'react-native'
-import { tabContentStyling, tabRootStyling } from '@/app/utils/tabRootStyling'
+import { tabContentStyling, tabRootStyling } from '@/src/utils/tabRootStyling'
 
 interface AppScrollViewProps extends ScrollViewProps {
     children: React.ReactNode

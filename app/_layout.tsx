@@ -3,8 +3,8 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 import '../global.css' // Ensure global styles are correctly imported
 import { Provider, useDispatch } from 'react-redux'
-import { store } from '@/app/redux/store'
-import { setupDeepLinking } from '@/app/utils/deepLinking'
+import { store } from '@/src/redux/store'
+import { setupDeepLinking } from '@/src/utils/deepLinking'
 
 function App() {
     const dispatch = useDispatch()

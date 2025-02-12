@@ -1,7 +1,7 @@
 import React from 'react'
 import { KeyboardAvoidingView, Platform, View, ViewProps } from 'react-native'
 import BackgroundCircles from '@/app/components/BackgroundCircles'
-import { tabContentStyling, tabRootStyling } from '@/app/utils/tabRootStyling'
+import { tabContentStyling, tabRootStyling } from '@/src/utils/tabRootStyling'
 
 interface AppViewProps extends ViewProps {
     children: React.ReactNode

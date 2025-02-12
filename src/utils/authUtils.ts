@@ -1,5 +1,5 @@
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import { supabase } from '@/app/utils/supabaseClient'
+import { supabase } from '@/src/utils/supabaseClient'
 
 export const createSessionFromUrl = async (url: string) => {
     const { params, errorCode } = QueryParams.getQueryParams(url)

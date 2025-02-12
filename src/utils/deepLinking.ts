@@ -1,8 +1,13 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
 import * as Linking from 'expo-linking'
-import { setUser, setSession, setLoading, setError } from '../redux/authSlice'
 import { supabase } from './supabaseClient'
+import {
+    setUser,
+    setSession,
+    setLoading,
+    setError,
+} from '@/src/redux/authSlice'
 
 export const handleDeepLink = async (
     event: { url: string },
