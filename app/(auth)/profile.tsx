@@ -1,4 +1,6 @@
+import { FontAwesome } from '@expo/vector-icons'
 import React from 'react'
+import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
@@ -28,14 +30,22 @@ export default function Profile() {
     }
 
     return (
-        <AppView isRoot={true} className="justify-center items-center">
-            <AppView>
-                <NavButtons leftButtonBack={true} />
-                <AppText>Welcome {user.email}</AppText>
-                <AppButton
-                    title="Sign out"
-                    onPress={() => dispatch(signOut())}
+        <AppView isRoot={true} className="items-center">
+            <AppView className="flex-1">
+                <NavButtons
+                    leftButton={<FontAwesome name="chevron-left" size={24} />}
+                    leftButtonHref="/"
                 />
+                <View className="flex-1 items-center justify-evenly">
+                    <AppText className="text-center">
+                        Signed in as:{'\n'} {user.email}
+                    </AppText>
+                    <AppButton
+                        title="Sign out"
+                        size="small"
+                        onPress={() => dispatch(signOut())}
+                    />
+                </View>
             </AppView>
         </AppView>
     )

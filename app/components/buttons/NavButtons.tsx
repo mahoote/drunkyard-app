@@ -51,7 +51,7 @@ export default function NavButtons({
         }
     } else if (leftButtonHref) {
         leftButtonAction = () => {
-            router.push(leftButtonHref)
+            router.replace(leftButtonHref)
         }
     }
 
@@ -61,7 +61,7 @@ export default function NavButtons({
         }
     } else if (rightButtonHref) {
         rightButtonAction = () => {
-            router.push(rightButtonHref)
+            router.replace(rightButtonHref)
         }
     }
 

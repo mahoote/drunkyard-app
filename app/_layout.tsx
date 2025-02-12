@@ -33,7 +33,7 @@ function MainApp() {
             <Stack
                 screenOptions={{
                     headerShown: false,
-                    animation: 'ios_from_right',
+                    animation: 'none',
                     animationDuration: 250,
                     contentStyle: {
                         backgroundColor: '#030323',
