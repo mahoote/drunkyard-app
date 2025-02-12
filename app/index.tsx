@@ -44,9 +44,9 @@ export default function Index() {
 
     if (!fontsLoaded) {
         return (
-            <View>
+            <AppView className="flex-1 items-center justify-center">
                 <AppText>Loading...</AppText>
-            </View>
+            </AppView>
         )
     }
 

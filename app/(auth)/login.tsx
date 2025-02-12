@@ -39,50 +39,31 @@ export default function Login() {
                             <AppText>LOGG INN</AppText>
                         </View>
                         <View className="flex-1 justify-between">
-                            <>
-                                {user ? (
-                                    <AppText>Logged in as {user.email}</AppText>
+                            <View className="gap-5">
+                                <View className="gap-2 items-center">
+                                    <AppText>Epost</AppText>
+                                    <AppTextInput
+                                        value={email}
+                                        onChangeText={setEmail}
+                                        placeholder="Epost"
+                                        keyboardType="email-address"
+                                    />
+                                </View>
+
+                                {loading ? (
+                                    <AppText className="text-center">
+                                        Loading...
+                                    </AppText>
                                 ) : (
-                                    <View className="gap-5">
-                                        <View className="gap-2 items-center">
-                                            <AppText>Epost</AppText>
-                                            <AppTextInput
-                                                value={email}
-                                                onChangeText={setEmail}
-                                                placeholder="Epost"
-                                                keyboardType="email-address"
-                                            />
-                                        </View>
-
-                                        {loading ? (
-                                            <AppText className="text-center">
-                                                Loading...
-                                            </AppText>
-                                        ) : (
-                                            <AppButton
-                                                title="Logg Inn / Registrer"
-                                                size="small"
-                                                onPress={() =>
-                                                    dispatch(
-                                                        signInWithMagicLink(
-                                                            email,
-                                                        ),
-                                                    )
-                                                }
-                                            />
-                                        )}
-
-                                        {error && (
-                                            <AppText
-                                                className="text-center"
-                                                size="text-sm-regular"
-                                            >
-                                                {error}
-                                            </AppText>
-                                        )}
-                                    </View>
+                                    <AppButton
+                                        title="Logg Inn / Registrer"
+                                        size="small"
+                                        onPress={() =>
+                                            dispatch(signInWithMagicLink(email))
+                                        }
+                                    />
                                 )}
-                            </>
+                            </View>
                             <View className="py-8">
                                 <AppText
                                     size="text-md-regular"
