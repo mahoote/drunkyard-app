@@ -1,13 +1,13 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
 import * as Linking from 'expo-linking'
-import { supabase } from './supabaseClient'
 import {
     setUser,
     setSession,
     setLoading,
     setError,
 } from '@/src/redux/slices/authSlice'
+import { supabase } from '@/src/utils/supabaseClient'
 
 export const handleDeepLink = async (
     event: { url: string },
@@ -21,19 +21,16 @@ export const handleDeepLink = async (
     const { params, errorCode } = QueryParams.getQueryParams(event.url)
     if (errorCode) {
         dispatch(setError(errorCode))
-        dispatch(setLoading(false))
         return
     }
 
     const { access_token, refresh_token } = params
-
     if (!access_token || !refresh_token) {
         dispatch(setError('Missing authentication tokens'))
-        dispatch(setLoading(false))
         return
     }
 
-    // Set the session in Supabase
+    // Set session in Supabase
     const { data, error } = await supabase.auth.setSession({
         access_token,
         refresh_token,
@@ -41,7 +38,6 @@ export const handleDeepLink = async (
 
     if (error) {
         dispatch(setError(error.message))
-        dispatch(setLoading(false))
         return
     }
 
@@ -49,14 +45,14 @@ export const handleDeepLink = async (
         dispatch(setUser(data.session.user))
         dispatch(setSession(data.session))
     }
-
-    dispatch(setLoading(false))
 }
 
-export const setupDeepLinking = (dispatch: Dispatch) => {
-    const subscription = Linking.addEventListener('url', event =>
-        handleDeepLink(event, dispatch),
-    )
+export const setupDeepLinking = async (dispatch: Dispatch) => {
+    const initialUrl = await Linking.getInitialURL()
+    if (initialUrl) {
+        await handleDeepLink({ url: initialUrl }, dispatch)
+    }
 
-    return () => subscription.remove() // Cleanup function
+    // Listen for new deep links
+    Linking.addEventListener('url', event => handleDeepLink(event, dispatch))
 }

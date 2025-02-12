@@ -1,27 +1,17 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../utils/supabaseClient'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppRootState } from '@/src/redux/store'
+import { setupDeepLinking } from '@/src/utils/deepLinking'
 
 export function useAuth() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const { session, loading } = useSelector(
+        (state: AppRootState) => state.auth,
+    )
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        const checkSession = async () => {
-            const { data } = await supabase.auth.getSession()
-            setIsAuthenticated(!!data?.session)
-            setLoading(false)
-        }
+        setupDeepLinking(dispatch) // Ensure deep linking is processed first
+    }, [dispatch])
 
-        checkSession()
-
-        const { data: authListener } = supabase.auth.onAuthStateChange(
-            (_event, session) => {
-                setIsAuthenticated(!!session)
-            },
-        )
-
-        return () => authListener.subscription.unsubscribe()
-    }, [])
-
-    return { isAuthenticated, loading }
+    return { isAuthenticated: !!session, loading }
 }

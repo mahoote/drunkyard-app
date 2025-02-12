@@ -5,13 +5,15 @@ interface AuthState {
     user: User | null
     session: Session | null
     loading: boolean
+    deepLinkProcessed: boolean
     error: string | null
 }
 
 const initialState: AuthState = {
     user: null,
     session: null,
-    loading: false,
+    loading: true,
+    deepLinkProcessed: false,
     error: null,
 }
 
@@ -24,12 +26,17 @@ const authSlice = createSlice({
         },
         setSession: (state, action: PayloadAction<Session | null>) => {
             state.session = action.payload
+            state.loading = false // Auth is now done loading
+        },
+        setDeepLinkProcessed: (state, action: PayloadAction<boolean>) => {
+            state.deepLinkProcessed = action.payload
         },
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload
         },
         setError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload
+            state.loading = false
         },
         logout: state => {
             state.user = null
@@ -38,6 +45,12 @@ const authSlice = createSlice({
     },
 })
 
-export const { setUser, setSession, setLoading, setError, logout } =
-    authSlice.actions
+export const {
+    setUser,
+    setSession,
+    setDeepLinkProcessed,
+    setLoading,
+    setError,
+    logout,
+} = authSlice.actions
 export default authSlice.reducer
