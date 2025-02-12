@@ -1,18 +1,10 @@
-import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import { supabase } from '@/src/utils/supabaseClient'
+import { AUTH_ROUTES } from '@/src/config/authConfig'
 
-export const createSessionFromUrl = async (url: string) => {
-    const { params, errorCode } = QueryParams.getQueryParams(url)
-
-    if (errorCode) throw new Error(errorCode)
-    const { access_token, refresh_token } = params
-
-    if (!access_token) return
-
-    const { data, error } = await supabase.auth.setSession({
-        access_token,
-        refresh_token,
-    })
-    if (error) throw error
-    return data.session
+/**
+ * Check if a route is protected
+ * Return false means the route is public
+ * @param path
+ */
+export function isProtectedRoute(path: string): boolean {
+    return AUTH_ROUTES[path] ?? false
 }

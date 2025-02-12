@@ -13,9 +13,7 @@ import { RootState, AppDispatch } from '@/src/redux/store'
 
 export default function Login() {
     const [email, setEmail] = useState<string>('martin@teigen.dev')
-    const { user, loading, error } = useSelector(
-        (state: RootState) => state.auth,
-    )
+    const { loading } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch<AppDispatch>()
 
     return (
