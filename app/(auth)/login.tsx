@@ -8,7 +8,7 @@ import AppText from '@/app/components/text/AppText'
 import AppTextInput from '@/app/components/text/AppTextInput'
 import AppKeyboardAvoidingView from '@/app/components/views/AppKeyboardAvoidingView'
 import AppView from '@/app/components/views/AppView'
-import { signInWithMagicLink } from '@/src/redux/authActions'
+import { signInWithMagicLink } from '@/src/redux/actions/authActions'
 import { RootState, AppDispatch } from '@/src/redux/store'
 
 export default function Login() {

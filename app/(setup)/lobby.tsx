@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
+import JoinGameQrComponent from '@/app/components/JoinGameQrComponent'
 import Overlay from '@/app/components/Overlay'
 import PlayerIcon from '@/app/components/PlayerIcon'
-import QrComponent from '@/app/components/QrComponent'
 import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
@@ -112,7 +112,7 @@ export default function Lobby() {
                 isVisible={isOverlayVisible}
                 toggleVisibility={toggleOverlay}
             >
-                <QrComponent />
+                <JoinGameQrComponent />
             </Overlay>
         </>
     )

@@ -1,15 +1,17 @@
+import '../global.css' // Ensure global styles are correctly imported
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
-import '../global.css' // Ensure global styles are correctly imported
-import { Provider, useDispatch } from 'react-redux'
-import { store } from '@/src/redux/store'
+import { Provider } from 'react-redux'
+import { fetchWebAppUrl } from '@/src/redux/slices/webUrlSlice'
+import { store, useAppDispatch } from '@/src/redux/store'
 import { setupDeepLinking } from '@/src/utils/deepLinking'
 
 function App() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
+        dispatch(fetchWebAppUrl())
         return setupDeepLinking(dispatch)
     }, [dispatch])
 

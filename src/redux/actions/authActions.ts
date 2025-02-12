@@ -1,6 +1,6 @@
 import { makeRedirectUri } from 'expo-auth-session'
-import { setLoading, setError, logout } from './authSlice'
-import { AppDispatch } from './store'
+import { setLoading, setError, logout } from '../slices/authSlice'
+import { AppDispatch } from '../store'
 import { supabase } from '@/src/utils/supabaseClient'
 
 export const signInWithMagicLink =

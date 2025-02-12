@@ -7,7 +7,7 @@ import {
     setSession,
     setLoading,
     setError,
-} from '@/src/redux/authSlice'
+} from '@/src/redux/slices/authSlice'
 
 export const handleDeepLink = async (
     event: { url: string },

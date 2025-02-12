@@ -1,21 +1,21 @@
 import React from 'react'
 import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
+import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
+import { RootState } from '@/src/redux/store'
 
-// TODO: Make this dynamic
-const getJoinWebUrl = () => {
-    return `http://192.168.0.200:8081/join`
-}
+export default function JoinGameQrComponent() {
+    const webAppUrl = useSelector((state: RootState) => state.webUrl.webAppUrl)
+    const joinUrl = webAppUrl + '/join'
 
-export default function QrComponent() {
     return (
         <View className="flex-1 items-center justify-between">
             <AppText size="display-sm-regular">Martin's spill</AppText>
             <View className="gap-8 items-center">
                 <View className="bg-white p-3 rounded-md">
                     <QRCode
-                        value={getJoinWebUrl()}
+                        value={joinUrl}
                         size={200}
                         color="black"
                         backgroundColor="white"
@@ -29,7 +29,7 @@ export default function QrComponent() {
                 <AppText size="display-lg-bold" style={{ letterSpacing: 10 }}>
                     12345
                 </AppText>
-                <AppText>www.splashd.no/join</AppText>
+                <AppText>{joinUrl}</AppText>
             </View>
         </View>
     )
