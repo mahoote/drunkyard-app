@@ -32,29 +32,25 @@ export default function Login() {
                     leftButton={<FontAwesome name="chevron-left" size={24} />}
                     leftButtonBack={true}
                 />
-                <View className="flex-1 justify-evenly">
+                <View className="flex-1 justify-between">
                     <View className="items-center gap-8">
                         <View className="items-center gap-5 px-6">
                             <AppText
                                 size="display-xs-regular"
                                 className="text-center"
                             >
-                                Logg inn for å være spillvert
+                                Bli spillvert – logg inn!
                             </AppText>
                             <AppText
                                 size="text-md-regular"
                                 className="text-center"
                             >
-                                Vi sender deg en epost med en lenke for å logge
-                                inn!
+                                Ingen passord å huske – {'\n'}bare skriv inn
+                                e-posten din, så sender vi deg en magisk lenke.{' '}
+                                {'\n'}Klikk på den, så er du inne!
                             </AppText>
                         </View>
                     </View>
-                    {error && (
-                        <AppText className="text-center" size="text-sm-regular">
-                            {error}
-                        </AppText>
-                    )}
                     <View className="gap-10">
                         {user ? (
                             <AppText>Logged in as {user.email}</AppText>
@@ -83,12 +79,21 @@ export default function Login() {
                                         }
                                     />
                                 )}
+
+                                {error && (
+                                    <AppText
+                                        className="text-center"
+                                        size="text-sm-regular"
+                                    >
+                                        {error}
+                                    </AppText>
+                                )}
                             </View>
                         )}
-                        <AppText size="text-sm-regular" className="text-center">
-                            Personvern & Vilkår
-                        </AppText>
                     </View>
+                    <AppText size="text-sm-regular" className="text-center">
+                        Personvern & Vilkår
+                    </AppText>
                 </View>
             </AppScrollView>
         </AppView>

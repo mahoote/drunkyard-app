@@ -4,7 +4,7 @@ const plugin = require('tailwindcss/plugin')
 const generateFontStyles = require('./src/utils/fontStyles')
 
 module.exports = {
-    content: ['./app/**/*.{js,jsx,ts,tsx}'],
+    content: ['./app/**/*.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
     presets: [require('nativewind/preset')],
     theme: {
         colors: {
