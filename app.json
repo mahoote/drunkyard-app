@@ -24,12 +24,9 @@
                     "action": "VIEW",
                     "data": [
                         {
-                            "scheme": "http",
-                            "host": "localhost",
-                            "pathPrefix": "/"
-                        },
-                        {
-                            "scheme": "dev.teigen"
+                            "scheme": "dev.teigen",
+                            "host": "auth",
+                            "pathPrefix": "/callback"
                         }
                     ],
                     "category": ["BROWSABLE", "DEFAULT"]

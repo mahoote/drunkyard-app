@@ -1,7 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons'
-import * as Linking from 'expo-linking'
-import * as WebBrowser from 'expo-web-browser'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
@@ -12,9 +10,6 @@ import AppScrollView from '@/app/components/views/AppScrollView'
 import AppView from '@/app/components/views/AppView'
 import { signInWithMagicLink } from '@/app/redux/authActions'
 import { AppDispatch } from '@/app/redux/store'
-import { createSessionFromUrl } from '@/app/utils/authUtils'
-
-WebBrowser.maybeCompleteAuthSession() // required for web only
 
 export default function Login() {
     const [email, setEmail] = useState<string>('martin@teigen.dev')
@@ -22,25 +17,6 @@ export default function Login() {
         (state: RootState) => state.auth,
     )
     const dispatch = useDispatch<AppDispatch>()
-
-    useEffect(() => {
-        const handleDeepLink = (event: { url: string }) => {
-            if (event.url) {
-                createSessionFromUrl(event.url)
-            }
-        }
-
-        // Subscribe to deep link events
-        const subscription = Linking.addEventListener('url', handleDeepLink)
-
-        // Cleanup function to remove the listener
-        return () => {
-            subscription.remove()
-        }
-    }, [])
-
-    const url = Linking.useURL()
-    if (url) createSessionFromUrl(url)
 
     return (
         <AppView

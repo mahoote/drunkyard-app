@@ -3,18 +3,15 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 import '../global.css' // Ensure global styles are correctly imported
 import { Provider, useDispatch } from 'react-redux'
-import useDeepLinking from '@/app/hooks/useDeepLinking'
-import { listenToAuthChanges } from '@/app/redux/authActions'
-import { AppDispatch, store } from '@/app/redux/store'
+import { store } from '@/app/redux/store'
+import { setupDeepLinking } from '@/app/utils/deepLinking'
 
 function App() {
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(listenToAuthChanges()) // ✅ Listen for auth state changes
+        return setupDeepLinking(dispatch)
     }, [dispatch])
-
-    useDeepLinking() // ✅ Handles deep linking and authentication
 
     return (
         <>

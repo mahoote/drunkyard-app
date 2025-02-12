@@ -12,7 +12,7 @@ const handleDeepLink = async (url: string, dispatch: AppDispatch) => {
         const { data, error } = await supabase.auth.exchangeCodeForSession(url)
 
         if (error) {
-            console.error('❌ Deep Link Error:', error.message)
+            console.error('Deep Link Error:', error.message)
             dispatch(setError(error.message))
             return
         }
@@ -22,7 +22,7 @@ const handleDeepLink = async (url: string, dispatch: AppDispatch) => {
             dispatch(setSession(data.session))
         }
     } catch (err) {
-        console.error('❌ Unexpected Error:', err)
+        console.error('Unexpected Error:', err)
     }
 }
 

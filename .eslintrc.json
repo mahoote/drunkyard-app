@@ -18,5 +18,8 @@
                 "argsIgnorePattern": "^_"
             }
         ]
+    },
+    "env": {
+        "node": true
     }
 }

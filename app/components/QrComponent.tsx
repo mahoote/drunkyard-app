@@ -1,17 +1,11 @@
-import Constants from 'expo-constants'
 import React from 'react'
 import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import AppText from '@/app/components/text/AppText'
 
+// TODO: Make this dynamic
 const getJoinWebUrl = () => {
-    const isDev = Constants.executionEnvironment === 'storeClient' // Running in Expo Go?
-
-    const BASE_WEB_URL = isDev
-        ? 'http://192.168.0.200:8081' // 👈 Use localhost in development
-        : 'https://www.splashd.no' // 👈 Use production URL
-
-    return `${BASE_WEB_URL}/join`
+    return `http://192.168.0.200:8081/join`
 }
 
 export default function QrComponent() {
