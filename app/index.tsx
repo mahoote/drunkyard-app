@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons'
 import {
     Poppins_400Regular,
     Poppins_300Light_Italic,
@@ -8,6 +9,7 @@ import {
 import { useFonts } from 'expo-font'
 import React from 'react'
 import { FlatList, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import PrimaryStartButton from '@/app/components/buttons/PrimaryStartButton'
 import SecondaryStartButton from '@/app/components/buttons/SecondaryStartButton'
@@ -19,6 +21,7 @@ import CheersHandsIcon from '@/assets/icons/cheers-hands.svg'
 import FeedbackIcon from '@/assets/icons/feedback.svg'
 import HoldingBeersIcon from '@/assets/icons/holding-beer.svg'
 import AppLogo from '@/assets/logos/app-logo.svg'
+import { AppRootState } from '@/src/redux/store'
 
 const data = [
     {
@@ -42,11 +45,15 @@ export default function Index() {
         Poppins_700Bold,
     })
 
-    if (!fontsLoaded) {
+    const { user, loading: authLoading } = useSelector(
+        (state: AppRootState) => state.auth,
+    )
+
+    if (!fontsLoaded || authLoading) {
         return (
-            <View>
+            <AppView className="flex-1 items-center justify-center">
                 <AppText>Loading...</AppText>
-            </View>
+            </AppView>
         )
     }
 
@@ -60,6 +67,18 @@ export default function Index() {
         </View>
     )
 
+    const rightButton = () => {
+        if (!user) {
+            return (
+                <AppText>
+                    <FontAwesome name="user-circle" size={36} />
+                </AppText>
+            )
+        }
+
+        return <ProfileIcon name="Martin" />
+    }
+
     return (
         <AppView isRoot={true} className="items-center">
             <AppScrollView
@@ -68,8 +87,8 @@ export default function Index() {
             >
                 <NavButtons
                     leftButton={<FeedbackIcon width={36} height={36} />}
-                    rightButton={<ProfileIcon name="Martin" />}
-                    rightButtonHref="/join"
+                    rightButton={rightButton()}
+                    rightButtonHref="/profile"
                 />
                 <View className="mt-8 mb-12">
                     <AppLogo height={70} width={240} />

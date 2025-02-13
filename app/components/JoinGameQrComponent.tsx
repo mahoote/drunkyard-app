@@ -1,11 +1,15 @@
-import { Link } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
+import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
+import { AppRootState } from '@/src/redux/store'
 
-export default function QrComponent() {
-    const webUrl = 'http://192.168.197.117:8081/join' // TODO: Change to actual URL
+export default function JoinGameQrComponent() {
+    const appBaseUrl = useSelector(
+        (state: AppRootState) => state.webUrl.appBaseUrl,
+    )
+    const joinUrl = `http://${appBaseUrl}/join`
 
     return (
         <View className="flex-1 items-center justify-between">
@@ -13,7 +17,7 @@ export default function QrComponent() {
             <View className="gap-8 items-center">
                 <View className="bg-white p-3 rounded-md">
                     <QRCode
-                        value={webUrl}
+                        value={joinUrl}
                         size={200}
                         color="black"
                         backgroundColor="white"
@@ -27,9 +31,7 @@ export default function QrComponent() {
                 <AppText size="display-lg-bold" style={{ letterSpacing: 10 }}>
                     12345
                 </AppText>
-                <Link href={webUrl}>
-                    <AppText className="underline">www.splashd.no/join</AppText>
-                </Link>
+                <AppText>{joinUrl}</AppText>
             </View>
         </View>
     )

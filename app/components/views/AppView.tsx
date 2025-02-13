@@ -1,18 +1,18 @@
 import React from 'react'
 import { View, ViewProps } from 'react-native'
 import BackgroundCircles from '@/app/components/BackgroundCircles'
-import { tabContentStyling, tabRootStyling } from '@/app/utils/tabRootStyling'
+import { tabContentStyling, tabRootStyling } from '@/src/utils/tabRootStyling'
 
 interface AppViewProps extends ViewProps {
     children: React.ReactNode
     className?: string
     isRoot?: boolean
-    isContent?: boolean
     noBackground?: boolean
 }
 
 /**
- * A custom View component that applies styling based on the isRoot and isContent props.
+ * A custom View component that applies root or content styling based on the isRoot prop.
+ * Adds a background to the root view.
  * @param children
  * @param className
  * @param isContent
@@ -24,7 +24,6 @@ interface AppViewProps extends ViewProps {
 export default function AppView({
     children,
     className = '',
-    isContent = true,
     isRoot,
     noBackground,
     ...props
@@ -42,16 +41,9 @@ export default function AppView({
             </>
         )
     }
-    if (isContent) {
-        return (
-            <View className={`${tabContentStyling} ${className}`} {...props}>
-                {children}
-            </View>
-        )
-    }
 
     return (
-        <View className={className} {...props}>
+        <View className={`${tabContentStyling} ${className}`} {...props}>
             {children}
         </View>
     )

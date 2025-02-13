@@ -3,12 +3,13 @@ import {
     KeyboardTypeOptions,
     Text,
     TextInput,
+    TextInputProps,
     TouchableOpacity,
     View,
 } from 'react-native'
 import ArrowRightIcon from '@/assets/icons/arrow-right-solid.svg'
 
-interface AppTextInputProps {
+interface AppTextInputProps extends TextInputProps {
     placeholder?: string
     className?: string
     width?: string
@@ -28,6 +29,7 @@ export default function AppTextInput({
     keyboardType,
     hasButton,
     buttonAction,
+    ...props
 }: AppTextInputProps) {
     const viewWidth = width ?? 'w-full'
 
@@ -48,6 +50,7 @@ export default function AppTextInput({
                 textAlignVertical="center"
                 maxLength={maxLength}
                 keyboardType={keyboardType}
+                {...props}
             />
             {hasButton && (
                 <TouchableOpacity
