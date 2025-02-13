@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createClient } from '@supabase/supabase-js'
 import Constants from 'expo-constants'
+import { Platform } from 'react-native'
 
 const supabaseUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_SUPABASE_URL
 const supabaseAnonKey =
@@ -11,10 +12,13 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-        storage: AsyncStorage,
-        autoRefreshToken: true, // Automatically refresh tokens
-        persistSession: true, // Persist session across reloads
-        detectSessionInUrl: false,
-    },
+    auth:
+        Platform.OS === 'web'
+            ? {}
+            : {
+                  storage: AsyncStorage,
+                  autoRefreshToken: true,
+                  persistSession: true,
+                  detectSessionInUrl: false,
+              },
 })

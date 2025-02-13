@@ -1,14 +1,18 @@
-import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
+import { useSelector } from 'react-redux'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import AppText from '@/app/components/text/AppText'
 import AppTextInput from '@/app/components/text/AppTextInput'
 import AppView from '@/app/components/views/AppView'
+import { AppRootState } from '@/src/redux/store'
 
 export default function Join() {
-    const router = useRouter()
+    const appBaseUrl = useSelector(
+        (state: AppRootState) => state.webUrl.appBaseUrl,
+    )
+    const loginUrl = `exp://${appBaseUrl}/--/login`
 
     return (
         <AppView isRoot={true} className="items-center">
@@ -56,7 +60,7 @@ export default function Join() {
                             title="Logg inn"
                             size="small"
                             color="primary-400"
-                            onPress={() => router.navigate('/login')}
+                            onPress={() => (window.location.href = loginUrl)}
                         />
                     </View>
                 </View>

@@ -6,10 +6,10 @@ import AppText from '@/app/components/text/AppText'
 import { AppRootState } from '@/src/redux/store'
 
 export default function JoinGameQrComponent() {
-    const webAppUrl = useSelector(
-        (state: AppRootState) => state.webUrl.webAppUrl,
+    const appBaseUrl = useSelector(
+        (state: AppRootState) => state.webUrl.appBaseUrl,
     )
-    const joinUrl = webAppUrl + '/join'
+    const joinUrl = `http://${appBaseUrl}/join`
 
     return (
         <View className="flex-1 items-center justify-between">

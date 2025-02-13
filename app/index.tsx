@@ -88,7 +88,6 @@ export default function Index() {
                 <NavButtons
                     leftButton={<FeedbackIcon width={36} height={36} />}
                     rightButton={rightButton()}
-                    leftButtonHref="/join"
                     rightButtonHref="/profile"
                 />
                 <View className="mt-8 mb-12">

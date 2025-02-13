@@ -5,7 +5,8 @@ import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { AUTH_ROUTES } from '@/src/config/authConfig'
 import { useAuth } from '@/src/hooks/useAuth'
-import { store } from '@/src/redux/store'
+import { fetchAppBaseUrl } from '@/src/redux/slices/webUrlSlice'
+import { store, useAppDispatch } from '@/src/redux/store'
 
 export default function RootLayout() {
     return (
@@ -16,11 +17,16 @@ export default function RootLayout() {
 }
 
 function MainApp() {
+    const dispatch = useAppDispatch()
     const router = useRouter()
     const pathname = usePathname()
     const { isAuthenticated, loading } = useAuth()
 
     const isAuthRoute = AUTH_ROUTES.includes(pathname)
+
+    useEffect(() => {
+        dispatch(fetchAppBaseUrl())
+    }, [dispatch])
 
     useEffect(() => {
         if (!loading && isAuthRoute && !isAuthenticated) {
