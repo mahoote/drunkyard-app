@@ -16,7 +16,7 @@ export default function RootLayout() {
     )
 }
 
-function MainApp() {
+export function MainApp() {
     const dispatch = useAppDispatch()
     const router = useRouter()
     const pathname = usePathname()

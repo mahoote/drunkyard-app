@@ -1,13 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User, Session } from '@supabase/supabase-js'
-
-interface AuthState {
-    user: User | null
-    session: Session | null
-    loading: boolean
-    deepLinkProcessed: boolean
-    error: string | null
-}
+import { AuthState } from '@/src/types/auth'
 
 const initialState: AuthState = {
     user: null,

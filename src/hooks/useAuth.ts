@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, setSession, setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState } from '@/src/redux/store'
+import { AuthStatus } from '@/src/types/auth'
 import { setupDeepLinking } from '@/src/utils/deepLinking'
 import { supabase } from '@/src/utils/supabaseClient'
 
-export function useAuth() {
+export function useAuth(): AuthStatus {
     const { session, loading } = useSelector(
         (state: AppRootState) => state.auth,
     )
