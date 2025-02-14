@@ -3,27 +3,23 @@ import { render, waitFor } from '@testing-library/react-native'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { MainApp } from '@/app/_layout'
-import { AuthStatus } from '@/src/types/auth'
 
-// Mock variables
+// Constants
+const AUTH_ROUTES = ['/some-auth-route']
+
+// Mocks
 const mockAppDispatch = jest.fn()
 const mockReplace = jest.fn()
 const mockAuthStatus = jest.fn()
 
-const AUTH_ROUTES = ['/some-auth-route']
-
 const mockStore = configureStore({
     reducer: {
-        auth: (
-            state = { isAuthenticated: false, loading: false },
-            action: any,
-        ) => state,
-        webUrl: (state = { baseUrl: 'http://example.com' }, action: any) =>
-            state,
+        auth: (state = { isAuthenticated: false, loading: false }) => state,
+        webUrl: (state = { baseUrl: 'http://example.com' }) => state,
     },
 })
 
-// Setup mocks
+// Setup Mocks for external dependencies
 jest.mock('@/src/config/authConfig', () => ({
     AUTH_ROUTES,
 }))
@@ -35,7 +31,7 @@ jest.mock('expo-router', () => ({
 }))
 
 jest.mock('@/src/hooks/useAuth', () => ({
-    useAuth: (): AuthStatus => mockAuthStatus(),
+    useAuth: () => mockAuthStatus(),
 }))
 
 jest.mock('@/src/redux/store', () => ({
@@ -46,13 +42,15 @@ jest.mock('@/src/redux/slices/webUrlSlice', () => ({
     fetchAppBaseUrl: jest.fn(() => ({ type: 'webUrl/fetchAppBaseUrl' })),
 }))
 
-// Tests
-describe('MainApp', () => {
-    beforeEach(() => {
-        mockAuthStatus.mockReset()
-        mockReplace.mockReset()
-    })
+beforeEach(() => {
+    mockAuthStatus.mockReset()
+    mockReplace.mockReset()
+})
 
+describe('MainApp', () => {
+    /**
+     * Makes sure to get the app base URL on mount.
+     */
     it('dispatches fetchAppBaseUrl on mount', async () => {
         mockAuthStatus.mockReturnValueOnce({
             isAuthenticated: false,
@@ -72,6 +70,9 @@ describe('MainApp', () => {
         })
     })
 
+    /**
+     * Makes sure to redirect to login if the user is not authenticated and trying to access auth routes.
+     */
     it('redirects to login if the user is not authenticated and trying to access auth routes', async () => {
         mockAuthStatus.mockReturnValueOnce({
             isAuthenticated: false,
@@ -89,7 +90,10 @@ describe('MainApp', () => {
         })
     })
 
-    it('should not redirect to login if the user is authenticated and accessing auth route.', async () => {
+    /**
+     * Lets the user access the route if the user is authenticated.
+     */
+    it('should not redirect to login if the user is authenticated and accessing auth route', async () => {
         mockAuthStatus.mockReturnValueOnce({
             isAuthenticated: true,
             loading: false,
