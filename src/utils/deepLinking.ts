@@ -9,6 +9,12 @@ import {
 } from '@/src/redux/slices/authSlice'
 import { supabase } from '@/src/utils/supabaseClient'
 
+/**
+ * Handles the deep link event and sets the user and session in the Redux store.
+ * Sets the loading state while processing the deep link, but expects the caller to end the loading state.
+ * @param event
+ * @param dispatch
+ */
 export const handleDeepLink = async (
     event: { url: string },
     dispatch: Dispatch,
