@@ -20,7 +20,10 @@ jest.mock('@/src/redux/slices/authSlice', () => {
             payload: session,
         })),
         setLoading: jest.fn(),
-        setError: jest.fn(),
+        setError: jest.fn((error: string) => ({
+            type: 'auth/setError',
+            payload: error,
+        })),
     }
 })
 
@@ -35,6 +38,32 @@ jest.mock('@/src/utils/supabaseClient', () => ({
 describe('handleDeepLink', () => {
     beforeEach(() => {
         jest.clearAllMocks()
+    })
+
+    it('should set error on invalid URL received', () => {
+        // Arrange
+        const event = { url: '' }
+
+        // Mock console.error to suppress the output and track its calls
+        const mockConsoleError = jest
+            .spyOn(console, 'error')
+            .mockImplementation(() => {})
+
+        // Act
+        handleDeepLink(event, mockDispatch)
+
+        // Assert
+        expect(mockConsoleError).toHaveBeenCalledWith(
+            'Invalid URL received',
+            event,
+        )
+        expect(mockDispatch).toHaveBeenCalledWith({
+            type: 'auth/setError',
+            payload: 'Invalid deep link URL',
+        })
+
+        // Cleanup
+        mockConsoleError.mockRestore()
     })
 
     it('should handle valid deep link and set user and session', async () => {
