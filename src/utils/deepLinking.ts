@@ -13,7 +13,11 @@ export const handleDeepLink = async (
     event: { url: string },
     dispatch: Dispatch,
 ) => {
-    if (!event?.url) return
+    if (!event.url.trim()) {
+        console.error('Invalid URL received', event)
+        dispatch(setError('Invalid deep link URL'))
+        return
+    }
 
     dispatch(setLoading(true))
 
