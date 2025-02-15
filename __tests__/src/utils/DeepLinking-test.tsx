@@ -1,23 +1,28 @@
 import { Session, User } from '@supabase/supabase-js'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
 import { handleDeepLink } from '@/src/utils/deepLinking'
-
 import { supabase } from '@/src/utils/supabaseClient'
 
 const mockDispatch = jest.fn()
-const mockSetUser = jest.fn()
-const mockSetSession = jest.fn()
 
 jest.mock('expo-auth-session/build/QueryParams', () => ({
     getQueryParams: jest.fn(),
 }))
 
-jest.mock('@/src/redux/slices/authSlice', () => ({
-    setUser: (...args: [User]) => mockSetUser(...args),
-    setSession: (...args: [Session]) => mockSetSession(...args),
-    setLoading: jest.fn(),
-    setError: jest.fn(),
-}))
+jest.mock('@/src/redux/slices/authSlice', () => {
+    return {
+        setUser: jest.fn((user: User) => ({
+            type: 'auth/setUser',
+            payload: user,
+        })),
+        setSession: jest.fn((session: Session) => ({
+            type: 'auth/setSession',
+            payload: session,
+        })),
+        setLoading: jest.fn(),
+        setError: jest.fn(),
+    }
+})
 
 jest.mock('@/src/utils/supabaseClient', () => ({
     supabase: {
@@ -47,29 +52,21 @@ describe('handleDeepLink', () => {
 
         const session: Session = {
             user,
-            access_token: 'valid_access_token',
-            refresh_token: 'valid_refresh_token',
+            access_token,
+            refresh_token,
             expires_in: 3600,
             token_type: '',
         }
 
-        jest.spyOn(QueryParams, 'getQueryParams').mockImplementation(() => ({
-            params: {
-                access_token,
-                refresh_token,
-            },
+        jest.spyOn(QueryParams, 'getQueryParams').mockReturnValue({
+            params: { access_token, refresh_token },
             errorCode: null,
-        }))
+        })
 
-        jest.spyOn(supabase.auth, 'setSession').mockImplementation(() =>
-            Promise.resolve({
-                data: {
-                    user: null,
-                    session,
-                },
-                error: null,
-            }),
-        )
+        jest.spyOn(supabase.auth, 'setSession').mockResolvedValueOnce({
+            data: { user: null, session },
+            error: null,
+        })
 
         const url = `myapp://auth?access_token=${access_token}&refresh_token=${refresh_token}`
         const event = { url }
@@ -83,7 +80,13 @@ describe('handleDeepLink', () => {
             access_token,
             refresh_token,
         })
-        expect(mockSetUser).toHaveBeenCalledWith(user)
-        expect(mockSetSession).toHaveBeenCalledWith(session)
+        expect(mockDispatch).toHaveBeenCalledWith({
+            type: 'auth/setUser',
+            payload: user,
+        })
+        expect(mockDispatch).toHaveBeenCalledWith({
+            type: 'auth/setSession',
+            payload: session,
+        })
     })
 })
