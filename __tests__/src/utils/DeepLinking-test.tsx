@@ -4,6 +4,7 @@ import { handleDeepLink } from '@/src/utils/deepLinking'
 import { supabase } from '@/src/utils/supabaseClient'
 
 const mockDispatch = jest.fn()
+const mockSetLoading = jest.fn()
 
 jest.mock('expo-auth-session/build/QueryParams', () => ({
     getQueryParams: jest.fn(),
@@ -19,7 +20,7 @@ jest.mock('@/src/redux/slices/authSlice', () => {
             type: 'auth/setSession',
             payload: session,
         })),
-        setLoading: jest.fn(),
+        setLoading: (...args: [boolean]) => mockSetLoading(...args),
         setError: jest.fn((error: string) => ({
             type: 'auth/setError',
             payload: error,
@@ -40,30 +41,15 @@ describe('handleDeepLink', () => {
         jest.clearAllMocks()
     })
 
-    it('should set error on invalid URL received', () => {
+    it('should return on invalid URL received', () => {
         // Arrange
         const event = { url: '' }
-
-        // Mock console.error to suppress the output and track its calls
-        const mockConsoleError = jest
-            .spyOn(console, 'error')
-            .mockImplementation(() => {})
 
         // Act
         handleDeepLink(event, mockDispatch)
 
         // Assert
-        expect(mockConsoleError).toHaveBeenCalledWith(
-            'Invalid URL received',
-            event,
-        )
-        expect(mockDispatch).toHaveBeenCalledWith({
-            type: 'auth/setError',
-            payload: 'Invalid deep link URL',
-        })
-
-        // Cleanup
-        mockConsoleError.mockRestore()
+        expect(QueryParams.getQueryParams).not.toHaveBeenCalled()
     })
 
     it('should handle valid deep link and set user and session', async () => {
@@ -117,5 +103,6 @@ describe('handleDeepLink', () => {
             type: 'auth/setSession',
             payload: session,
         })
+        expect(mockSetLoading).toHaveBeenCalled()
     })
 })

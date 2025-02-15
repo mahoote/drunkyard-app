@@ -18,6 +18,7 @@ export default function RootLayout() {
 
 export function MainApp() {
     const dispatch = useAppDispatch()
+
     const router = useRouter()
     const pathname = usePathname()
     const { isAuthenticated, loading } = useAuth()
