@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { render, waitFor } from '@testing-library/react-native'
+import { act, renderHook } from '@testing-library/react'
+import { waitFor } from '@testing-library/react-native'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { MainApp } from '@/app/_layout'
+import { useAppLogic } from '@/src/hooks/useAppLogic'
 
 // Constants
 const AUTH_ROUTES = ['/some-auth-route']
@@ -58,11 +59,13 @@ describe('useAppLogic', () => {
             loading: false,
         })
 
-        render(
-            <Provider store={mockStore}>
-                <MainApp />
-            </Provider>,
-        )
+        await act(async () => {
+            renderHook(() => useAppLogic(), {
+                wrapper: ({ children }) => (
+                    <Provider store={mockStore}>{children}</Provider>
+                ),
+            })
+        })
 
         await waitFor(() => {
             expect(mockAppDispatch).toHaveBeenCalledWith({
@@ -80,11 +83,13 @@ describe('useAppLogic', () => {
             loading: false,
         })
 
-        render(
-            <Provider store={mockStore}>
-                <MainApp />
-            </Provider>,
-        )
+        await act(async () => {
+            renderHook(() => useAppLogic(), {
+                wrapper: ({ children }) => (
+                    <Provider store={mockStore}>{children}</Provider>
+                ),
+            })
+        })
 
         await waitFor(() => {
             expect(mockBack).toHaveBeenCalled()
@@ -101,11 +106,13 @@ describe('useAppLogic', () => {
             loading: false,
         })
 
-        render(
-            <Provider store={mockStore}>
-                <MainApp />
-            </Provider>,
-        )
+        await act(async () => {
+            renderHook(() => useAppLogic(), {
+                wrapper: ({ children }) => (
+                    <Provider store={mockStore}>{children}</Provider>
+                ),
+            })
+        })
 
         await waitFor(() => {
             expect(mockBack).not.toHaveBeenCalled()
