@@ -1,29 +1,13 @@
-import { AuthError, Session, User } from '@supabase/supabase-js'
+import { AuthError } from '@supabase/supabase-js'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import deepLinkMockData from '@/src/__mocks__/deepLinkMockData'
+import { jestMockAuth } from '@/src/__mocks__/jestMockAuth'
+import sessionMockData from '@/src/__mocks__/sessionMockData'
 import { handleDeepLink } from '@/src/utils/deepLink/handleDeepLink'
 import { supabase } from '@/src/utils/supabaseClient'
 
 const mockDispatch = jest.fn()
-const mockSetLoading = jest.fn()
 
-jest.mock('@/src/redux/slices/authSlice', () => {
-    return {
-        setUser: jest.fn((user: User) => ({
-            type: 'auth/setUser',
-            payload: user,
-        })),
-        setSession: jest.fn((session: Session) => ({
-            type: 'auth/setSession',
-            payload: session,
-        })),
-        setLoading: (...args: [boolean]) => mockSetLoading(...args),
-        setError: jest.fn((error: string) => ({
-            type: 'auth/setError',
-            payload: error,
-        })),
-    }
-})
+jestMockAuth()
 
 jest.mock('@/src/utils/supabaseClient', () => ({
     supabase: {
@@ -61,8 +45,7 @@ describe('handleDeepLink', () => {
      */
     it('should handle valid deep link and set user and session', async () => {
         // Arrange
-        const { access_token, refresh_token, user, session } =
-            deepLinkMockData()
+        const { access_token, refresh_token, user, session } = sessionMockData()
 
         jest.spyOn(QueryParams, 'getQueryParams')
 
@@ -92,8 +75,10 @@ describe('handleDeepLink', () => {
             type: 'auth/setSession',
             payload: session,
         })
-        expect(mockSetLoading).toHaveBeenCalledWith(true)
-        expect(mockSetLoading).not.toHaveBeenCalledWith(false)
+        expect(mockDispatch).toHaveBeenCalledWith({
+            type: 'auth/setLoading',
+            payload: true,
+        })
     })
 
     /**
@@ -128,7 +113,7 @@ describe('handleDeepLink', () => {
      */
     it('should set error when params record contains undefined string', () => {
         // Arrange
-        const { access_token, refresh_token, session } = deepLinkMockData()
+        const { access_token, refresh_token, session } = sessionMockData()
 
         const eventOne = {
             url: `myapp://auth?access_token=${access_token}`,
@@ -171,7 +156,7 @@ describe('handleDeepLink', () => {
      */
     it('should set error if the supabase set session returns error', async () => {
         // Arrange
-        const { access_token, refresh_token } = deepLinkMockData()
+        const { access_token, refresh_token } = sessionMockData()
 
         const error = {
             name: 'SUPABASE_ERROR',

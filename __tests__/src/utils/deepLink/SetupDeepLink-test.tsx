@@ -1,5 +1,5 @@
 import * as Linking from 'expo-linking'
-import deepLinkMockData from '@/src/__mocks__/deepLinkMockData'
+import sessionMockData from '@/src/__mocks__/sessionMockData'
 import { handleDeepLink } from '@/src/utils/deepLink/handleDeepLink'
 import { setupDeepLink } from '@/src/utils/deepLink/setupDeepLink'
 
@@ -16,7 +16,7 @@ describe('setupDeepLinking', () => {
      */
     it('should handle initial URL if present', async () => {
         // Arrange
-        const { access_token, refresh_token } = deepLinkMockData()
+        const { access_token, refresh_token } = sessionMockData()
         const initialUrl = `myapp://auth?access_token=${access_token}&refresh_token=${refresh_token}`
 
         jest.spyOn(Linking, 'getInitialURL').mockResolvedValue(initialUrl)

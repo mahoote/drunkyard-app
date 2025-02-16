@@ -3,7 +3,7 @@ import { Session, User } from '@supabase/supabase-js'
 /**
  * Mock data for a working deep link.
  */
-export default function deepLinkMockData() {
+export default function sessionMockData() {
     const access_token = 'valid_access_token'
     const refresh_token = 'valid_refresh_token'
 

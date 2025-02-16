@@ -18,6 +18,7 @@
     },
     "jest": {
         "preset": "jest-expo",
+        "testEnvironment": "jsdom",
         "transformIgnorePatterns": [
             "/node_modules/(?!react-redux)/"
         ],
@@ -76,6 +77,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.25.2",
+        "@testing-library/react": "^16.2.0",
         "@testing-library/react-native": "^13.0.1",
         "@types/jest": "^29.5.12",
         "@types/react": "~18.3.12",
