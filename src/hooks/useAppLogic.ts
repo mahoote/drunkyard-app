@@ -5,6 +5,10 @@ import { useAuth } from '@/src/hooks/useAuth'
 import { fetchAppBaseUrl } from '@/src/redux/slices/webUrlSlice'
 import { useAppDispatch } from '@/src/redux/store'
 
+/**
+ * Gets the app base URL on mount.
+ * Redirects to /login if not authenticated and trying to access an auth route.
+ */
 export function useAppLogic() {
     const dispatch = useAppDispatch()
 
