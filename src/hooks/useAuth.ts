@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { setUser, setSession, setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 import { AuthStatus } from '@/src/types/auth'
-import { setupDeepLinking } from '@/src/utils/deepLinking'
+import { setupDeepLink } from '@/src/utils/deepLink/setupDeepLink'
 import { supabase } from '@/src/utils/supabaseClient'
 
 export function useAuth(): AuthStatus {
@@ -28,7 +28,7 @@ export function useAuth(): AuthStatus {
         }
 
         restoreSessionFromSupabase()
-        setupDeepLinking(dispatch)
+        setupDeepLink(dispatch)
     }, [dispatch])
 
     return { isAuthenticated: !!session, loading }

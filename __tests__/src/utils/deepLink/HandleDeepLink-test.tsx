@@ -1,6 +1,7 @@
 import { AuthError, Session, User } from '@supabase/supabase-js'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import { handleDeepLink } from '@/src/utils/deepLinking'
+import deepLinkMockData from '@/src/__mocks__/deepLinkMockData'
+import { handleDeepLink } from '@/src/utils/deepLink/handleDeepLink'
 import { supabase } from '@/src/utils/supabaseClient'
 
 const mockDispatch = jest.fn()
@@ -60,7 +61,8 @@ describe('handleDeepLink', () => {
      */
     it('should handle valid deep link and set user and session', async () => {
         // Arrange
-        const { access_token, refresh_token, user, session } = workingMockData()
+        const { access_token, refresh_token, user, session } =
+            deepLinkMockData()
 
         jest.spyOn(QueryParams, 'getQueryParams')
 
@@ -126,7 +128,7 @@ describe('handleDeepLink', () => {
      */
     it('should set error when params record contains undefined string', () => {
         // Arrange
-        const { access_token, refresh_token, session } = workingMockData()
+        const { access_token, refresh_token, session } = deepLinkMockData()
 
         const eventOne = {
             url: `myapp://auth?access_token=${access_token}`,
@@ -169,7 +171,7 @@ describe('handleDeepLink', () => {
      */
     it('should set error if the supabase set session returns error', async () => {
         // Arrange
-        const { access_token, refresh_token } = workingMockData()
+        const { access_token, refresh_token } = deepLinkMockData()
 
         const error = {
             name: 'SUPABASE_ERROR',
@@ -202,29 +204,3 @@ describe('handleDeepLink', () => {
         })
     })
 })
-
-/**
- * Mock data for a working deep link.
- */
-function workingMockData() {
-    const access_token = 'valid_access_token'
-    const refresh_token = 'valid_refresh_token'
-
-    const user: User = {
-        id: 'user_id',
-        app_metadata: {},
-        user_metadata: {},
-        aud: '',
-        created_at: '',
-    }
-
-    const session: Session = {
-        user,
-        access_token,
-        refresh_token,
-        expires_in: 3600,
-        token_type: '',
-    }
-
-    return { access_token, refresh_token, user, session }
-}

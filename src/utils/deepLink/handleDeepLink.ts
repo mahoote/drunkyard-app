@@ -1,11 +1,10 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import * as Linking from 'expo-linking'
 import {
-    setUser,
-    setSession,
-    setLoading,
     setError,
+    setLoading,
+    setSession,
+    setUser,
 } from '@/src/redux/slices/authSlice'
 import { supabase } from '@/src/utils/supabaseClient'
 
@@ -51,14 +50,4 @@ export const handleDeepLink = async (
         dispatch(setUser(data.session.user))
         dispatch(setSession(data.session))
     }
-}
-
-export const setupDeepLinking = async (dispatch: Dispatch) => {
-    const initialUrl = await Linking.getInitialURL()
-    if (initialUrl) {
-        await handleDeepLink({ url: initialUrl }, dispatch)
-    }
-
-    // Listen for new deep links
-    Linking.addEventListener('url', event => handleDeepLink(event, dispatch))
 }
