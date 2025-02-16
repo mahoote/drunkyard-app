@@ -9,7 +9,8 @@ const AUTH_ROUTES = ['/some-auth-route']
 
 // Mocks
 const mockAppDispatch = jest.fn()
-const mockReplace = jest.fn()
+const mockPush = jest.fn()
+const mockBack = jest.fn()
 const mockAuthStatus = jest.fn()
 
 const mockStore = configureStore({
@@ -25,7 +26,7 @@ jest.mock('@/src/config/authConfig', () => ({
 }))
 
 jest.mock('expo-router', () => ({
-    useRouter: () => ({ replace: mockReplace }),
+    useRouter: () => ({ push: mockPush, back: mockBack }),
     usePathname: () => AUTH_ROUTES[0],
     Stack: jest.fn(() => null),
 }))
@@ -43,8 +44,8 @@ jest.mock('@/src/redux/slices/webUrlSlice', () => ({
 }))
 
 beforeEach(() => {
-    mockAuthStatus.mockReset()
-    mockReplace.mockReset()
+    jest.clearAllMocks()
+    jest.restoreAllMocks()
 })
 
 describe('useAppLogic', () => {
@@ -86,7 +87,8 @@ describe('useAppLogic', () => {
         )
 
         await waitFor(() => {
-            expect(mockReplace).toHaveBeenCalledWith('/login')
+            expect(mockBack).toHaveBeenCalled()
+            expect(mockPush).toHaveBeenCalledWith('/login')
         })
     })
 
@@ -106,7 +108,8 @@ describe('useAppLogic', () => {
         )
 
         await waitFor(() => {
-            expect(mockReplace).not.toHaveBeenCalled()
+            expect(mockBack).not.toHaveBeenCalled()
+            expect(mockPush).not.toHaveBeenCalled()
         })
     })
 })
