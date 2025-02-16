@@ -47,11 +47,11 @@ beforeEach(() => {
     mockReplace.mockReset()
 })
 
-describe('MainApp', () => {
+describe('useAppLogic', () => {
     /**
      * Makes sure to get the app base URL on mount.
      */
-    it('dispatches fetchAppBaseUrl on mount', async () => {
+    it('should dispatch fetchAppBaseUrl on mount', async () => {
         mockAuthStatus.mockReturnValueOnce({
             isAuthenticated: false,
             loading: false,
@@ -73,7 +73,7 @@ describe('MainApp', () => {
     /**
      * Makes sure to redirect to login if the user is not authenticated and trying to access auth routes.
      */
-    it('redirects to login if the user is not authenticated and trying to access auth routes', async () => {
+    it('should redirect to login if the user is not authenticated and trying to access auth routes', async () => {
         mockAuthStatus.mockReturnValueOnce({
             isAuthenticated: false,
             loading: false,
