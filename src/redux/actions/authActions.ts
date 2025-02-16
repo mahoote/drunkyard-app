@@ -1,4 +1,5 @@
 import { makeRedirectUri } from 'expo-auth-session'
+import { Router } from 'expo-router'
 import { setLoading, setError, logout } from '../slices/authSlice'
 import { AppDispatch } from '../store'
 import { supabase } from '@/src/utils/supabaseClient'
@@ -26,7 +27,11 @@ export const signInWithMagicLink =
         dispatch(setLoading(false))
     }
 
-export const signOut = () => async (dispatch: AppDispatch) => {
+/**
+ * Signs out from supabase, clears the user session and redirects to the home page.
+ */
+export const signOut = (router: Router) => async (dispatch: AppDispatch) => {
     await supabase.auth.signOut()
     dispatch(logout())
+    router.replace('/')
 }

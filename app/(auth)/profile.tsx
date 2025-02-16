@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -12,6 +13,7 @@ import { AppRootState, useAppDispatch } from '@/src/redux/store'
 export default function Profile() {
     const dispatch = useAppDispatch()
     const { user, loading } = useSelector((state: AppRootState) => state.auth)
+    const router = useRouter()
 
     if (loading) {
         return (
@@ -43,7 +45,7 @@ export default function Profile() {
                     <AppButton
                         title="Sign out"
                         size="small"
-                        onPress={() => dispatch(signOut())}
+                        onPress={() => dispatch(signOut(router))}
                     />
                 </View>
             </AppView>

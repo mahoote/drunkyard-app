@@ -24,7 +24,8 @@ export function useAppLogic() {
 
     useEffect(() => {
         if (!loading && isAuthRoute && !isAuthenticated) {
-            router.replace('/login') // Redirect only if deep linking and auth are both done
+            router.back()
+            router.push('/login') // Redirect only if deep linking and auth are both done
         }
     }, [pathname, isAuthenticated, loading])
 }
