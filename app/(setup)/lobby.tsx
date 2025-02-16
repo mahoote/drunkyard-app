@@ -30,8 +30,6 @@ const players = [
 export default function Lobby() {
     const [isOverlayVisible, setOverlayVisible] = useState(false)
 
-    const toggleOverlay = () => setOverlayVisible(prev => !prev)
-
     const isPlayerAlone = players.length <= 1
 
     return (
@@ -61,7 +59,7 @@ export default function Lobby() {
                             </AppText>
                             <Pressable
                                 className="my-4 items-center"
-                                onPress={toggleOverlay}
+                                onPress={() => setOverlayVisible(true)}
                             >
                                 <FontAwesome
                                     name="qrcode"
@@ -110,7 +108,7 @@ export default function Lobby() {
             </AppView>
             <Overlay
                 isVisible={isOverlayVisible}
-                toggleVisibility={toggleOverlay}
+                setVisible={setOverlayVisible}
             >
                 <JoinGameQrComponent />
             </Overlay>

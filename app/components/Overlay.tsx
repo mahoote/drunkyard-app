@@ -11,7 +11,7 @@ import AppView from '@/app/components/views/AppView'
 
 interface OverlayProps {
     isVisible: boolean
-    toggleVisibility: () => void
+    setVisible: (visible: boolean) => void
     children: React.ReactNode
 }
 
@@ -23,7 +23,7 @@ interface OverlayProps {
  * @param children
  * @constructor
  */
-const Overlay = ({ isVisible, toggleVisibility, children }: OverlayProps) => {
+const Overlay = ({ isVisible, setVisible, children }: OverlayProps) => {
     const opacity = useSharedValue(0) // Start with invisible state
     const [shouldRender, setShouldRender] = useState(false)
 
@@ -61,7 +61,7 @@ const Overlay = ({ isVisible, toggleVisibility, children }: OverlayProps) => {
                 <AppView className="flex-1">
                     <NavButtons
                         rightButton={<FontAwesome name="close" size={24} />}
-                        rightButtonAction={toggleVisibility}
+                        rightButtonAction={() => setVisible(false)}
                     />
                     {children}
                 </AppView>
