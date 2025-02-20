@@ -13,6 +13,7 @@ export default function sessionMockData() {
         user_metadata: {},
         aud: '',
         created_at: '',
+        email: 'test@persson.com',
     }
 
     const session: Session = {
