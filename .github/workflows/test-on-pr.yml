@@ -1,4 +1,4 @@
-name: Tests on Pull Request
+name: Jest Tests on Pull Request
 
 on:
     pull_request:
@@ -23,4 +23,4 @@ jobs:
               run: npm install
 
             - name: Run Jest Tests
-              run: npm test
+              run: npm test:ci
