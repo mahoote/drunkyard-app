@@ -1,19 +1,24 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import * as Linking from 'expo-linking'
 import {
-    setUser,
-    setSession,
-    setLoading,
     setError,
+    setLoading,
+    setSession,
+    setUser,
 } from '@/src/redux/slices/authSlice'
 import { supabase } from '@/src/utils/supabaseClient'
 
+/**
+ * Handles the deep link event and sets the user and session in the Redux store.
+ * Sets the loading state while processing the deep link, but expects the caller to end the loading state.
+ * @param event
+ * @param dispatch
+ */
 export const handleDeepLink = async (
     event: { url: string },
     dispatch: Dispatch,
 ) => {
-    if (!event?.url) return
+    if (!event.url.trim()) return
 
     dispatch(setLoading(true))
 
@@ -45,14 +50,4 @@ export const handleDeepLink = async (
         dispatch(setUser(data.session.user))
         dispatch(setSession(data.session))
     }
-}
-
-export const setupDeepLinking = async (dispatch: Dispatch) => {
-    const initialUrl = await Linking.getInitialURL()
-    if (initialUrl) {
-        await handleDeepLink({ url: initialUrl }, dispatch)
-    }
-
-    // Listen for new deep links
-    Linking.addEventListener('url', event => handleDeepLink(event, dispatch))
 }

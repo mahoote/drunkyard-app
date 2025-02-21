@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Constants from 'expo-constants'
 import { Platform } from 'react-native'
+import applicationConfig from '@/src/config/applicationConfig'
 
 const PROD_WEB_URL = 'https://splashd.no'
 const DEFAULT_LOCAL_PORT = 8081
@@ -12,7 +13,7 @@ const DEFAULT_LOCAL_PORT = 8081
  * @returns The URL of the web app.
  */
 export const fetchAppBaseUrl = createAsyncThunk('webUrl/fetch', async () => {
-    if (!__DEV__) return PROD_WEB_URL
+    if (!applicationConfig.isDevelopment) return PROD_WEB_URL
 
     try {
         if (Platform.OS === 'web') {
