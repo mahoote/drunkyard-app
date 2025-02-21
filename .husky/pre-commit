@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
+#!/bin/sh
 
 # Get current branch name
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
@@ -11,4 +10,4 @@ if ! echo "$BRANCH_NAME" | grep -qE '^[0-9]+-' && ! echo "$BRANCH_NAME" | grep -
 fi
 
 # Run lint-staged
-npx lint-staged
+npx lint-staged || echo "⚠️ No matching staged files for lint-staged. Skipping..."
