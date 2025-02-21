@@ -1,42 +1,42 @@
 name: Jest Tests Coverage
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+    test:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
 
-      - name: Install dependencies
-        run: |
-          npm install
+            - name: Install dependencies
+              run: |
+                  npm install
 
-      - name: Install Expo CLI
-        run: |
-          npm install -g expo-cli
+            - name: Install Expo CLI
+              run: |
+                  npm install -g expo-cli
 
-      - name: Run Jest tests with coverage
-        run: |
-          npm test -- --coverage --watchAll=false
+            - name: Run Jest tests with coverage
+              run: |
+                  npm test -- --coverage --watchAll=false
 
-      - name: Generate lcov report
-        run: |
-          npx jest --coverage --collectCoverageFrom='**/*.{js,ts,tsx}' --coverageReporters='lcov' --coverageDirectory='./coverage'
+            - name: Generate lcov report
+              run: |
+                  npx jest --coverage --collectCoverageFrom='**/*.{js,ts,tsx}' --coverageReporters='lcov' --coverageDirectory='./coverage'
 
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@v2.3.0
-        with:
-          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          path-to-lcov: coverage/lcov-report/lcov-report/index.html
+            - name: Upload coverage to Coveralls
+              uses: coverallsapp/github-action@v2.3.0
+              with:
+                  github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
+                  path-to-lcov: coverage/lcov-report/index.html
