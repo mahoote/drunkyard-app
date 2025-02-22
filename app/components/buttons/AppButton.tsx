@@ -1,8 +1,8 @@
 import React from 'react'
-import { Pressable, PressableProps } from 'react-native'
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import AppText from '@/app/components/text/AppText'
 
-interface AppButtonProps extends PressableProps {
+interface AppButtonProps extends TouchableOpacityProps {
     title: string
     size?: 'small' | 'large'
     color?: 'primary-400' | 'secondary-900'
@@ -45,7 +45,8 @@ export default function AppButton({
     }
 
     return (
-        <Pressable
+        <TouchableOpacity
+            activeOpacity={0.6}
             className={`${buttonStyles} ${buttonBackgroundColor} ${width} justify-center`}
             {...props}
         >
@@ -57,6 +58,6 @@ export default function AppButton({
             >
                 {title}
             </AppText>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
