@@ -45,7 +45,11 @@ export default function SelectButton({
                     >
                         <AppText
                             size="text-lg-semibold"
-                            color="text-background"
+                            color={
+                                selectedOption === option.value
+                                    ? 'text-background'
+                                    : 'text-foreground'
+                            }
                         >
                             {option.label}
                         </AppText>
