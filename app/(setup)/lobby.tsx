@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import AppButton from '@/app/components/buttons/AppButton'
@@ -28,6 +29,8 @@ const players = [
 ]
 
 export default function Lobby() {
+    const router = useRouter()
+
     const [isOverlayVisible, setOverlayVisible] = useState(false)
 
     const isPlayerAlone = players.length <= 1
@@ -102,7 +105,10 @@ export default function Lobby() {
                     defaultHeight={140}
                 >
                     <AppView>
-                        <AppButton title="NESTE" />
+                        <AppButton
+                            title="NESTE"
+                            onPress={() => router.push('/host')}
+                        />
                     </AppView>
                 </GradientBackgroundView>
             </AppView>
