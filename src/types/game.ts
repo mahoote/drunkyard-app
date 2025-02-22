@@ -5,6 +5,7 @@ export interface PlayerPreferences {
 
 export interface GameGenericPreferences {
     isPlayerCreative: boolean
+    durationMinutes: number
 }
 
 export interface GameState {

@@ -30,6 +30,12 @@ const playerCreativityOptions = [
     { label: 'På', value: true },
 ]
 
+const gameDurationMinutes = [
+    { label: '10 min', value: 10 },
+    { label: '30 min', value: 30 },
+    { label: '1 time', value: 60 },
+]
+
 /**
  * The host page where the host will decide their preferences and also
  * the more generic game preferences.
@@ -119,6 +125,27 @@ export default function host() {
                                                 ...gameGenericPreferences,
                                                 isPlayerCreative:
                                                     value as boolean,
+                                            }),
+                                        )
+                                    }
+                                />
+                            </View>
+                            <View className="items-center gap-2 mt-8">
+                                <AppText size="text-lg-regular">
+                                    Spillelengde
+                                </AppText>
+                                {/* TODO: Use correct design */}
+                                <SelectButton
+                                    options={gameDurationMinutes}
+                                    selectedOption={
+                                        gameGenericPreferences.durationMinutes
+                                    }
+                                    setSelectedOption={value =>
+                                        dispatch(
+                                            setGameGenericPreferences({
+                                                ...gameGenericPreferences,
+                                                durationMinutes:
+                                                    value as number,
                                             }),
                                         )
                                     }

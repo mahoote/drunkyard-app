@@ -8,6 +8,7 @@ import {
 const initialState: GameState = {
     gameGenericPreferences: {
         isPlayerCreative: false,
+        durationMinutes: 30,
     },
     playerPreferences: {
         drunkLevel: 1,
