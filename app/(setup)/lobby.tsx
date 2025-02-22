@@ -1,6 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { FlatList, Pressable, View } from 'react-native'
+import { FlatList, TouchableOpacity, View } from 'react-native'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import JoinGameQrComponent from '@/app/components/JoinGameQrComponent'
@@ -28,6 +29,8 @@ const players = [
 ]
 
 export default function Lobby() {
+    const router = useRouter()
+
     const [isOverlayVisible, setOverlayVisible] = useState(false)
 
     const isPlayerAlone = players.length <= 1
@@ -57,7 +60,8 @@ export default function Lobby() {
                             <AppText size="display-sm-regular">
                                 Martin's spill
                             </AppText>
-                            <Pressable
+                            <TouchableOpacity
+                                activeOpacity={0.5}
                                 className="my-4 items-center"
                                 onPress={() => setOverlayVisible(true)}
                             >
@@ -69,7 +73,7 @@ export default function Lobby() {
                                 <AppText size="text-sm-regular">
                                     TRYKK PÅ QR
                                 </AppText>
-                            </Pressable>
+                            </TouchableOpacity>
                             <View className="items-center w-full mt-6 mb-4">
                                 <AppText size="text-xl-semibold">
                                     {players.length} / 15
@@ -102,7 +106,10 @@ export default function Lobby() {
                     defaultHeight={140}
                 >
                     <AppView>
-                        <AppButton title="NESTE" />
+                        <AppButton
+                            title="NESTE"
+                            onPress={() => router.push('/host')}
+                        />
                     </AppView>
                 </GradientBackgroundView>
             </AppView>

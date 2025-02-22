@@ -1,6 +1,6 @@
 import { LinkProps, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Pressable, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import AppText from '@/app/components/text/AppText'
 
 interface NavButtonsProps {
@@ -75,7 +75,8 @@ export default function NavButtons({
 
     return (
         <View className="w-full flex-row justify-between items-center">
-            <Pressable
+            <TouchableOpacity
+                activeOpacity={0.5}
                 onPress={leftButtonAction}
                 disabled={leftButtonDisabled}
                 className="p-2"
@@ -90,8 +91,9 @@ export default function NavButtons({
                 >
                     {leftButton}
                 </AppText>
-            </Pressable>
-            <Pressable
+            </TouchableOpacity>
+            <TouchableOpacity
+                activeOpacity={0.5}
                 onPress={rightButtonAction}
                 disabled={rightButtonDisabled}
                 className="p-2"
@@ -106,7 +108,7 @@ export default function NavButtons({
                 >
                     {rightButton}
                 </AppText>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }

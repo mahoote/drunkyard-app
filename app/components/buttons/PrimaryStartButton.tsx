@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Pressable, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import AppText from '@/app/components/text/AppText'
 import BeersIcon from '@/assets/icons/beers.svg'
 import SquaresBackgroundImage from '@/assets/images/squares-background-1.svg'
@@ -13,7 +13,8 @@ export default function PrimaryStartButton() {
     }
 
     return (
-        <Pressable
+        <TouchableOpacity
+            activeOpacity={0.6}
             className="relative w-full px-3 py-6 bg-secondary-900 flex-row justify-center items-center rounded-3xl overflow-hidden"
             onPress={handlePress}
         >
@@ -34,6 +35,6 @@ export default function PrimaryStartButton() {
                 </AppText>
                 <BeersIcon height={115} fill="blue" />
             </View>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
