@@ -1,31 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Pressable, View } from 'react-native'
 import AppText from '@/app/components/text/AppText'
 
 interface SelectButtonProps {
-    options: { label: string; value: string }[]
-    defaultOption: string
+    options: { label: string; value: string | number | boolean }[]
+    selectedOption: string | number | boolean
+    setSelectedOption: (value: string | number | boolean) => void
     className?: string
     buttonClassName?: string
 }
 
 /**
  * A button that allows the user to select between different options.
+ * Accepts the value as string, number and boolean.
  * @param options
  * @param defaultOption
+ * @param selectedOption
+ * @param setSelectedOption
  * @param className
  * @param buttonClassName
  * @constructor
  */
 export default function SelectButton({
     options,
-    defaultOption,
+    selectedOption,
+    setSelectedOption,
     className,
     buttonClassName,
 }: SelectButtonProps) {
-    const [selectedOption, setSelectedOption] = useState<string>(defaultOption)
-
-    const handleSelectOption = (value: string) => {
+    const handleSelectOption = (value: string | number | boolean) => {
         setSelectedOption(value)
     }
 
