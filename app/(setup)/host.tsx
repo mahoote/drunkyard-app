@@ -43,7 +43,7 @@ export default function Host() {
                     leftButtonBack={true}
                 />
             }
-            footerComponent={<AppButton title="Start" />}
+            footerComponent={<AppButton title="START" />}
         >
             <View className="gap-5">
                 <GamePreferencesComponent

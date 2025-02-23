@@ -46,9 +46,9 @@ export default function AppPageLayout({
     return (
         <AppView isRoot={true} className="h-full">
             <AppView className="items-center justify-between flex-1">
-                <View className="items-center">
+                <View className="flex-1 items-center">
                     {navComponent}
-                    <AppView className="gap-8">
+                    <AppView className="flex-1 gap-8">
                         <View className="gap-5">
                             {displayTitleComponent}
                             {subtitle && (
@@ -57,7 +57,7 @@ export default function AppPageLayout({
                                 </AppText>
                             )}
                         </View>
-                        {children}
+                        <View className="flex-1">{children}</View>
                     </AppView>
                 </View>
                 {footerComponent}
