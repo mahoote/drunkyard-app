@@ -48,19 +48,14 @@ export default function Login() {
                                     />
                                 </View>
 
-                                {loading ? (
-                                    <AppText className="text-center">
-                                        Loading...
-                                    </AppText>
-                                ) : (
-                                    <AppButton
-                                        title="Logg Inn / Registrer"
-                                        size="small"
-                                        onPress={() =>
-                                            dispatch(signInWithMagicLink(email))
-                                        }
-                                    />
-                                )}
+                                <AppButton
+                                    title="Logg Inn / Registrer"
+                                    size="small"
+                                    onPress={() =>
+                                        dispatch(signInWithMagicLink(email))
+                                    }
+                                    loading={loading}
+                                />
                             </View>
                             <View className="py-8">
                                 <AppText
