@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
+import AppLoader from '@/app/components/AppLoader'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import AppText from '@/app/components/text/AppText'
@@ -16,17 +17,13 @@ export default function Profile() {
     const router = useRouter()
 
     if (loading) {
-        return (
-            <AppView className="flex-1 items-center justify-center">
-                <AppText>Loading user data...</AppText>
-            </AppView>
-        )
+        return <AppLoader title="Laster..." />
     }
 
     if (!user) {
         return (
             <AppView className="flex-1 items-center justify-center">
-                <AppText>User not found</AppText>
+                <AppText>Det var et problem med å hente din data.</AppText>
             </AppView>
         )
     }

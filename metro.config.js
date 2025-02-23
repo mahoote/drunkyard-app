@@ -3,14 +3,19 @@ const { withNativeWind } = require('nativewind/metro')
 
 const config = getDefaultConfig(__dirname)
 
-// Update the resolver and transformer to handle SVG files
+// Update the transformer to handle SVG files
 config.transformer = {
     ...config.transformer,
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
 }
+
+// Update the resolver to support SVG and .lottie files
 config.resolver = {
     ...config.resolver,
-    assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
+    assetExts: [
+        ...config.resolver.assetExts.filter(ext => ext !== 'svg'),
+        'lottie',
+    ],
     sourceExts: [...config.resolver.sourceExts, 'svg'],
 }
 

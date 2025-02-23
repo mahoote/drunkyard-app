@@ -31,7 +31,9 @@ export const signInWithMagicLink =
  * Signs out from supabase, clears the user session and redirects to the home page.
  */
 export const signOut = (router: Router) => async (dispatch: AppDispatch) => {
+    dispatch(setLoading(true))
     await supabase.auth.signOut()
     dispatch(logout())
     router.replace('/')
+    dispatch(setLoading(false))
 }

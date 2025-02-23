@@ -106,47 +106,69 @@ describe('handleDeepLink', () => {
     })
 
     /**
-     * Creates two events with different tokens.
-     * Token one is missing the refresh token.
-     * Token two is missing the access token.
-     * Both should set an error.
+     * Creates an event where the query params return an error and error_description in the url.
+     * The error description should be set in the Redux store.
      */
-    it('should set error when params record contains undefined string', () => {
+    it('should set error description when params contains error', async () => {
         // Arrange
-        const { access_token, refresh_token, session } = sessionMockData()
-
-        const eventOne = {
-            url: `myapp://auth?access_token=${access_token}`,
-        }
-
-        const eventTwo = {
-            url: `myapp://auth?refresh_token=${refresh_token}`,
-        }
-
-        const mockDispatchTwo = jest.fn()
+        const error = 'error'
+        const error_description = 'error_description'
 
         jest.spyOn(QueryParams, 'getQueryParams')
 
-        jest.spyOn(supabase.auth, 'setSession').mockResolvedValue({
-            data: { user: null, session },
-            error: null,
-        })
+        const event = {
+            url: `myapp://auth?error=${error}&error_description=${error_description}`,
+        }
 
         // Act
-        handleDeepLink(eventOne, mockDispatch)
-        handleDeepLink(eventTwo, mockDispatchTwo)
+        await handleDeepLink(event, mockDispatch)
 
         // Assert
-        expect(QueryParams.getQueryParams).toHaveBeenCalledWith(eventOne.url)
+        expect(QueryParams.getQueryParams).toHaveBeenCalledWith(event.url)
         expect(mockDispatch).toHaveBeenCalledWith({
             type: 'auth/setError',
-            payload: 'Missing authentication tokens',
+            payload: error_description,
         })
+        expect(mockDispatch).not.toHaveBeenCalledWith({
+            type: 'auth/setUser',
+            payload: null,
+        })
+        expect(mockDispatch).not.toHaveBeenCalledWith({
+            type: 'auth/setSession',
+            payload: null,
+        })
+    })
 
-        expect(QueryParams.getQueryParams).toHaveBeenCalledWith(eventTwo.url)
-        expect(mockDispatchTwo).toHaveBeenCalledWith({
+    /**
+     * Creates an event where the query params return an error.
+     * The error should be set in the Redux store.
+     */
+    it('should set error when params contains error', async () => {
+        // Arrange
+        const error = 'error'
+
+        jest.spyOn(QueryParams, 'getQueryParams')
+
+        const event = {
+            url: `myapp://auth?error=${error}`,
+        }
+
+        // Act
+        await handleDeepLink(event, mockDispatch)
+
+        // Assert
+        expect(QueryParams.getQueryParams).toHaveBeenCalledWith(event.url)
+        expect(mockDispatch).toHaveBeenCalledWith({
             type: 'auth/setError',
-            payload: 'Missing authentication tokens',
+            payload: error,
+        })
+        expect(mockDispatch).not.toHaveBeenCalledWith({
+            type: 'auth/setUser',
+            payload: null,
+        })
+        expect(mockDispatch).not.toHaveBeenCalledWith({
+            type: 'auth/setSession',
+            payload: null,
         })
     })
 

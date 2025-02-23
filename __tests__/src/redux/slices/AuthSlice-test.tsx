@@ -118,5 +118,7 @@ describe('authSlice', () => {
         // Assert
         expect(actual.user).toBeNull()
         expect(actual.session).toBeNull()
+        expect(actual.error).toBeNull()
+        expect(actual.deepLinkProcessed).toBeFalsy()
     })
 })
