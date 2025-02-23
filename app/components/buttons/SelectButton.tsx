@@ -45,6 +45,7 @@ export default function SelectButton({
                     >
                         <AppText
                             size="text-lg-semibold"
+                            verticalAlign={true}
                             color={
                                 selectedOption === option.value
                                     ? 'text-background'
