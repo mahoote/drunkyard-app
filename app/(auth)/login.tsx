@@ -119,7 +119,7 @@ function LoginFormComponent({
 }) {
     return (
         <>
-            <View className="gap-5">
+            <View className="gap-5 pt-16">
                 <View className="gap-2 items-center">
                     <AppText>E-post</AppText>
                     <AppTextInput
@@ -190,7 +190,7 @@ export default function Login() {
                         leftButtonBack={true}
                     />
                     <AppView className="flex-auto justify-between">
-                        <View className="items-center gap-5 pb-16">
+                        <View className="items-center gap-5">
                             <AppText
                                 size="display-sm-regular"
                                 className="text-center"
