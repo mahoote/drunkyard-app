@@ -10,6 +10,7 @@ import { useFonts } from 'expo-font'
 import React from 'react'
 import { FlatList, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import AppLoader from '@/app/components/AppLoader'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import PrimaryStartButton from '@/app/components/buttons/PrimaryStartButton'
 import SecondaryStartButton from '@/app/components/buttons/SecondaryStartButton'
@@ -50,11 +51,7 @@ export default function Index() {
     )
 
     if (!fontsLoaded || authLoading) {
-        return (
-            <AppView className="flex-1 items-center justify-center">
-                <AppText>Loading...</AppText>
-            </AppView>
-        )
+        return <AppLoader />
     }
 
     const renderItem = ({
