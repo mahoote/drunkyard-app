@@ -16,6 +16,138 @@ import { AppRootState, AppDispatch } from '@/src/redux/store'
 
 const RETRY_SECONDS = 20
 
+function LoginErrorComponent({
+    error,
+    onPress,
+}: {
+    error: string
+    onPress: () => void
+}) {
+    return (
+        <View className="items-center justify-evenly flex-1">
+            <View className="gap-5">
+                <AppText className="text-center">
+                    Det oppstod et problem.
+                </AppText>
+                <AppText
+                    size="text-md-semibold"
+                    color="text-primary-400"
+                    className="text-center"
+                >
+                    ({error})
+                </AppText>
+            </View>
+            <AppButton title="Prøv igjen" onPress={onPress} />
+        </View>
+    )
+}
+
+function EmailConfirmationComponent({
+    canRetry,
+    onPress,
+    secondsToRetry,
+}: {
+    canRetry: boolean
+    onPress: () => void
+    secondsToRetry: number
+}) {
+    return (
+        <>
+            <View className="items-center">
+                <View className={`w-[200] h-[200]`}>
+                    <LottieView
+                        source={require('@/assets/animations/email-received.json')}
+                        autoPlay
+                        loop
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                        }}
+                    />
+                </View>
+                <View className="items-center gap-5">
+                    <AppText>Sjekk inboksen din!</AppText>
+                    <AppText size="text-md-regular" className="text-center">
+                        Klikk på lenken, så er du inne!
+                    </AppText>
+                </View>
+            </View>
+            <View className="py-8">
+                <AppText
+                    size="text-md-regular"
+                    className="text-center"
+                    color="text-primary-400"
+                >
+                    Fikk ikke mail?
+                </AppText>
+
+                {canRetry ? (
+                    <TouchableOpacity onPress={onPress}>
+                        <AppText
+                            size="text-md-regular"
+                            className="text-center underline"
+                            color="text-primary-400"
+                        >
+                            Prøv på nytt
+                        </AppText>
+                    </TouchableOpacity>
+                ) : (
+                    <AppText
+                        size="text-md-regular"
+                        className="text-center"
+                        color="text-primary-400"
+                    >
+                        Prøv på nytt om {secondsToRetry}{' '}
+                        {secondsToRetry === 1 ? 'sekund' : 'sekunder'}
+                    </AppText>
+                )}
+            </View>
+        </>
+    )
+}
+
+function LoginFormComponent({
+    value,
+    onChangeText,
+    onPress,
+    loading,
+}: {
+    value: string
+    onChangeText: (value: ((prevState: string) => string) | string) => void
+    onPress: () => void
+    loading: any
+}) {
+    return (
+        <>
+            <View className="gap-5">
+                <View className="gap-2 items-center">
+                    <AppText>E-post</AppText>
+                    <AppTextInput
+                        value={value}
+                        onChangeText={onChangeText}
+                        placeholder="Epost"
+                        keyboardType="email-address"
+                    />
+                </View>
+
+                <AppButton
+                    title="Logg Inn / Registrer"
+                    size="small"
+                    onPress={onPress}
+                    loading={loading}
+                />
+            </View>
+            <View className="py-8">
+                <AppText size="text-md-regular" className="text-center">
+                    Ingen passord å huske –{'\n'} bare skriv inn e-posten din,
+                    så sender vi deg en magisk lenke.
+                    {'\n\n'}Klikk på den, så er du inne!
+                </AppText>
+            </View>
+        </>
+    )
+}
+
 export default function Login() {
     const dispatch = useDispatch<AppDispatch>()
 
@@ -69,117 +201,23 @@ export default function Login() {
                         </View>
                         <View className="flex-1 justify-between">
                             {error ? (
-                                <View className="items-center justify-evenly flex-1">
-                                    <View className="gap-5">
-                                        <AppText className="text-center">
-                                            Det oppstod et problem.
-                                        </AppText>
-                                        <AppText
-                                            size="text-md-semibold"
-                                            color="text-primary-400"
-                                            className="text-center"
-                                        >
-                                            ({error})
-                                        </AppText>
-                                    </View>
-                                    <AppButton
-                                        title="Prøv igjen"
-                                        onPress={handleReset}
-                                    />
-                                </View>
+                                <LoginErrorComponent
+                                    error={error}
+                                    onPress={handleReset}
+                                />
                             ) : emailSent && !loading ? (
-                                <>
-                                    <View className="items-center">
-                                        <View className={`w-[200] h-[200]`}>
-                                            <LottieView
-                                                source={require('@/assets/animations/email-received.json')}
-                                                autoPlay
-                                                loop
-                                                style={{
-                                                    width: '100%',
-                                                    height: '100%',
-                                                }}
-                                            />
-                                        </View>
-                                        <View className="items-center gap-5">
-                                            <AppText>
-                                                Sjekk inboksen din!
-                                            </AppText>
-                                            <AppText
-                                                size="text-md-regular"
-                                                className="text-center"
-                                            >
-                                                Klikk på lenken, så er du inne!
-                                            </AppText>
-                                        </View>
-                                    </View>
-                                    <View className="py-8">
-                                        <AppText
-                                            size="text-md-regular"
-                                            className="text-center"
-                                            color="text-primary-400"
-                                        >
-                                            Fikk ikke mail?
-                                        </AppText>
-
-                                        {canRetry ? (
-                                            <TouchableOpacity
-                                                onPress={handleReset}
-                                            >
-                                                <AppText
-                                                    size="text-md-regular"
-                                                    className="text-center underline"
-                                                    color="text-primary-400"
-                                                >
-                                                    Prøv på nytt
-                                                </AppText>
-                                            </TouchableOpacity>
-                                        ) : (
-                                            <AppText
-                                                size="text-md-regular"
-                                                className="text-center"
-                                                color="text-primary-400"
-                                            >
-                                                Prøv på nytt om {secondsToRetry}{' '}
-                                                {secondsToRetry === 1
-                                                    ? 'sekund'
-                                                    : 'sekunder'}
-                                            </AppText>
-                                        )}
-                                    </View>
-                                </>
+                                <EmailConfirmationComponent
+                                    canRetry={canRetry}
+                                    onPress={handleReset}
+                                    secondsToRetry={secondsToRetry}
+                                />
                             ) : (
-                                <>
-                                    <View className="gap-5">
-                                        <View className="gap-2 items-center">
-                                            <AppText>Epost</AppText>
-                                            <AppTextInput
-                                                value={email}
-                                                onChangeText={setEmail}
-                                                placeholder="Epost"
-                                                keyboardType="email-address"
-                                            />
-                                        </View>
-
-                                        <AppButton
-                                            title="Logg Inn / Registrer"
-                                            size="small"
-                                            onPress={handleLogin}
-                                            loading={loading}
-                                        />
-                                    </View>
-                                    <View className="py-8">
-                                        <AppText
-                                            size="text-md-regular"
-                                            className="text-center"
-                                        >
-                                            Ingen passord å huske –{'\n'} bare
-                                            skriv inn e-posten din, så sender vi
-                                            deg en magisk lenke.
-                                            {'\n\n'}Klikk på den, så er du inne!
-                                        </AppText>
-                                    </View>
-                                </>
+                                <LoginFormComponent
+                                    value={email}
+                                    onChangeText={setEmail}
+                                    onPress={handleLogin}
+                                    loading={loading}
+                                />
                             )}
 
                             <AppText
