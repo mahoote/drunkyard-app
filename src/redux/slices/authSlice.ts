@@ -34,6 +34,8 @@ const authSlice = createSlice({
         logout: state => {
             state.user = null
             state.session = null
+            state.error = null
+            state.deepLinkProcessed = false
         },
     },
 })

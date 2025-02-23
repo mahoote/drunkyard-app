@@ -17,7 +17,7 @@ export default function Profile() {
     const router = useRouter()
 
     if (loading) {
-        return <AppLoader title="Henter din data..." />
+        return <AppLoader title="Laster..." />
     }
 
     if (!user) {
