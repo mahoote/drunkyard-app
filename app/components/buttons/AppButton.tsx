@@ -32,24 +32,23 @@ export default function AppButton({
     loading = false,
     ...props
 }: AppButtonProps) {
-    const buttonBackgroundColor =
-        color === 'primary-400' ? 'bg-primary-400' : 'bg-secondary-900'
-
-    const buttonTextColor =
-        color === 'primary-400' ? 'text-background' : 'text-foreground'
-
     const width = fullWidth ? 'w-full' : 'w-fit'
 
     let buttonStyles = 'rounded-xl p-1 ios:p-2'
     let textSize = 'text-xl-semibold'
-    let loaderHeight = 35
-    let loaderWidth = 50
+    let buttonBackgroundColor = 'bg-secondary-900'
+    let buttonTextColor = 'text-foreground'
+    let loaderAnimationClass = 'w-[50] h-[35]'
+
+    if (color === 'primary-400') {
+        buttonBackgroundColor = 'bg-primary-400'
+        buttonTextColor = 'text-background'
+    }
 
     if (size === 'large') {
         buttonStyles = 'rounded-2xl p-2 ios:p-3'
         textSize = 'display-sm-semibold'
-        loaderHeight = 51
-        loaderWidth = 70
+        loaderAnimationClass = 'w-[70] h-[51]'
     }
 
     return (
@@ -60,7 +59,7 @@ export default function AppButton({
             {...props}
         >
             {loading ? (
-                <View className={`w-[${loaderWidth}] h-[${loaderHeight}]`}>
+                <View className={loaderAnimationClass}>
                     <LottieView
                         source={require('@/assets/animations/dots.json')}
                         autoPlay

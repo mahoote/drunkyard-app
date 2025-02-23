@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons'
 import LottieView from 'lottie-react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import AppButton from '@/app/components/buttons/AppButton'
@@ -9,9 +9,12 @@ import AppText from '@/app/components/text/AppText'
 import AppTextInput from '@/app/components/text/AppTextInput'
 import AppKeyboardAvoidingView from '@/app/components/views/AppKeyboardAvoidingView'
 import AppView from '@/app/components/views/AppView'
+import { useEmailRetry } from '@/src/hooks/useEmailRetry'
 import { signInWithMagicLink } from '@/src/redux/actions/authActions'
 import { logout } from '@/src/redux/slices/authSlice'
 import { AppRootState, AppDispatch } from '@/src/redux/store'
+
+const RETRY_SECONDS = 20
 
 export default function Login() {
     const dispatch = useDispatch<AppDispatch>()
@@ -21,7 +24,7 @@ export default function Login() {
     const [emailSent, setEmailSent] = useState<boolean>(false)
 
     const [canRetry, setCanRetry] = useState<boolean>(false)
-    const [secondsToRetry, setSecondsToRetry] = useState(20)
+    const [secondsToRetry, setSecondsToRetry] = useState(RETRY_SECONDS)
 
     const handleLogin = () => {
         dispatch(signInWithMagicLink(email))
@@ -30,30 +33,19 @@ export default function Login() {
     const handleReset = () => {
         setEmailSent(false)
         setCanRetry(false)
-        setSecondsToRetry(20)
+        setSecondsToRetry(RETRY_SECONDS)
         dispatch(logout())
     }
 
-    useEffect(() => {
-        let interval: NodeJS.Timeout
-
-        if (loading && !emailSent) {
-            setEmailSent(true)
-        }
-
-        // If the email has been sent, and the loading is done, and the user can retry
-        // Set a timer to allow the user to retry the login process.
-        if (emailSent && !loading && secondsToRetry > 0) {
-            interval = setInterval(() => {
-                setSecondsToRetry(prev => prev - 1)
-            }, 1000) // Update every second
-        } else if (secondsToRetry <= 0) {
-            setCanRetry(true)
-        }
-
-        // Cleanup the interval when the component unmounts or when the timer stops
-        return () => clearInterval(interval)
-    }, [loading, emailSent, canRetry, secondsToRetry])
+    useEmailRetry({
+        loading,
+        emailSent,
+        setEmailSent,
+        secondsToRetry,
+        setSecondsToRetry,
+        canRetry,
+        setCanRetry,
+    })
 
     return (
         <AppView isRoot={true}>
