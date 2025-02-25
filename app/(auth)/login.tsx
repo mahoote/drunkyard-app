@@ -1,7 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons'
 import LottieView from 'lottie-react-native'
 import React, { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Linking, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
@@ -13,6 +13,7 @@ import { useEmailRetry } from '@/src/hooks/useEmailRetry'
 import { signInWithMagicLink } from '@/src/redux/actions/authActions'
 import { logout } from '@/src/redux/slices/authSlice'
 import { AppRootState, AppDispatch } from '@/src/redux/store'
+import { isProduction } from '@/src/utils/environmentUtils'
 
 const RETRY_SECONDS = 20
 
@@ -51,6 +52,11 @@ function EmailConfirmationComponent({
     onPress: () => void
     secondsToRetry: number
 }) {
+    const openDevMail = () => {
+        // TODO: Set real URL.
+        Linking.openURL('http://192.168.0.106:54324/monitor')
+    }
+
     return (
         <>
             <View className="items-center">
@@ -70,6 +76,16 @@ function EmailConfirmationComponent({
                     <AppText size="text-md-regular" className="text-center">
                         Klikk på lenken, så er du inne!
                     </AppText>
+                    {!isProduction() && (
+                        <TouchableOpacity onPress={openDevMail}>
+                            <AppText
+                                size="text-md-regular"
+                                className="text-center underline"
+                            >
+                                DEV MAIL INBOX
+                            </AppText>
+                        </TouchableOpacity>
+                    )}
                 </View>
             </View>
             <View className="py-8">

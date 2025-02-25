@@ -4,6 +4,7 @@ import { setUser, setSession, setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 import { AuthStatus } from '@/src/types/auth'
 import { setupDeepLink } from '@/src/utils/deepLink/setupDeepLink'
+import { isDevice, isWeb } from '@/src/utils/platformUtils'
 import { supabase } from '@/src/utils/supabaseClient'
 
 export function useAuth(): AuthStatus {
@@ -13,23 +14,24 @@ export function useAuth(): AuthStatus {
     const dispatch = useAppDispatch()
 
     /**
-     * Happens only once when the component is mounted,
-     * since the dispatch is stable and doesn't change.
+     * Happens only on device, as web version doesn't allow auth.
      */
     useEffect(() => {
-        const restoreSessionFromSupabase = async () => {
-            dispatch(setLoading(true))
-            const { data } = await supabase.auth.getSession()
-            if (data?.session) {
-                dispatch(setUser(data.session.user))
-                dispatch(setSession(data.session))
+        if (isDevice()) {
+            const restoreSessionFromSupabase = async () => {
+                dispatch(setLoading(true))
+                const { data } = await supabase.auth.getSession()
+                if (data?.session) {
+                    dispatch(setUser(data.session.user))
+                    dispatch(setSession(data.session))
+                }
+                dispatch(setLoading(false))
             }
-            dispatch(setLoading(false))
-        }
 
-        restoreSessionFromSupabase()
-        setupDeepLink(dispatch)
+            restoreSessionFromSupabase()
+            setupDeepLink(dispatch)
+        }
     }, [dispatch])
 
-    return { isAuthenticated: !!session, loading }
+    return { isAuthenticated: isWeb() ? false : !!session, loading }
 }
