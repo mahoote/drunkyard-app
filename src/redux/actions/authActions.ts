@@ -1,3 +1,4 @@
+import { Session, User } from '@supabase/supabase-js'
 import { makeRedirectUri } from 'expo-auth-session'
 import { Router } from 'expo-router'
 import {
@@ -38,8 +39,9 @@ export const signInWithMagicLink =
         dispatch(setLoading(false))
     }
 /**
- * Signs in with e-mail and password.
+ * Combined sign in and sign up with e-mail and password.
  * Used in development as there are issues with local magic link.
+ * If the user doesn't exist, we sign them up so the flow is similar to magic link.
  * @param email
  * @param password
  */
@@ -47,18 +49,45 @@ export const signInWithEmailAndPassword =
     (email: string, password: string) => async (dispatch: AppDispatch) => {
         dispatch(setLoading(true))
 
+        let responseData: { user: User | null; session: Session | null }
+
+        // Try sign in.
         const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password,
         })
 
+        responseData = { session: data.session, user: data.user }
+
         if (error) {
-            dispatch(setError(error.message))
+            // Sign them up
+            if (error.message.includes('Invalid login credentials')) {
+                const { data: signUpData, error: signUpError } =
+                    await supabase.auth.signUp({
+                        email,
+                        password,
+                    })
+
+                if (signUpError) {
+                    dispatch(setError(signUpError.message))
+                    dispatch(setLoading(false))
+                    return
+                }
+
+                if (signUpData) {
+                    // Use the newly created user
+                    responseData = signUpData
+                }
+            } else {
+                dispatch(setError(error.message))
+                dispatch(setLoading(false))
+                return
+            }
         }
 
-        if (data?.session) {
-            dispatch(setUser(data.session.user))
-            dispatch(setSession(data.session))
+        if (responseData?.user) {
+            dispatch(setUser(responseData.user))
+            dispatch(setSession(responseData.session))
         }
 
         dispatch(setLoading(false))
