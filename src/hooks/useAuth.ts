@@ -16,10 +16,9 @@ export function useAuth(): AuthStatus {
 
     /**
      * Happens only on device, as web version doesn't allow auth.
-     * And on production, as we use different auth flow on dev.
      */
     useEffect(() => {
-        if (isDevice() && isProduction()) {
+        if (isDevice()) {
             const restoreSessionFromSupabase = async () => {
                 dispatch(setLoading(true))
                 const { data } = await supabase.auth.getSession()
@@ -31,7 +30,11 @@ export function useAuth(): AuthStatus {
             }
 
             restoreSessionFromSupabase()
-            setupDeepLink(dispatch)
+
+            // Only use deep link on production.
+            if (isProduction()) {
+                setupDeepLink(dispatch)
+            }
         } else {
             dispatch(setLoading(false))
         }
