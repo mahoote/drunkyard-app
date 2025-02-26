@@ -4,6 +4,7 @@ import { setUser, setSession, setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 import { AuthStatus } from '@/src/types/auth'
 import { setupDeepLink } from '@/src/utils/deepLink/setupDeepLink'
+import { isProduction } from '@/src/utils/environmentUtils'
 import { isDevice, isWeb } from '@/src/utils/platformUtils'
 import { supabase } from '@/src/utils/supabaseClient'
 
@@ -15,9 +16,10 @@ export function useAuth(): AuthStatus {
 
     /**
      * Happens only on device, as web version doesn't allow auth.
+     * And on production, as we use different auth flow on dev.
      */
     useEffect(() => {
-        if (isDevice()) {
+        if (isDevice() && isProduction()) {
             const restoreSessionFromSupabase = async () => {
                 dispatch(setLoading(true))
                 const { data } = await supabase.auth.getSession()
@@ -30,6 +32,8 @@ export function useAuth(): AuthStatus {
 
             restoreSessionFromSupabase()
             setupDeepLink(dispatch)
+        } else {
+            dispatch(setLoading(false))
         }
     }, [dispatch])
 
