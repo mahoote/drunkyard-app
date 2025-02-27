@@ -4,8 +4,10 @@ import {
     GameGenericPreferences,
     PlayerPreferences,
 } from '@/src/types/game'
+import { Room } from '@/src/types/room'
 
 const initialState: GameState = {
+    room: null,
     gameGenericPreferences: {
         isPlayerCreative: false,
         durationMinutes: 30,
@@ -23,6 +25,9 @@ const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
+        setRoom: (state, action: PayloadAction<Room | null>) => {
+            state.room = action.payload
+        },
         setGameGenericPreferences: (
             state,
             action: PayloadAction<GameGenericPreferences>,
@@ -38,6 +43,6 @@ const gameSlice = createSlice({
     },
 })
 
-export const { setGameGenericPreferences, setPlayerPreferences } =
+export const { setRoom, setGameGenericPreferences, setPlayerPreferences } =
     gameSlice.actions
 export default gameSlice.reducer

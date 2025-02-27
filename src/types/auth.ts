@@ -6,6 +6,7 @@ export interface AuthState {
     player: Player | null
     session: Session | null
     loading: boolean
+    loadingMessage: string
     deepLinkProcessed: boolean
     error: string | null
 }

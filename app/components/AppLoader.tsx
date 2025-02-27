@@ -1,14 +1,14 @@
 import LottieView from 'lottie-react-native'
 import React from 'react'
 import { View } from 'react-native'
+import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
+import { AppRootState } from '@/src/redux/store'
 
-interface AppLoaderProps {
-    title?: string
-}
+export default function AppLoader() {
+    const { loadingMessage } = useSelector((state: AppRootState) => state.auth)
 
-export default function AppLoader({ title = 'Laster inn...' }: AppLoaderProps) {
     return (
         <AppView className="flex-1 items-center justify-center">
             <View className="w-[300] h-[300]">
@@ -19,7 +19,7 @@ export default function AppLoader({ title = 'Laster inn...' }: AppLoaderProps) {
                     style={{ width: '100%', height: '100%' }}
                 />
             </View>
-            <AppText>{title}</AppText>
+            <AppText>{loadingMessage}</AppText>
         </AppView>
     )
 }

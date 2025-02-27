@@ -21,12 +21,12 @@ export function useAuth(): AuthStatus {
     useEffect(() => {
         if (isDevice()) {
             const restoreSessionFromSupabase = async () => {
-                dispatch(setLoading(true))
+                dispatch(setLoading({ loading: true }))
                 const { data } = await supabase.auth.getSession()
                 if (data?.session) {
                     dispatch(setPlayerSessionData(data.session))
                 }
-                dispatch(setLoading(false))
+                dispatch(setLoading({ loading: false }))
             }
 
             restoreSessionFromSupabase()
@@ -36,7 +36,7 @@ export function useAuth(): AuthStatus {
                 setupDeepLink(dispatch)
             }
         } else {
-            dispatch(setLoading(false))
+            dispatch(setLoading({ loading: false }))
         }
     }, [dispatch])
 

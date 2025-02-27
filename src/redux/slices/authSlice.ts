@@ -8,6 +8,7 @@ const initialState: AuthState = {
     player: null,
     session: null,
     loading: true,
+    loadingMessage: '',
     deepLinkProcessed: false,
     error: null,
 }
@@ -29,8 +30,16 @@ const authSlice = createSlice({
         setDeepLinkProcessed: (state, action: PayloadAction<boolean>) => {
             state.deepLinkProcessed = action.payload
         },
-        setLoading: (state, action: PayloadAction<boolean>) => {
-            state.loading = action.payload
+        setLoading: (
+            state,
+            action: PayloadAction<{
+                loading: boolean
+                loadingMessage?: string
+            }>,
+        ) => {
+            state.loading = action.payload.loading
+            state.loadingMessage =
+                action.payload.loadingMessage ?? 'Laster inn...'
         },
         setError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload

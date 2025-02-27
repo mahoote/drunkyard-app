@@ -19,7 +19,7 @@ export default function Profile() {
     const router = useRouter()
 
     if (loading) {
-        return <AppLoader title="Laster..." />
+        return <AppLoader />
     }
 
     if (!user || !player) {

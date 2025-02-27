@@ -1,7 +1,9 @@
 import { FontAwesome } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
+import { useSelector } from 'react-redux'
+import AppLoader from '@/app/components/AppLoader'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import JoinGameQrComponent from '@/app/components/JoinGameQrComponent'
@@ -10,30 +12,83 @@ import PlayerIcon from '@/app/components/PlayerIcon'
 import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
-
-const players = [
-    'Martin',
-    'Erik',
-    'Morten',
-    'Jonas',
-    'Karl',
-    'Marius',
-    'Ulrikke',
-    'Andreas',
-    'Morten',
-    'Jonas',
-    'Karl',
-    'Nina',
-    'Johanne',
-    'Andreas',
-]
+import { setLoading } from '@/src/redux/slices/authSlice'
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import {
+    addPlayerToRoom,
+    deletePlayerFromRoom,
+    getPlayersInRoom,
+} from '@/src/services/roomService'
+import { Player } from '@/src/types/player'
 
 export default function Lobby() {
     const router = useRouter()
+    const dispatch = useAppDispatch()
+
+    const { player, loading } = useSelector((state: AppRootState) => state.auth)
+    const { room } = useSelector((state: AppRootState) => state.game)
 
     const [isOverlayVisible, setOverlayVisible] = useState(false)
+    const [players, setPlayers] = useState<Player[]>([])
 
     const isPlayerAlone = players.length <= 1
+
+    const handleBack = async () => {
+        dispatch(
+            setLoading({ loading: true, loadingMessage: 'Forlater rom...' }),
+        )
+        if (player && room) {
+            await deletePlayerFromRoom({
+                playerId: player.id,
+                roomId: room.id,
+            })
+        }
+        router.back()
+        dispatch(setLoading({ loading: false }))
+    }
+
+    useEffect(() => {
+        if (player && room) {
+            const addPlayer = async () => {
+                await addPlayerToRoom({
+                    playerId: player.id,
+                    roomId: room.id,
+                })
+            }
+            const fetchPlayers = async () => {
+                const playersInRoom = await getPlayersInRoom(room.id)
+                setPlayers(playersInRoom)
+            }
+
+            addPlayer().then(fetchPlayers)
+        }
+    }, [])
+
+    /*useEffect(() => {
+        if (!room) {
+            return
+        }
+
+        const subscription = subscribeToRoomPlayers(room.id, payload => {
+            if (payload.eventType === 'INSERT') {
+                setPlayers(prev => [...prev, payload.new])
+            } else if (payload.eventType === 'DELETE') {
+                setPlayers(prev => prev.filter(p => p.id !== payload.old.id))
+            } else if (payload.eventType === 'UPDATE') {
+                setPlayers(prev =>
+                    prev.map(p => (p.id === payload.new.id ? payload.new : p)),
+                )
+            }
+        })
+
+        return () => {
+            subscription.unsubscribe() // Cleanup subscription on unmount
+        }
+    }, [room])*/
+
+    if (loading) {
+        return <AppLoader />
+    }
 
     return (
         <>
@@ -55,7 +110,7 @@ export default function Lobby() {
                                         size={24}
                                     />
                                 }
-                                leftButtonBack={true}
+                                leftButtonAction={handleBack}
                             />
                             <AppText size="display-sm-regular">
                                 Martin's spill
@@ -81,9 +136,12 @@ export default function Lobby() {
                             </View>
                         </AppView>
                     }
-                    renderItem={({ item }) => (
+                    renderItem={({ item: player }) => (
                         <View className="w-1/3 py-2 items-center">
-                            <PlayerIcon name={item} size="medium" />
+                            <PlayerIcon
+                                name={player.username ?? '-'}
+                                size="medium"
+                            />
                         </View>
                     )}
                     ListFooterComponent={

@@ -48,7 +48,7 @@ export const handleDeepLink = async (
 ) => {
     if (!event.url.trim()) return
 
-    dispatch(setLoading(true))
+    dispatch(setLoading({ loading: true }))
 
     // Extract tokens from URL
     const { params, errorCode } = QueryParams.getQueryParams(event.url)

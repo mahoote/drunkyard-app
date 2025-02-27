@@ -20,7 +20,7 @@ import { supabase } from '@/src/utils/supabaseClient'
  */
 export const signInWithMagicLink =
     (email: string) => async (dispatch: AppDispatch) => {
-        dispatch(setLoading(true))
+        dispatch(setLoading({ loading: true }))
 
         const redirectUri = makeRedirectUri({
             scheme: 'dev.teigen',
@@ -38,7 +38,7 @@ export const signInWithMagicLink =
             dispatch(setError(error.message))
         }
 
-        dispatch(setLoading(false))
+        dispatch(setLoading({ loading: false }))
     }
 /**
  * Combined sign in and sign up with e-mail and password.
@@ -49,7 +49,7 @@ export const signInWithMagicLink =
  */
 export const signInWithEmailAndPassword =
     (email: string, password: string) => async (dispatch: AppDispatch) => {
-        dispatch(setLoading(true))
+        dispatch(setLoading({ loading: true }))
 
         let responseData: { user: User | null; session: Session | null }
 
@@ -72,7 +72,7 @@ export const signInWithEmailAndPassword =
 
                 if (signUpError) {
                     dispatch(setError(signUpError.message))
-                    dispatch(setLoading(false))
+                    dispatch(setLoading({ loading: false }))
                     return
                 }
 
@@ -82,7 +82,7 @@ export const signInWithEmailAndPassword =
                 }
             } else {
                 dispatch(setError(error.message))
-                dispatch(setLoading(false))
+                dispatch(setLoading({ loading: false }))
                 return
             }
         }
@@ -91,18 +91,18 @@ export const signInWithEmailAndPassword =
             dispatch(setPlayerSessionData(responseData.session))
         }
 
-        dispatch(setLoading(false))
+        dispatch(setLoading({ loading: false }))
     }
 
 /**
  * Signs out from supabase, clears the user session and redirects to the home page.
  */
 export const signOut = (router: Router) => async (dispatch: AppDispatch) => {
-    dispatch(setLoading(true))
+    dispatch(setLoading({ loading: true }))
     await supabase.auth.signOut()
     dispatch(logout())
     router.replace('/')
-    dispatch(setLoading(false))
+    dispatch(setLoading({ loading: false }))
 }
 
 /**

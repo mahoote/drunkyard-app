@@ -1,15 +1,37 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
 import BeersIcon from '@/assets/icons/beers.svg'
 import SquaresBackgroundImage from '@/assets/images/squares-background-1.svg'
+import { setLoading } from '@/src/redux/slices/authSlice'
+import { setRoom } from '@/src/redux/slices/gameSlice'
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { createRoom } from '@/src/services/roomService'
 
 export default function PrimaryStartButton() {
+    const dispatch = useAppDispatch()
+    const { player } = useSelector((state: AppRootState) => state.auth)
     const router = useRouter()
 
-    const handlePress = () => {
+    /**
+     * Creates a room, stores it, and navigates to the lobby
+     */
+    const handlePress = async () => {
+        if (!player) {
+            console.error('Player not found')
+            return
+        }
+
+        dispatch(
+            setLoading({ loading: true, loadingMessage: 'Oppretter rom...' }),
+        )
+        const room = await createRoom({ name: "Martin's room" })
+        dispatch(setRoom(room))
+
         router.navigate('/lobby')
+        dispatch(setLoading({ loading: false }))
     }
 
     return (
