@@ -60,7 +60,11 @@ export default function Lobby() {
                 setPlayers(playersInRoom)
             }
 
-            addPlayer().then(fetchPlayers)
+            addPlayer().then(() =>
+                fetchPlayers().then(() =>
+                    dispatch(setLoading({ loading: false })),
+                ),
+            )
         }
     }, [])
 

@@ -31,7 +31,6 @@ export default function PrimaryStartButton() {
         dispatch(setRoom(room))
 
         router.navigate('/lobby')
-        dispatch(setLoading({ loading: false }))
     }
 
     return (
