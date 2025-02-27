@@ -1,11 +1,7 @@
-import { Dispatch } from '@reduxjs/toolkit'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import {
-    setError,
-    setLoading,
-    setSession,
-    setUser,
-} from '@/src/redux/slices/authSlice'
+import { setPlayerSessionData } from '@/src/redux/actions/authActions'
+import { setError, setLoading } from '@/src/redux/slices/authSlice'
+import { AppDispatch } from '@/src/redux/store'
 import { supabase } from '@/src/utils/supabaseClient'
 
 /**
@@ -18,7 +14,7 @@ import { supabase } from '@/src/utils/supabaseClient'
  */
 const validateUrlTokens = (
     params: Record<string, string>,
-    dispatch: Dispatch,
+    dispatch: AppDispatch,
 ) => {
     const {
         access_token,
@@ -48,7 +44,7 @@ const validateUrlTokens = (
  */
 export const handleDeepLink = async (
     event: { url: string },
-    dispatch: Dispatch,
+    dispatch: AppDispatch,
 ) => {
     if (!event.url.trim()) return
 
@@ -79,7 +75,6 @@ export const handleDeepLink = async (
     }
 
     if (data?.session) {
-        dispatch(setUser(data.session.user))
-        dispatch(setSession(data.session))
+        dispatch(setPlayerSessionData(data.session))
     }
 }

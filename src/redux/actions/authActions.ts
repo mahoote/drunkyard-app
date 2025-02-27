@@ -7,8 +7,10 @@ import {
     logout,
     setUser,
     setSession,
+    setPlayer,
 } from '../slices/authSlice'
 import { AppDispatch } from '../store'
+import { getPlayer } from '@/src/services/playerService'
 import { supabase } from '@/src/utils/supabaseClient'
 
 /**
@@ -85,9 +87,8 @@ export const signInWithEmailAndPassword =
             }
         }
 
-        if (responseData?.user) {
-            dispatch(setUser(responseData.user))
-            dispatch(setSession(responseData.session))
+        if (responseData?.session) {
+            dispatch(setPlayerSessionData(responseData.session))
         }
 
         dispatch(setLoading(false))
@@ -103,3 +104,24 @@ export const signOut = (router: Router) => async (dispatch: AppDispatch) => {
     router.replace('/')
     dispatch(setLoading(false))
 }
+
+/**
+ * Sets the variables to store:
+ * - Session
+ * - User
+ * - Player
+ * @param session
+ */
+export const setPlayerSessionData =
+    (session: Session) => async (dispatch: AppDispatch) => {
+        dispatch(setUser(session.user))
+        dispatch(setSession(session))
+
+        const player = await getPlayer(session.user.id)
+
+        if (!player) {
+            dispatch(setError('Could not load player data.'))
+        } else {
+            dispatch(setPlayer(player))
+        }
+    }

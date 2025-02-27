@@ -13,14 +13,16 @@ import { AppRootState, useAppDispatch } from '@/src/redux/store'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
-    const { user, loading } = useSelector((state: AppRootState) => state.auth)
+    const { user, loading, player } = useSelector(
+        (state: AppRootState) => state.auth,
+    )
     const router = useRouter()
 
     if (loading) {
         return <AppLoader title="Laster..." />
     }
 
-    if (!user) {
+    if (!user || !player) {
         return (
             <AppView className="flex-1 items-center justify-center">
                 <AppText>Det var et problem med å hente din data.</AppText>
@@ -36,6 +38,11 @@ export default function Profile() {
                     leftButtonHref="/"
                 />
                 <View className="flex-1 items-center justify-evenly">
+                    {player.username && (
+                        <AppText className="text-center">
+                            Username:{'\n'} {player.username}
+                        </AppText>
+                    )}
                     <AppText className="text-center">
                         Signed in as:{'\n'} {user.email}
                     </AppText>

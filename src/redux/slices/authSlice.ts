@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User, Session } from '@supabase/supabase-js'
 import { AuthState } from '@/src/types/auth'
+import { Player } from '@/src/types/player'
 
 const initialState: AuthState = {
     user: null,
+    player: null,
     session: null,
     loading: true,
     deepLinkProcessed: false,
@@ -16,6 +18,9 @@ const authSlice = createSlice({
     reducers: {
         setUser: (state, action: PayloadAction<User | null>) => {
             state.user = action.payload
+        },
+        setPlayer: (state, action: PayloadAction<Player | null>) => {
+            state.player = action.payload
         },
         setSession: (state, action: PayloadAction<Session | null>) => {
             state.session = action.payload
@@ -42,6 +47,7 @@ const authSlice = createSlice({
 
 export const {
     setUser,
+    setPlayer,
     setSession,
     setDeepLinkProcessed,
     setLoading,

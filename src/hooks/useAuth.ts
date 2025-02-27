@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { setUser, setSession, setLoading } from '@/src/redux/slices/authSlice'
+import { setPlayerSessionData } from '@/src/redux/actions/authActions'
+import { setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 import { AuthStatus } from '@/src/types/auth'
 import { setupDeepLink } from '@/src/utils/deepLink/setupDeepLink'
@@ -23,8 +24,7 @@ export function useAuth(): AuthStatus {
                 dispatch(setLoading(true))
                 const { data } = await supabase.auth.getSession()
                 if (data?.session) {
-                    dispatch(setUser(data.session.user))
-                    dispatch(setSession(data.session))
+                    dispatch(setPlayerSessionData(data.session))
                 }
                 dispatch(setLoading(false))
             }
