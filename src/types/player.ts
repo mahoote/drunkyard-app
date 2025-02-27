@@ -11,8 +11,8 @@ export interface Player {
 }
 
 export interface PlayerUpdateDto {
-    user_id: string
+    userId: string
     username?: string
-    first_name?: string
-    last_name?: string
+    firstName?: string
+    lastName?: string
 }
