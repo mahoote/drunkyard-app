@@ -12,13 +12,21 @@ import { createRoom } from '@/src/services/roomService'
 
 export default function PrimaryStartButton() {
     const dispatch = useAppDispatch()
-    const { player } = useSelector((state: AppRootState) => state.auth)
+    const { player, session, user } = useSelector(
+        (state: AppRootState) => state.auth,
+    )
     const router = useRouter()
 
     /**
-     * Creates a room, stores it, and navigates to the lobby
+     * Creates a room, stores it, and navigates to the lobby.
+     * Makes sure the user is authenticated before creating room.
      */
     const handlePress = async () => {
+        if (!user || !session) {
+            router.navigate('/login')
+            return
+        }
+
         if (!player) {
             console.error('Player not found')
             return
