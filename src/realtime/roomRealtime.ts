@@ -1,17 +1,18 @@
-import { RealtimePostgresChangesPayload } from '@supabase/supabase-js'
 import { supabase } from '../utils/supabaseClient'
-import { PlayerHasRoom } from '@/src/types/room'
+import { getPlayersInRoom } from '@/src/services/roomService'
+import { Player } from '@/src/types/player'
 
 /**
  * Subscribes to changes in the player_has_room table for a specific room.
+ * Then fetches all players in that room and sets the players list.
  * @param roomId
- * @param callback
+ * @param setPlayers
  */
 export const subscribeToRoomPlayers = (
     roomId: number,
-    callback: (payload: RealtimePostgresChangesPayload<PlayerHasRoom>) => void,
+    setPlayers: React.Dispatch<React.SetStateAction<Player[]>>,
 ) => {
-    return supabase
+    const channel = supabase
         .channel(`room-${roomId}`)
         .on(
             'postgres_changes',
@@ -21,7 +22,14 @@ export const subscribeToRoomPlayers = (
                 table: 'player_has_room',
                 filter: `room_id=eq.${roomId}`,
             },
-            callback,
+            async _ => {
+                const updatedPlayers = await getPlayersInRoom(roomId)
+                setPlayers(updatedPlayers)
+            },
         )
         .subscribe()
+
+    return () => {
+        channel.unsubscribe()
+    }
 }

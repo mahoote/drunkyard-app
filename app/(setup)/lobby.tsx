@@ -12,6 +12,7 @@ import PlayerIcon from '@/app/components/PlayerIcon'
 import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
+import { subscribeToRoomPlayers } from '@/src/realtime/roomRealtime'
 import { setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 import {
@@ -68,27 +69,17 @@ export default function Lobby() {
         }
     }, [])
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (!room) {
             return
         }
 
-        const subscription = subscribeToRoomPlayers(room.id, payload => {
-            if (payload.eventType === 'INSERT') {
-                setPlayers(prev => [...prev, payload.new])
-            } else if (payload.eventType === 'DELETE') {
-                setPlayers(prev => prev.filter(p => p.id !== payload.old.id))
-            } else if (payload.eventType === 'UPDATE') {
-                setPlayers(prev =>
-                    prev.map(p => (p.id === payload.new.id ? payload.new : p)),
-                )
-            }
-        })
+        const unsubscribe = subscribeToRoomPlayers(room.id, setPlayers)
 
         return () => {
-            subscription.unsubscribe() // Cleanup subscription on unmount
+            unsubscribe() // Cleanup on unmount
         }
-    }, [room])*/
+    }, [room])
 
     if (loading) {
         return <AppLoader />
