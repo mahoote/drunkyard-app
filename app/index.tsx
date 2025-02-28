@@ -46,9 +46,11 @@ export default function Index() {
         Poppins_700Bold,
     })
 
-    const { user, loading: authLoading } = useSelector(
-        (state: AppRootState) => state.auth,
-    )
+    const {
+        user,
+        player,
+        loading: authLoading,
+    } = useSelector((state: AppRootState) => state.auth)
 
     if (!fontsLoaded || authLoading) {
         return <AppLoader />
@@ -65,7 +67,7 @@ export default function Index() {
     )
 
     const rightButton = () => {
-        if (!user) {
+        if (!user || !player) {
             return (
                 <AppText>
                     <FontAwesome name="user-circle" size={36} />
@@ -73,7 +75,7 @@ export default function Index() {
             )
         }
 
-        return <ProfileIcon name="Martin" />
+        return <ProfileIcon name={player.username ?? '-'} />
     }
 
     return (

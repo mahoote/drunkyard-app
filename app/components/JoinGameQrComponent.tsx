@@ -5,11 +5,17 @@ import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
 import { AppRootState } from '@/src/redux/store'
 
-export default function JoinGameQrComponent() {
+interface JoinGameQrProps {
+    roomId: number
+}
+
+export default function JoinGameQrComponent({ roomId }: JoinGameQrProps) {
     const appBaseUrl = useSelector(
         (state: AppRootState) => state.webUrl.appBaseUrl,
     )
-    const joinUrl = `http://${appBaseUrl}/join`
+    // const joinUrl = `http://${appBaseUrl}/join`
+    const joinUrlBase = `exp://${appBaseUrl}/--/join`
+    const joinUrl = `${joinUrlBase}?code=${roomId}`
 
     return (
         <View className="flex-1 items-center justify-between">
@@ -29,9 +35,9 @@ export default function JoinGameQrComponent() {
             <View className="items-center gap-5 pb-10">
                 <AppText>Eller skriv inn koden</AppText>
                 <AppText size="display-lg-bold" style={{ letterSpacing: 10 }}>
-                    12345
+                    {roomId}
                 </AppText>
-                <AppText>{joinUrl}</AppText>
+                <AppText>{joinUrlBase}</AppText>
             </View>
         </View>
     )

@@ -26,6 +26,22 @@ export async function createRoom(room: RoomCreateDto) {
 }
 
 /**
+ * Calls the edge function to get a room.
+ * @param roomId
+ */
+export async function getRoom(roomId: number) {
+    const { data, error } = await supabase.functions.invoke(`room/${roomId}`, {
+        method: 'GET',
+    })
+
+    if (error) {
+        throw new Error(error.message)
+    }
+
+    return JSON.parse(data) as Room
+}
+
+/**
  * Calls the edge function to add a player to a room.
  * @param playerHasRoom
  */

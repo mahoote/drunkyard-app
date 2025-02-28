@@ -44,7 +44,7 @@ export default function Lobby() {
                 roomId: room.id,
             })
         }
-        router.back()
+        router.replace('/')
         dispatch(setLoading({ loading: false }))
     }
 
@@ -83,6 +83,14 @@ export default function Lobby() {
 
     if (loading) {
         return <AppLoader />
+    }
+
+    if (!room) {
+        return (
+            <AppView className="flex-1 items-center justify-center">
+                <AppText>Det var et problem med å hente lobby data.</AppText>
+            </AppView>
+        )
     }
 
     return (
@@ -170,7 +178,7 @@ export default function Lobby() {
                 isVisible={isOverlayVisible}
                 setVisible={setOverlayVisible}
             >
-                <JoinGameQrComponent />
+                <JoinGameQrComponent roomId={room.id} />
             </Overlay>
         </>
     )

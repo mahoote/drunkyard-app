@@ -1,18 +1,60 @@
-import React from 'react'
+import { useLocalSearchParams, useRouter } from 'expo-router'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
+import AppLoader from '@/app/components/AppLoader'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import AppText from '@/app/components/text/AppText'
 import AppTextInput from '@/app/components/text/AppTextInput'
 import AppView from '@/app/components/views/AppView'
-import { AppRootState } from '@/src/redux/store'
+import { setLoading } from '@/src/redux/slices/authSlice'
+import { setRoom } from '@/src/redux/slices/gameSlice'
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { getRoom } from '@/src/services/roomService'
 
 export default function Join() {
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+    const { code } = useLocalSearchParams<{ code: string }>()
+
     const appBaseUrl = useSelector(
         (state: AppRootState) => state.webUrl.appBaseUrl,
     )
+
+    const { user, session, loading } = useSelector(
+        (state: AppRootState) => state.auth,
+    )
+
+    const [username, setUsername] = useState<string>('')
+    const [roomIdString, setRoomIdString] = useState<string>('')
+
     const loginUrl = `exp://${appBaseUrl}/--/login`
+
+    /**
+     * Fetches the room and navigates to the lobby.
+     * @param code
+     */
+    const handleJoinLobby = async (code?: string) => {
+        dispatch(
+            setLoading({ loading: true, loadingMessage: 'Joiner spill...' }),
+        )
+
+        const room = await getRoom(parseInt(code ?? roomIdString))
+        dispatch(setRoom(room))
+
+        router.replace('/lobby')
+    }
+
+    useEffect(() => {
+        if (user && session && code) {
+            handleJoinLobby(code)
+        }
+    }, [user, session, code])
+
+    if (loading) {
+        return <AppLoader />
+    }
 
     return (
         <AppView isRoot={true} className="items-center">
@@ -24,9 +66,11 @@ export default function Join() {
                         <View className="items-center gap-2">
                             <AppText>Spill som gjest</AppText>
                             <AppTextInput
+                                value={username}
+                                onChangeText={setUsername}
                                 placeholder="Skriv inn navn"
                                 hasButton={true}
-                                buttonAction={() => {}}
+                                buttonAction={handleJoinLobby}
                                 maxLength={16}
                                 width="w-72"
                             />
@@ -34,6 +78,8 @@ export default function Join() {
                         <View className="items-center gap-2">
                             <AppText>Kode</AppText>
                             <AppTextInput
+                                value={roomIdString}
+                                onChangeText={setRoomIdString}
                                 className="text-lg-semibold text-center tracking-[6px]"
                                 keyboardType="number-pad"
                                 placeholder="-"
