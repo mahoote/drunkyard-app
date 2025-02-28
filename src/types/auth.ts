@@ -14,4 +14,5 @@ export interface AuthState {
 export interface AuthStatus {
     isAuthenticated: boolean
     loading: boolean
+    player: Player | null
 }

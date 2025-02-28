@@ -14,7 +14,7 @@ export function useAppLogic() {
 
     const router = useRouter()
     const pathname = usePathname()
-    const { isAuthenticated, loading } = useAuth()
+    const { isAuthenticated, loading, player } = useAuth()
 
     const isAuthRoute = AUTH_ROUTES.includes(pathname)
 
@@ -23,7 +23,9 @@ export function useAppLogic() {
     }, [dispatch])
 
     useEffect(() => {
-        if (!loading && isAuthRoute && !isAuthenticated) {
+        const validPlayer = player || isAuthenticated
+
+        if (!loading && isAuthRoute && !validPlayer) {
             router.back()
             router.push('/login') // Redirect only if deep linking and auth are both done
         }

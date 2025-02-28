@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useRouter } from 'expo-router'
+import { useGlobalSearchParams, useRouter } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -8,15 +8,17 @@ import NavButtons from '@/app/components/buttons/NavButtons'
 import AppText from '@/app/components/text/AppText'
 import AppTextInput from '@/app/components/text/AppTextInput'
 import AppView from '@/app/components/views/AppView'
-import { setLoading } from '@/src/redux/slices/authSlice'
+import { setLoading, setPlayer } from '@/src/redux/slices/authSlice'
 import { setRoom } from '@/src/redux/slices/gameSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { createPlayer } from '@/src/services/playerService'
 import { getRoom } from '@/src/services/roomService'
+import { isDevice } from '@/src/utils/platformUtils'
 
 export default function Join() {
     const dispatch = useAppDispatch()
     const router = useRouter()
-    const { code } = useLocalSearchParams<{ code: string }>()
+    const { code } = useGlobalSearchParams<{ code: string }>()
 
     const appBaseUrl = useSelector(
         (state: AppRootState) => state.webUrl.appBaseUrl,
@@ -25,6 +27,7 @@ export default function Join() {
     const { user, session, loading } = useSelector(
         (state: AppRootState) => state.auth,
     )
+    const { player } = useSelector((state: AppRootState) => state.auth)
 
     const [username, setUsername] = useState<string>('')
     const [roomIdString, setRoomIdString] = useState<string>('')
@@ -40,13 +43,30 @@ export default function Join() {
             setLoading({ loading: true, loadingMessage: 'Joiner spill...' }),
         )
 
-        const room = await getRoom(parseInt(code ?? roomIdString))
+        let roomId: number
+
+        if (code && !isNaN(parseInt(code))) {
+            roomId = parseInt(code)
+        } else {
+            roomId = parseInt(roomIdString.trim() ?? code)
+        }
+
+        const room = await getRoom(roomId)
         dispatch(setRoom(room))
+
+        if (!player) {
+            const newPlayer = await createPlayer({ username, isGuest: true })
+            dispatch(setPlayer(newPlayer))
+        }
 
         router.replace('/lobby')
     }
 
     useEffect(() => {
+        if (code) {
+            setRoomIdString(code)
+        }
+
         if (user && session && code) {
             handleJoinLobby(code)
         }
@@ -80,7 +100,7 @@ export default function Join() {
                             <AppTextInput
                                 value={roomIdString}
                                 onChangeText={setRoomIdString}
-                                className="text-lg-semibold text-center tracking-[6px]"
+                                className="text-lg-semibold text-center"
                                 keyboardType="number-pad"
                                 placeholder="-"
                                 width="w-40"
@@ -106,7 +126,13 @@ export default function Join() {
                             title="Logg inn"
                             size="small"
                             color="primary-400"
-                            onPress={() => (window.location.href = loginUrl)}
+                            onPress={() => {
+                                if (isDevice()) {
+                                    router.push('/login')
+                                } else {
+                                    window.location.href = loginUrl
+                                }
+                            }}
                         />
                     </View>
                 </View>

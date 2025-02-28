@@ -11,8 +11,18 @@ export interface Player {
 }
 
 export interface PlayerUpdateDto {
-    userId: string
+    id: string
     username?: string
     firstName?: string
     lastName?: string
+    isGuest?: boolean
+    deletedAt?: string
+}
+
+export interface PlayerCreateDto {
+    userId?: string
+    username?: string
+    firstName?: string
+    lastName?: string
+    isGuest?: boolean
 }

@@ -50,6 +50,7 @@ const authSlice = createSlice({
             state.session = null
             state.error = null
             state.deepLinkProcessed = false
+            state.player = null
         },
     },
 })

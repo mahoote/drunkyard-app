@@ -34,9 +34,7 @@ export default function JoinGameQrComponent({ roomId }: JoinGameQrProps) {
             <View className="h-[1px] w-24 bg-accent" />
             <View className="items-center gap-5 pb-10">
                 <AppText>Eller skriv inn koden</AppText>
-                <AppText size="display-lg-bold" style={{ letterSpacing: 10 }}>
-                    {roomId}
-                </AppText>
+                <AppText size="display-lg-bold">{roomId}</AppText>
                 <AppText>{joinUrlBase}</AppText>
             </View>
         </View>

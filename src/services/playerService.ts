@@ -1,5 +1,22 @@
-import { Player, PlayerUpdateDto } from '@/src/types/player'
+import { Player, PlayerCreateDto, PlayerUpdateDto } from '@/src/types/player'
 import { supabase } from '@/src/utils/supabaseClient'
+
+/**
+ * Calls the edge function to create a player.
+ * @param playerDto
+ */
+export async function createPlayer(playerDto: PlayerCreateDto) {
+    const { data, error } = await supabase.functions.invoke('player', {
+        method: 'POST',
+        body: playerDto,
+    })
+
+    if (error) {
+        throw new Error(error.message || 'Failed to create player')
+    }
+
+    return JSON.parse(data) as Player
+}
 
 /**
  * Calls the edge function to get a player.

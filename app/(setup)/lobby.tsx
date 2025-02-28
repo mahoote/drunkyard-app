@@ -13,8 +13,10 @@ import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
 import { subscribeToRoomPlayers } from '@/src/realtime/roomRealtime'
+import { signOut } from '@/src/redux/actions/authActions'
 import { setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { updatePlayer } from '@/src/services/playerService'
 import {
     addPlayerToRoom,
     deletePlayerFromRoom,
@@ -43,7 +45,17 @@ export default function Lobby() {
                 playerId: player.id,
                 roomId: room.id,
             })
+            // Delete and "Sign out" guests without account.
+            if (player.is_guest) {
+                await updatePlayer({
+                    id: player.id,
+                    deletedAt: new Date().toISOString(),
+                })
+                dispatch(signOut(router))
+                return
+            }
         }
+
         router.replace('/')
         dispatch(setLoading({ loading: false }))
     }

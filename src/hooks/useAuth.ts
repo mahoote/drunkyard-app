@@ -10,7 +10,7 @@ import { isDevice, isWeb } from '@/src/utils/platformUtils'
 import { supabase } from '@/src/utils/supabaseClient'
 
 export function useAuth(): AuthStatus {
-    const { session, loading } = useSelector(
+    const { session, loading, player } = useSelector(
         (state: AppRootState) => state.auth,
     )
     const dispatch = useAppDispatch()
@@ -40,5 +40,5 @@ export function useAuth(): AuthStatus {
         }
     }, [dispatch])
 
-    return { isAuthenticated: isWeb() ? false : !!session, loading }
+    return { isAuthenticated: isWeb() ? false : !!session, loading, player }
 }
