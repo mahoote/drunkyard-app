@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import AppText from '@/app/components/text/AppText'
-import WebAwesomeIcon from '@/assets/icons/web-awesome-solid.svg'
+import CrownIcon from '@/assets/icons/crown-solid.svg'
 
 interface ProfileIconProps {
     name: string
@@ -50,9 +50,7 @@ export default function ProfileIcon({
             </View>
             {showAsHost && (
                 <View className="absolute inset-0 top-[-50px] flex items-center justify-center">
-                    <AppText color="text-white">
-                        <WebAwesomeIcon width={24} height={24} />
-                    </AppText>
+                    <CrownIcon width={24} height={24} />
                 </View>
             )}
         </View>
