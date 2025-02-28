@@ -156,6 +156,7 @@ export default function Lobby() {
                             <PlayerIcon
                                 name={player.username ?? '-'}
                                 size="medium"
+                                showAsHost={player.id === room.host_player_id}
                             />
                         </View>
                     )}

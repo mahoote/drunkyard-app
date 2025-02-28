@@ -4,6 +4,7 @@ export interface Room {
     max_players?: number
     created_at: string
     deleted_at?: string
+    host_player_id: string
 }
 
 export interface PlayerHasRoom {
@@ -15,6 +16,7 @@ export interface PlayerHasRoom {
 }
 
 export interface RoomCreateDto {
+    hostPlayerId: string
     name: string
     maxPlayers?: number
 }

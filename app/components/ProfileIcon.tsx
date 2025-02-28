@@ -1,12 +1,14 @@
 import React from 'react'
 import { View } from 'react-native'
 import AppText from '@/app/components/text/AppText'
+import WebAwesomeIcon from '@/assets/icons/web-awesome-solid.svg'
 
 interface ProfileIconProps {
     name: string
     size?: 'small' | 'medium' | 'large'
     circleColor?: string
     textColor?: string
+    showAsHost?: boolean
 }
 
 /**
@@ -16,6 +18,7 @@ interface ProfileIconProps {
  * @param size
  * @param circleColor
  * @param textColor
+ * @param showAsHost
  * @constructor
  */
 export default function ProfileIcon({
@@ -23,6 +26,7 @@ export default function ProfileIcon({
     size = 'small',
     circleColor = 'bg-avatar-5',
     textColor = 'text-background',
+    showAsHost,
 }: ProfileIconProps) {
     let circleSize = 'h-11 w-11'
     let fontSize = 'display-xs-medium'
@@ -36,12 +40,21 @@ export default function ProfileIcon({
     }
 
     return (
-        <View
-            className={`${circleColor} ${circleSize} flex items-center justify-center rounded-[50%]`}
-        >
-            <AppText size={fontSize} color={textColor} verticalAlign={true}>
-                {name[0].toUpperCase()}
-            </AppText>
+        <View className="relative">
+            <View
+                className={`${circleColor} ${circleSize} flex items-center justify-center rounded-[50%]`}
+            >
+                <AppText size={fontSize} color={textColor} verticalAlign={true}>
+                    {name[0].toUpperCase()}
+                </AppText>
+            </View>
+            {showAsHost && (
+                <View className="absolute inset-0 top-[-50px] flex items-center justify-center">
+                    <AppText color="text-white">
+                        <WebAwesomeIcon width={24} height={24} />
+                    </AppText>
+                </View>
+            )}
         </View>
     )
 }

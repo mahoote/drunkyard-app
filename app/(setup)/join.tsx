@@ -67,10 +67,10 @@ export default function Join() {
             setRoomIdString(code)
         }
 
-        if (user && session && code) {
+        if (user && session && player && code) {
             handleJoinLobby(code)
         }
-    }, [user, session, code])
+    }, [user, session, player, code])
 
     if (loading) {
         return <AppLoader />

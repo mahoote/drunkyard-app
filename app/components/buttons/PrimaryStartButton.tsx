@@ -35,7 +35,10 @@ export default function PrimaryStartButton() {
         dispatch(
             setLoading({ loading: true, loadingMessage: 'Oppretter rom...' }),
         )
-        const room = await createRoom({ name: "Martin's room" })
+        const room = await createRoom({
+            hostPlayerId: player.id,
+            name: "Martin's room",
+        })
         dispatch(setRoom(room))
 
         router.navigate('/lobby')

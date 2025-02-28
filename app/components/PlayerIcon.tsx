@@ -6,6 +6,7 @@ import AppText from '@/app/components/text/AppText'
 interface PlayerIconProps {
     name: string
     size?: 'small' | 'medium' | 'large'
+    showAsHost?: boolean
 }
 
 /**
@@ -14,19 +15,23 @@ interface PlayerIconProps {
  * @param props
  * @constructor
  */
-export default function PlayerIcon(props: PlayerIconProps) {
+export default function PlayerIcon({
+    name,
+    size,
+    showAsHost,
+}: PlayerIconProps) {
     let fontSize: string | undefined
 
-    if (props.size === 'medium') {
+    if (size === 'medium') {
         fontSize = 'text-lg-regular'
-    } else if (props.size === 'large') {
+    } else if (size === 'large') {
         fontSize = 'text-xl-regular'
     }
 
     return (
         <View className="items-center gap-2">
-            <ProfileIcon {...props} />
-            {fontSize && <AppText size={fontSize}>{props.name}</AppText>}
+            <ProfileIcon name={name} showAsHost={showAsHost} />
+            {fontSize && <AppText size={fontSize}>{name}</AppText>}
         </View>
     )
 }
