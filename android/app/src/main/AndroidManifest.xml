@@ -27,6 +27,12 @@
         <data android:scheme="dev.teigen"/>
         <data android:scheme="dev.teigen.dgapp"/>
       </intent-filter>
+      <intent-filter data-generated="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <data android:scheme="dev.teigen" android:host="auth" android:pathPrefix="/callback"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
     </activity>
   </application>
 </manifest>
