@@ -2,8 +2,8 @@ import 'dotenv/config'
 
 export default {
     expo: {
-        name: 'dg-app',
-        slug: 'dg-app',
+        name: 'Drunkyard',
+        slug: 'drunkyard-app',
         version: '1.0.0',
         orientation: 'portrait',
         icon: './assets/images/icon.png',
