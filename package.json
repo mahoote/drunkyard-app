@@ -16,7 +16,7 @@
         "updateSnapshots": "jest -u --coverage=false",
         "lint": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
         "format": "prettier --write .",
-        "prepare": "husky install"
+        "prepare": "husky"
     },
     "jest": {
         "preset": "jest-expo",
