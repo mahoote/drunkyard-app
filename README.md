@@ -6,7 +6,7 @@ _We are only collecting coverage from the `/src` folder as it's the only folder 
 The `/app` folder is only for the UI and is not being tested.<br>
 We might use [Storybook](https://storybook.js.org/) at a later time to validate the UI._
 
-## Installation
+## Getting Started
 
 - Clone the repository
 - Run `npm install` to install the dependencies
