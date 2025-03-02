@@ -1,20 +1,15 @@
 import { FontAwesome } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import AppLoader from '@/app/components/AppLoader'
-import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
+import { SignOutButtonComponent } from '@/app/components/SignOutButtonComponent'
 import AppText from '@/app/components/text/AppText'
 import AppView from '@/app/components/views/AppView'
-import { signOut } from '@/src/redux/actions/authActions'
-import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { AppRootState } from '@/src/redux/store'
 
 export default function Profile() {
-    const router = useRouter()
-    const dispatch = useAppDispatch()
-
     const { user, loading, player } = useSelector(
         (state: AppRootState) => state.auth,
     )
@@ -27,11 +22,7 @@ export default function Profile() {
         return (
             <AppView className="flex-1 items-center justify-center gap-5">
                 <AppText>Det var et problem med å hente din data.</AppText>
-                <AppButton
-                    title="Logg ut"
-                    size="small"
-                    onPress={() => dispatch(signOut(router))}
-                />
+                <SignOutButtonComponent />
             </AppView>
         )
     }
@@ -52,11 +43,7 @@ export default function Profile() {
                     <AppText className="text-center">
                         Signed in as:{'\n'} {user.email}
                     </AppText>
-                    <AppButton
-                        title="Sign out"
-                        size="small"
-                        onPress={() => dispatch(signOut(router))}
-                    />
+                    <SignOutButtonComponent />
                 </View>
             </AppView>
         </AppView>
