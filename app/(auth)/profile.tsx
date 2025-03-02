@@ -24,8 +24,13 @@ export default function Profile() {
 
     if (!user || !player) {
         return (
-            <AppView className="flex-1 items-center justify-center">
+            <AppView className="flex-1 items-center justify-center gap-5">
                 <AppText>Det var et problem med å hente din data.</AppText>
+                <AppButton
+                    title="Logg ut"
+                    size="small"
+                    onPress={() => dispatch(signOut(router))}
+                />
             </AppView>
         )
     }
