@@ -10,13 +10,10 @@ import AppText from '@/app/components/text/AppText'
 import AppKeyboardAvoidingView from '@/app/components/views/AppKeyboardAvoidingView'
 import AppView from '@/app/components/views/AppView'
 import { useEmailRetry } from '@/src/hooks/useEmailRetry'
-import {
-    signInWithEmailAndPassword,
-    signInWithMagicLink,
-} from '@/src/redux/actions/authActions'
-import { logout } from '@/src/redux/slices/authSlice'
+
 import { AppDispatch, AppRootState } from '@/src/redux/store'
 import { isProduction } from '@/src/utils/environmentUtils'
+import { handleLogin, handleLoginReset } from '@/src/utils/loginUtils'
 
 const RETRY_SECONDS = 20
 
@@ -30,24 +27,6 @@ export default function Login() {
 
     const [canRetry, setCanRetry] = useState<boolean>(false)
     const [secondsToRetry, setSecondsToRetry] = useState(RETRY_SECONDS)
-
-    /**
-     * Handles login based on environment.
-     */
-    const handleLogin = () => {
-        if (isProduction()) {
-            dispatch(signInWithMagicLink(email))
-        } else {
-            dispatch(signInWithEmailAndPassword(email, password))
-        }
-    }
-
-    const handleReset = () => {
-        setEmailSent(false)
-        setCanRetry(false)
-        setSecondsToRetry(RETRY_SECONDS)
-        dispatch(logout())
-    }
 
     useEmailRetry({
         loading,
@@ -83,19 +62,37 @@ export default function Login() {
                             {error ? (
                                 <LoginErrorComponent
                                     error={error}
-                                    onPress={handleReset}
+                                    onPress={() =>
+                                        handleLoginReset(
+                                            dispatch,
+                                            setEmailSent,
+                                            setCanRetry,
+                                            setSecondsToRetry,
+                                            RETRY_SECONDS,
+                                        )
+                                    }
                                 />
                             ) : emailSent && !loading ? (
                                 <EmailConfirmationComponent
                                     canRetry={canRetry}
-                                    onPress={handleReset}
+                                    onPress={() =>
+                                        handleLoginReset(
+                                            dispatch,
+                                            setEmailSent,
+                                            setCanRetry,
+                                            setSecondsToRetry,
+                                            RETRY_SECONDS,
+                                        )
+                                    }
                                     secondsToRetry={secondsToRetry}
                                 />
                             ) : (
                                 <LoginFormComponent
                                     email={email}
                                     setEmail={setEmail}
-                                    onPress={handleLogin}
+                                    onPress={() =>
+                                        handleLogin(dispatch, email, password)
+                                    }
                                     loading={loading}
                                     password={
                                         isProduction() ? undefined : password
