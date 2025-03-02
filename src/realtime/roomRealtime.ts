@@ -4,6 +4,7 @@ import { Player } from '@/src/types/player'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setRoom } from '@/src/redux/slices/gameSlice'
 import { Room } from '@/src/types/room'
+import { AppDispatch } from '@/src/redux/store'
 
 /**
  * Subscribes to changes in the player_has_room table for a specific room.
@@ -37,7 +38,7 @@ export const subscribeToRoomPlayers = (
     }
 }
 
-export const subscribeToRoom = (roomId: number, dispatch: Dispatch) => {
+export const subscribeToRoom = (roomId: number, dispatch: AppDispatch) => {
     const channel = supabase
         .channel(`room-${roomId}`)
         .on(

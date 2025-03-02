@@ -28,6 +28,9 @@ import {
     updateRoom,
 } from '@/src/services/roomService'
 import { Player } from '@/src/types/player'
+import { handleLobbyBack } from '@/src/utils/lobbyUtils'
+import { useAddPlayerToRoom } from '@/src/hooks/useAddPlayerToRoom'
+import { useLobbySubscription } from '@/src/hooks/useLobbySubscription'
 
 export default function Lobby() {
     const router = useRouter()
@@ -41,68 +44,9 @@ export default function Lobby() {
 
     const isPlayerAlone = players.length <= 1
 
-    const handleBack = async () => {
-        dispatch(
-            setLoading({ loading: true, loadingMessage: 'Forlater rom...' }),
-        )
-        if (player && room) {
-            await deletePlayerFromRoom({
-                playerId: player.id,
-                roomId: room.id,
-            })
-            // Delete and "Sign out" guests without account.
-            if (player.is_guest) {
-                await updatePlayer({
-                    id: player.id,
-                    deletedAt: new Date().toISOString(),
-                })
-                dispatch(signOut(router))
-                return
-            }
-        }
+    useAddPlayerToRoom({ setPlayers })
 
-        router.replace('/')
-        dispatch(setLoading({ loading: false }))
-    }
-
-    useEffect(() => {
-        if (player && room) {
-            const addPlayer = async () => {
-                await addPlayerToRoom({
-                    playerId: player.id,
-                    roomId: room.id,
-                })
-            }
-            const fetchPlayers = async () => {
-                const playersInRoom = await getPlayersInRoom(room.id)
-                setPlayers(playersInRoom)
-            }
-
-            addPlayer().then(() =>
-                fetchPlayers().then(() =>
-                    dispatch(setLoading({ loading: false })),
-                ),
-            )
-        }
-    }, [])
-
-    useEffect(() => {
-        if (!room) {
-            return
-        }
-
-        const unsubscribeToRoomPlayers = subscribeToRoomPlayers(
-            room.id,
-            setPlayers,
-        )
-        const unsubscribeToRoom = subscribeToRoom(room.id, dispatch)
-
-        // Cleanup on unmount
-        return () => {
-            unsubscribeToRoomPlayers()
-            unsubscribeToRoom()
-        }
-    }, [room])
+    useLobbySubscription({ setPlayers })
 
     if (loading) {
         return <AppLoader />
@@ -138,7 +82,14 @@ export default function Lobby() {
                                         size={24}
                                     />
                                 }
-                                leftButtonAction={handleBack}
+                                leftButtonAction={async () =>
+                                    await handleLobbyBack(
+                                        dispatch,
+                                        router,
+                                        player,
+                                        room,
+                                    )
+                                }
                             />
                             {isHost ? (
                                 <EditableText

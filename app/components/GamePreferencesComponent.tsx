@@ -5,6 +5,7 @@ import SelectButton from '@/app/components/buttons/SelectButton'
 import AppText from '@/app/components/text/AppText'
 import { setPlayerPreferences } from '@/src/redux/slices/gameSlice'
 import { PlayerPreferences } from '@/src/types/game'
+import { AppDispatch } from '@/src/redux/store'
 
 const drunkOptions = [
     { label: 'Brisen', value: 0 },
@@ -20,7 +21,7 @@ const activityOptions = [
 
 interface GamePreferencesProps {
     playerPreferences: PlayerPreferences
-    dispatch: Dispatch
+    dispatch: AppDispatch
 }
 
 /**
