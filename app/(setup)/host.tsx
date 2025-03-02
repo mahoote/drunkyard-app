@@ -6,8 +6,10 @@ import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import SelectButton from '@/app/components/buttons/SelectButton'
 import GamePreferencesComponent from '@/app/components/GamePreferencesComponent'
+import { SignOutButtonComponent } from '@/app/components/SignOutButtonComponent'
 import AppPageLayout from '@/app/components/text/AppPageLayout'
 import AppText from '@/app/components/text/AppText'
+import AppView from '@/app/components/views/AppView'
 import { setGameGenericPreferences } from '@/src/redux/slices/gameSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 
@@ -29,13 +31,22 @@ const gameDurationMinutes = [
 export default function Host() {
     const dispatch = useAppDispatch()
 
-    const { gameGenericPreferences, playerPreferences } = useSelector(
+    const { room, gameGenericPreferences } = useSelector(
         (state: AppRootState) => state.game,
     )
 
+    if (!room) {
+        return (
+            <AppView className="flex-1 items-center justify-center gap-5">
+                <AppText>Det oppstod en feil.</AppText>
+                <SignOutButtonComponent />
+            </AppView>
+        )
+    }
+
     return (
         <AppPageLayout
-            title="Martin's spill"
+            title={room.name}
             subtitle="Dine preferanser"
             navComponent={
                 <NavButtons
@@ -46,10 +57,7 @@ export default function Host() {
             footerComponent={<AppButton title="START" />}
         >
             <View className="gap-5">
-                <GamePreferencesComponent
-                    playerPreferences={playerPreferences}
-                    dispatch={dispatch}
-                />
+                <GamePreferencesComponent />
                 <View className="items-center gap-2">
                     <AppText size="text-lg-regular">
                         Spilleres kreativitet
@@ -69,7 +77,6 @@ export default function Host() {
                 </View>
                 <View className="items-center gap-2 mt-8">
                     <AppText size="text-lg-regular">Spillelengde</AppText>
-                    {/* TODO: Use correct design */}
                     <SelectButton
                         options={gameDurationMinutes}
                         selectedOption={gameGenericPreferences.durationMinutes}
