@@ -13,7 +13,10 @@ import AppText from '@/app/components/text/AppText'
 import EditableText from '@/app/components/text/EditableText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
-import { subscribeToRoomPlayers } from '@/src/realtime/roomRealtime'
+import {
+    subscribeToRoom,
+    subscribeToRoomPlayers,
+} from '@/src/realtime/roomRealtime'
 import { signOut } from '@/src/redux/actions/authActions'
 import { setLoading } from '@/src/redux/slices/authSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
@@ -22,6 +25,7 @@ import {
     addPlayerToRoom,
     deletePlayerFromRoom,
     getPlayersInRoom,
+    updateRoom,
 } from '@/src/services/roomService'
 import { Player } from '@/src/types/player'
 
@@ -87,10 +91,16 @@ export default function Lobby() {
             return
         }
 
-        const unsubscribe = subscribeToRoomPlayers(room.id, setPlayers)
+        const unsubscribeToRoomPlayers = subscribeToRoomPlayers(
+            room.id,
+            setPlayers,
+        )
+        const unsubscribeToRoom = subscribeToRoom(room.id, dispatch)
 
+        // Cleanup on unmount
         return () => {
-            unsubscribe() // Cleanup on unmount
+            unsubscribeToRoomPlayers()
+            unsubscribeToRoom()
         }
     }, [room])
 
@@ -134,6 +144,12 @@ export default function Lobby() {
                                 <EditableText
                                     size="display-sm-regular"
                                     maxLength={20}
+                                    onSave={newName =>
+                                        updateRoom({
+                                            id: room.id,
+                                            name: newName,
+                                        })
+                                    }
                                 >
                                     {room.name}
                                 </EditableText>

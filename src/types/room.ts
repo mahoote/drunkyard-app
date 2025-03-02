@@ -22,7 +22,7 @@ export interface RoomCreateDto {
 }
 
 export interface RoomUpdateDto {
-    roomId: number
+    id: number
     name?: string
     maxPlayers?: number
     deletedAt?: string

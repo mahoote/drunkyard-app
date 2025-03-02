@@ -4,6 +4,7 @@ import { TextInput, TouchableOpacity, View } from 'react-native'
 import AppText, { AppTextProps } from '@/app/components/text/AppText'
 
 interface EditableTextProps extends AppTextProps {
+    onSave: (text: string) => void
     maxLength?: number
 }
 
@@ -16,6 +17,7 @@ interface EditableTextProps extends AppTextProps {
  * @param size
  * @param color
  * @param maxLength
+ * @param onSave
  * @param props
  * @constructor
  */
@@ -24,12 +26,26 @@ export default function EditableText({
     size = 'text-xl-regular',
     color = 'text-foreground',
     maxLength,
+    onSave,
     ...props
 }: EditableTextProps) {
-    const [text, setText] = useState<string>(children as string)
+    const originalText = children as string
+
+    const [text, setText] = useState<string>(originalText)
     const [isEditing, setIsEditing] = useState<boolean>(false)
 
+    /**
+     * Handles the text editing.
+     * If the text is less than 3 characters, the original text is restored.
+     * @param editing
+     */
     const handleEditText = (editing: boolean) => {
+        if (text.trim().length < 3) {
+            setText(originalText)
+            onSave(originalText)
+        } else {
+            onSave(text)
+        }
         setIsEditing(editing)
     }
 
