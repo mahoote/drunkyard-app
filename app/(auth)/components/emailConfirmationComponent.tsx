@@ -1,9 +1,8 @@
-import { useRouter } from 'expo-router'
 import LottieView from 'lottie-react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import AppText from '@/app/components/text/AppText'
-import { isProduction } from '@/src/utils/environmentUtils'
+import { useDevRedirectToProfile } from '@/src/hooks/dev/useDevRedirectToProfile'
 
 export default function EmailConfirmationComponent({
     canRetry,
@@ -14,18 +13,7 @@ export default function EmailConfirmationComponent({
     onPress: () => void
     secondsToRetry: number
 }) {
-    const router = useRouter()
-
-    /**
-     * Redirect to profile page after 2 seconds if not in production
-     */
-    useEffect(() => {
-        if (!isProduction()) {
-            setTimeout(() => {
-                router.replace('/profile')
-            }, 2000)
-        }
-    }, [])
+    useDevRedirectToProfile()
 
     return (
         <>
