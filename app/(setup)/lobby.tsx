@@ -203,17 +203,19 @@ export default function Lobby() {
                         </AppView>
                     }
                 />
-                <GradientBackgroundView
-                    gradientBackgroundColor={[3, 3, 35]}
-                    defaultHeight={140}
-                >
-                    <AppView>
-                        <AppButton
-                            title="NESTE"
-                            onPress={() => router.push('/host')}
-                        />
-                    </AppView>
-                </GradientBackgroundView>
+                {isHost && (
+                    <GradientBackgroundView
+                        gradientBackgroundColor={[3, 3, 35]}
+                        defaultHeight={140}
+                    >
+                        <AppView>
+                            <AppButton
+                                title="NESTE"
+                                onPress={() => router.push('/host')}
+                            />
+                        </AppView>
+                    </GradientBackgroundView>
+                )}
             </AppView>
             <Overlay
                 isVisible={isOverlayVisible}
