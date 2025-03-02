@@ -1,11 +1,10 @@
-import { Dispatch } from '@reduxjs/toolkit'
 import React from 'react'
 import { View } from 'react-native'
 import SelectButton from '@/app/components/buttons/SelectButton'
 import AppText from '@/app/components/text/AppText'
 import { setPlayerPreferences } from '@/src/redux/slices/gameSlice'
-import { PlayerPreferences } from '@/src/types/game'
 import { AppDispatch } from '@/src/redux/store'
+import { PlayerPreferences } from '@/src/types/game'
 
 const drunkOptions = [
     { label: 'Brisen', value: 0 },

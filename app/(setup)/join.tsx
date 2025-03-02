@@ -45,10 +45,10 @@ export default function Join() {
 
         let roomId: number
 
-        if (code && !isNaN(parseInt(code))) {
-            roomId = parseInt(code)
+        if (code && !isNaN(parseInt(code, 10))) {
+            roomId = parseInt(code, 10)
         } else {
-            roomId = parseInt(roomIdString.trim() ?? code)
+            roomId = parseInt(roomIdString.trim() ?? code, 10)
         }
 
         const room = await getRoom(roomId)

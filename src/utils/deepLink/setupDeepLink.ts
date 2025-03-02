@@ -1,4 +1,3 @@
-import { Dispatch } from '@reduxjs/toolkit'
 import * as Linking from 'expo-linking'
 import { handleDeepLink } from './handleDeepLink'
 import { AppDispatch } from '@/src/redux/store'

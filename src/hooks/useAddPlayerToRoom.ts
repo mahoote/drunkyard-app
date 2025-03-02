@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { addPlayerToRoom, getPlayersInRoom } from '@/src/services/roomService'
-import { setLoading } from '@/src/redux/slices/authSlice'
-import { Player } from '@/src/types/player'
-import { Room } from '@/src/types/room'
-import { AppDispatch, AppRootState, useAppDispatch } from '@/src/redux/store'
 import { useSelector } from 'react-redux'
+import { setLoading } from '@/src/redux/slices/authSlice'
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { addPlayerToRoom, getPlayersInRoom } from '@/src/services/roomService'
+import { Player } from '@/src/types/player'
 
 interface UseAddPlayerToRoomProps {
     setPlayers: React.Dispatch<React.SetStateAction<Player[]>>

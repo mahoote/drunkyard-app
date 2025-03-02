@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import {
     subscribeToRoom,
     subscribeToRoomPlayers,
 } from '@/src/realtime/roomRealtime'
-import { Room } from '@/src/types/room'
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
 import { Player } from '@/src/types/player'
-import { AppDispatch, AppRootState, useAppDispatch } from '@/src/redux/store'
-import { useSelector } from 'react-redux'
 
 interface UseLobbySubscriptionProps {
     setPlayers: React.Dispatch<React.SetStateAction<Player[]>>

@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import AppLoader from '@/app/components/AppLoader'
@@ -13,24 +13,13 @@ import AppText from '@/app/components/text/AppText'
 import EditableText from '@/app/components/text/EditableText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
-import {
-    subscribeToRoom,
-    subscribeToRoomPlayers,
-} from '@/src/realtime/roomRealtime'
-import { signOut } from '@/src/redux/actions/authActions'
-import { setLoading } from '@/src/redux/slices/authSlice'
-import { AppRootState, useAppDispatch } from '@/src/redux/store'
-import { updatePlayer } from '@/src/services/playerService'
-import {
-    addPlayerToRoom,
-    deletePlayerFromRoom,
-    getPlayersInRoom,
-    updateRoom,
-} from '@/src/services/roomService'
-import { Player } from '@/src/types/player'
-import { handleLobbyBack } from '@/src/utils/lobbyUtils'
 import { useAddPlayerToRoom } from '@/src/hooks/useAddPlayerToRoom'
 import { useLobbySubscription } from '@/src/hooks/useLobbySubscription'
+
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
+import { updateRoom } from '@/src/services/roomService'
+import { Player } from '@/src/types/player'
+import { handleLobbyBack } from '@/src/utils/lobbyUtils'
 
 export default function Lobby() {
     const router = useRouter()

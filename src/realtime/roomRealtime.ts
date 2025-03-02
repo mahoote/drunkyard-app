@@ -1,10 +1,9 @@
 import { supabase } from '../utils/supabaseClient'
+import { setRoom } from '@/src/redux/slices/gameSlice'
+import { AppDispatch } from '@/src/redux/store'
 import { getPlayersInRoom } from '@/src/services/roomService'
 import { Player } from '@/src/types/player'
-import { Dispatch } from '@reduxjs/toolkit'
-import { setRoom } from '@/src/redux/slices/gameSlice'
 import { Room } from '@/src/types/room'
-import { AppDispatch } from '@/src/redux/store'
 
 /**
  * Subscribes to changes in the player_has_room table for a specific room.
@@ -50,8 +49,6 @@ export const subscribeToRoom = (roomId: number, dispatch: AppDispatch) => {
                 filter: `id=eq.${roomId}`,
             },
             async payload => {
-                console.log('payload', payload)
-
                 dispatch(setRoom(payload.new as Room))
             },
         )

@@ -1,11 +1,11 @@
-import { setLoading } from '@/src/redux/slices/authSlice'
-import { deletePlayerFromRoom } from '@/src/services/roomService'
-import { updatePlayer } from '@/src/services/playerService'
-import { signOut } from '@/src/redux/actions/authActions'
 import { Router } from 'expo-router'
+import { signOut } from '@/src/redux/actions/authActions'
+import { setLoading } from '@/src/redux/slices/authSlice'
+import { AppDispatch } from '@/src/redux/store'
+import { updatePlayer } from '@/src/services/playerService'
+import { deletePlayerFromRoom } from '@/src/services/roomService'
 import { Player } from '@/src/types/player'
 import { Room } from '@/src/types/room'
-import { AppDispatch } from '@/src/redux/store'
 
 /**
  * Handles the back button in the lobby.
