@@ -5,54 +5,24 @@ import { useSelector } from 'react-redux'
 import AppText from '@/app/components/text/AppText'
 import BeersIcon from '@/assets/icons/beers.svg'
 import SquaresBackgroundImage from '@/assets/images/squares-background-1.svg'
-import { setLoading } from '@/src/redux/slices/authSlice'
-import { setRoom } from '@/src/redux/slices/gameSlice'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
-import { createRoom } from '@/src/services/roomService'
+import { handleLobbyCreate } from '@/src/utils/lobbyUtils'
 
 export default function PrimaryStartButton() {
+    const router = useRouter()
     const dispatch = useAppDispatch()
+
     const { player, session, user } = useSelector(
         (state: AppRootState) => state.auth,
     )
-    const router = useRouter()
-
-    /**
-     * Creates a room, stores it, and navigates to the lobby.
-     * Makes sure the user is authenticated before creating room.
-     */
-    const handlePress = async () => {
-        if (!user || !session) {
-            router.navigate('/login')
-            return
-        }
-
-        if (!player) {
-            console.error('Player not found')
-            return
-        }
-
-        dispatch(
-            setLoading({ loading: true, loadingMessage: 'Oppretter rom...' }),
-        )
-
-        const playerUsername = player.username ?? 'Player'
-        const roomName = `${playerUsername.substring(0, 12)}'s lobby`
-
-        const room = await createRoom({
-            hostPlayerId: player.id,
-            name: roomName,
-        })
-        dispatch(setRoom(room))
-
-        router.navigate('/lobby')
-    }
 
     return (
         <TouchableOpacity
             activeOpacity={0.6}
             className="relative w-full px-3 py-6 bg-secondary-900 flex-row justify-center items-center rounded-3xl overflow-hidden"
-            onPress={handlePress}
+            onPress={async () =>
+                handleLobbyCreate(dispatch, router, user, session, player)
+            }
         >
             <View className="absolute inset-0">
                 <SquaresBackgroundImage

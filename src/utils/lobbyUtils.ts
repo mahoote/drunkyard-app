@@ -1,12 +1,59 @@
+import { Session, User } from '@supabase/supabase-js'
 import { Router } from 'expo-router'
 import { signOut } from '@/src/redux/actions/authActions'
 import { setLoading, setPlayer } from '@/src/redux/slices/authSlice'
 import { setRoom } from '@/src/redux/slices/gameSlice'
 import { AppDispatch } from '@/src/redux/store'
 import { createPlayer, updatePlayer } from '@/src/services/playerService'
-import { deletePlayerFromRoom, getRoom } from '@/src/services/roomService'
+import {
+    createRoom,
+    deletePlayerFromRoom,
+    getRoom,
+} from '@/src/services/roomService'
 import { Player } from '@/src/types/player'
 import { Room } from '@/src/types/room'
+
+/**
+ * Creates a room, stores it, and navigates to the lobby.
+ * Makes sure the user is authenticated before creating room.
+ * @param dispatch
+ * @param router
+ * @param user
+ * @param session
+ * @param player
+ */
+export async function handleLobbyCreate(
+    dispatch: AppDispatch,
+    router: Router,
+    user: User | null,
+    session: Session | null,
+    player: Player | null,
+) {
+    if (!user || !session) {
+        router.navigate('/login')
+        return
+    }
+
+    if (!player) {
+        console.error('Player not found')
+        return
+    }
+
+    dispatch(
+        setLoading({ loading: true, loadingMessage: 'Oppretter lobby...' }),
+    )
+
+    const playerUsername = player.username ?? 'Player'
+    const roomName = `${playerUsername.substring(0, 12)}'s lobby`
+
+    const room = await createRoom({
+        hostPlayerId: player.id,
+        name: roomName,
+    })
+    dispatch(setRoom(room))
+
+    router.navigate('/lobby')
+}
 
 /**
  * Handles the back button in the lobby.
