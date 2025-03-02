@@ -12,11 +12,12 @@ import { signOut } from '@/src/redux/actions/authActions'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
 
 export default function Profile() {
+    const router = useRouter()
     const dispatch = useAppDispatch()
+
     const { user, loading, player } = useSelector(
         (state: AppRootState) => state.auth,
     )
-    const router = useRouter()
 
     if (loading) {
         return <AppLoader />
