@@ -35,9 +35,13 @@ export default function PrimaryStartButton() {
         dispatch(
             setLoading({ loading: true, loadingMessage: 'Oppretter rom...' }),
         )
+
+        const playerUsername = player.username ?? 'Player'
+        const roomName = `${playerUsername.substring(0, 12)}'s lobby`
+
         const room = await createRoom({
             hostPlayerId: player.id,
-            name: "Martin's room",
+            name: roomName,
         })
         dispatch(setRoom(room))
 

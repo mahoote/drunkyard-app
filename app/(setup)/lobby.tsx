@@ -10,6 +10,7 @@ import JoinGameQrComponent from '@/app/components/JoinGameQrComponent'
 import Overlay from '@/app/components/Overlay'
 import PlayerIcon from '@/app/components/PlayerIcon'
 import AppText from '@/app/components/text/AppText'
+import EditableText from '@/app/components/text/EditableText'
 import AppView from '@/app/components/views/AppView'
 import GradientBackgroundView from '@/app/components/views/GradientBackgroundView'
 import { subscribeToRoomPlayers } from '@/src/realtime/roomRealtime'
@@ -97,13 +98,15 @@ export default function Lobby() {
         return <AppLoader />
     }
 
-    if (!room) {
+    if (!room || !player) {
         return (
             <AppView className="flex-1 items-center justify-center">
                 <AppText>Det var et problem med å hente lobby data.</AppText>
             </AppView>
         )
     }
+
+    const isHost = player.id === room.host_player_id
 
     return (
         <>
@@ -127,9 +130,18 @@ export default function Lobby() {
                                 }
                                 leftButtonAction={handleBack}
                             />
-                            <AppText size="display-sm-regular">
-                                Martin's spill
-                            </AppText>
+                            {isHost ? (
+                                <EditableText
+                                    size="display-sm-regular"
+                                    maxLength={20}
+                                >
+                                    {room.name}
+                                </EditableText>
+                            ) : (
+                                <AppText size="display-sm-regular">
+                                    {room.name}
+                                </AppText>
+                            )}
                             <TouchableOpacity
                                 activeOpacity={0.5}
                                 className="my-4 items-center"

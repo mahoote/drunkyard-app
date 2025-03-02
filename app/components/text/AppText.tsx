@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, TextProps } from 'react-native'
 
-interface AppTextProps extends TextProps {
+export interface AppTextProps extends TextProps {
     children: React.ReactNode
     size?: string
     color?: string
