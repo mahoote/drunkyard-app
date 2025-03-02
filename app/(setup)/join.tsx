@@ -1,5 +1,5 @@
 import { useGlobalSearchParams, useRouter } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import AppLoader from '@/app/components/AppLoader'
@@ -8,69 +8,39 @@ import NavButtons from '@/app/components/buttons/NavButtons'
 import AppText from '@/app/components/text/AppText'
 import AppTextInput from '@/app/components/text/AppTextInput'
 import AppView from '@/app/components/views/AppView'
-import { setLoading, setPlayer } from '@/src/redux/slices/authSlice'
-import { setRoom } from '@/src/redux/slices/gameSlice'
+import { usePlayerJoinLobby } from '@/src/hooks/usePlayerJoinLobby'
 import { AppRootState, useAppDispatch } from '@/src/redux/store'
-import { createPlayer } from '@/src/services/playerService'
-import { getRoom } from '@/src/services/roomService'
+import { handleLobbyGuestJoin } from '@/src/utils/lobbyUtils'
 import { isDevice } from '@/src/utils/platformUtils'
 
 export default function Join() {
-    const dispatch = useAppDispatch()
     const router = useRouter()
-    const { code } = useGlobalSearchParams<{ code: string }>()
+    const dispatch = useAppDispatch()
 
+    const { player } = useSelector((state: AppRootState) => state.auth)
+    const { user, session, loading } = useSelector(
+        (state: AppRootState) => state.auth,
+    )
     const appBaseUrl = useSelector(
         (state: AppRootState) => state.webUrl.appBaseUrl,
     )
 
-    const { user, session, loading } = useSelector(
-        (state: AppRootState) => state.auth,
-    )
-    const { player } = useSelector((state: AppRootState) => state.auth)
+    const { code } = useGlobalSearchParams<{ code: string }>()
 
     const [username, setUsername] = useState<string>('')
     const [roomIdString, setRoomIdString] = useState<string>('')
 
     const loginUrl = `exp://${appBaseUrl}/--/login`
 
-    /**
-     * Fetches the room and navigates to the lobby.
-     * @param code
-     */
-    const handleJoinLobby = async (code?: string) => {
-        dispatch(
-            setLoading({ loading: true, loadingMessage: 'Joiner spill...' }),
-        )
-
-        let roomId: number
-
-        if (code && !isNaN(parseInt(code, 10))) {
-            roomId = parseInt(code, 10)
-        } else {
-            roomId = parseInt(roomIdString.trim() ?? code, 10)
-        }
-
-        const room = await getRoom(roomId)
-        dispatch(setRoom(room))
-
-        if (!player) {
-            const newPlayer = await createPlayer({ username, isGuest: true })
-            dispatch(setPlayer(newPlayer))
-        }
-
-        router.replace('/lobby')
-    }
-
-    useEffect(() => {
-        if (code) {
-            setRoomIdString(code)
-        }
-
-        if (user && session && player && code) {
-            handleJoinLobby(code)
-        }
-    }, [user, session, player, code])
+    usePlayerJoinLobby({
+        setRoomIdString,
+        dispatch,
+        router,
+        code,
+        user,
+        session,
+        player,
+    })
 
     if (loading) {
         return <AppLoader />
@@ -90,7 +60,15 @@ export default function Join() {
                                 onChangeText={setUsername}
                                 placeholder="Skriv inn navn"
                                 hasButton={true}
-                                buttonAction={handleJoinLobby}
+                                buttonAction={async () =>
+                                    await handleLobbyGuestJoin(
+                                        dispatch,
+                                        roomIdString,
+                                        router,
+                                        username,
+                                        code,
+                                    )
+                                }
                                 maxLength={16}
                                 width="w-72"
                             />

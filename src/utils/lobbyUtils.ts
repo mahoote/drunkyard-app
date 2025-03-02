@@ -1,9 +1,10 @@
 import { Router } from 'expo-router'
 import { signOut } from '@/src/redux/actions/authActions'
-import { setLoading } from '@/src/redux/slices/authSlice'
+import { setLoading, setPlayer } from '@/src/redux/slices/authSlice'
+import { setRoom } from '@/src/redux/slices/gameSlice'
 import { AppDispatch } from '@/src/redux/store'
-import { updatePlayer } from '@/src/services/playerService'
-import { deletePlayerFromRoom } from '@/src/services/roomService'
+import { createPlayer, updatePlayer } from '@/src/services/playerService'
+import { deletePlayerFromRoom, getRoom } from '@/src/services/roomService'
 import { Player } from '@/src/types/player'
 import { Room } from '@/src/types/room'
 
@@ -40,4 +41,43 @@ export async function handleLobbyBack(
 
     router.replace('/')
     dispatch(setLoading({ loading: false }))
+}
+
+/**
+ * Sets the loading state, gets the room id and gets the room.
+ * Then, since the player is a guest, create a guest player.
+ * Finally redirects to the lobby.
+ * @param dispatch
+ * @param roomIdString
+ * @param router
+ * @param username
+ * @param code
+ */
+export async function handleLobbyGuestJoin(
+    dispatch: AppDispatch,
+    roomIdString: string,
+    router: Router,
+    username: string,
+    code?: string,
+) {
+    dispatch(setLoading({ loading: true, loadingMessage: 'Joiner spill...' }))
+
+    let roomId: number
+
+    // If the code is a number, use it as the room id.
+    if (code && !isNaN(parseInt(code, 10))) {
+        roomId = parseInt(code, 10)
+    }
+    // Else, use the roomIdString as the room id.
+    else {
+        roomId = parseInt(roomIdString.trim(), 10)
+    }
+
+    const room = await getRoom(roomId)
+    dispatch(setRoom(room))
+
+    const newPlayer = await createPlayer({ username, isGuest: true })
+    dispatch(setPlayer(newPlayer))
+
+    router.replace('/lobby')
 }
