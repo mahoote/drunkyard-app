@@ -1,10 +1,10 @@
 import React from 'react'
 import { View } from 'react-native'
+import { useSelector } from 'react-redux'
 import SelectButton from '@/app/components/buttons/SelectButton'
 import AppText from '@/app/components/text/AppText'
 import { setPlayerPreferences } from '@/src/redux/slices/gameSlice'
-import { AppDispatch } from '@/src/redux/store'
-import { PlayerPreferences } from '@/src/types/game'
+import { AppRootState, useAppDispatch } from '@/src/redux/store'
 
 const drunkOptions = [
     { label: 'Brisen', value: 0 },
@@ -18,21 +18,16 @@ const activityOptions = [
     { label: 'Høy', value: 2 },
 ]
 
-interface GamePreferencesProps {
-    playerPreferences: PlayerPreferences
-    dispatch: AppDispatch
-}
-
 /**
  * The common preferences for the host and guest.
- * @param playerPreferences
- * @param dispatch
- * @constructor
  */
-export default function GamePreferencesComponent({
-    playerPreferences,
-    dispatch,
-}: GamePreferencesProps) {
+export default function GamePreferencesComponent() {
+    const dispatch = useAppDispatch()
+
+    const { playerPreferences } = useSelector(
+        (state: AppRootState) => state.game,
+    )
+
     return (
         <View className="gap-5">
             <View className="items-center gap-2">

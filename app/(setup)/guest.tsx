@@ -1,21 +1,13 @@
 import { FontAwesome } from '@expo/vector-icons'
 import React from 'react'
 import { View } from 'react-native'
-import { useSelector } from 'react-redux'
 import AppButton from '@/app/components/buttons/AppButton'
 import NavButtons from '@/app/components/buttons/NavButtons'
 import GamePreferencesComponent from '@/app/components/GamePreferencesComponent'
 import AppPageLayout from '@/app/components/text/AppPageLayout'
 import AppText from '@/app/components/text/AppText'
-import { AppRootState, useAppDispatch } from '@/src/redux/store'
 
 export default function Guest() {
-    const dispatch = useAppDispatch()
-
-    const { playerPreferences } = useSelector(
-        (state: AppRootState) => state.game,
-    )
-
     return (
         <AppPageLayout
             title="Martin's spill"
@@ -30,10 +22,7 @@ export default function Guest() {
         >
             <View className="flex-1">
                 <View className="gap-5">
-                    <GamePreferencesComponent
-                        playerPreferences={playerPreferences}
-                        dispatch={dispatch}
-                    />
+                    <GamePreferencesComponent />
                 </View>
                 <View className="flex-1 justify-center">
                     <AppText
