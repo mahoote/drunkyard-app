@@ -13,7 +13,7 @@ export default function JoinGameQrComponent({ roomId }: JoinGameQrProps) {
     const appBaseUrl = useSelector(
         (state: AppRootState) => state.webUrl.appBaseUrl,
     )
-    // const joinUrl = `http://${appBaseUrl}/join`
+    // const joinUrlBase = `http://${appBaseUrl}/join`
     const joinUrlBase = `exp://${appBaseUrl}/--/join`
     const joinUrl = `${joinUrlBase}?code=${roomId}`
 
